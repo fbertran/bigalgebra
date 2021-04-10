@@ -59,14 +59,14 @@ of the low-level calling syntax depending on the library used.
 Feel free to contact us for help installing and running the package.
 }
 \author{
-Michael J. Kane, Bryan Lewis, John W. Emerson
+Frédéric Bertrand, Michael J. Kane, Bryan Lewis, John W. Emerson
 
-Maintainers: Mike and Jay <bigmemoryauthors@gmail.com>
+Maintainer: Frédéric Bertrand <frederic.bertrand@utt.fr>
 }
 \references{
-\url{http://www.netlib.org/blas/}
+\url{https://www.netlib.org/blas/}
 
-\url{http://www.netlib.org/lapack/}
+\url{https://www.netlib.org/lapack/}
 }
 \keyword{package}
 \seealso{

@@ -42,11 +42,11 @@ dgemm = function(TRANSA='N', TRANSB='N', M=NULL, N=NULL, K=NULL,
   if(missing(C)) C = anon_matrix(M, N)
   C.is.bm = "big.matrix" %in% class(C)
 
-  .Call('dgemm_wrapper', as.character(TRANSA), as.character(TRANSB),
+  .Call(`_dgemm_wrapper`, as.character(TRANSA), as.character(TRANSB),
     as.double(M), as.double(N), as.double(K), as.double(ALPHA), A, 
     as.double(LDA), B, as.double(LDB),
     as.double(BETA), C, as.double(LDC), as.logical(A.is.bm), 
-    as.logical(B.is.bm), as.logical(C.is.bm), COFF, PACKAGE="bigalgebra")
+    as.logical(B.is.bm), as.logical(C.is.bm), COFF)
 }
 
 # Vector addition and scaling
@@ -80,8 +80,7 @@ daxpy = function(A=1, X, Y)
     mixed = (X.is.bm != check_matrix(Y,classes=c('big.matrix','matrix','vector','numeric')))
     Z[] = Y[]
   }
-  ans = .Call("daxpy_wrapper", as.double(L), as.double(A), X, Z, X.is.bm,
-              PACKAGE="bigalgebra")
+  ans = .Call(`_daxpy_wrapper`, as.double(L), as.double(A), X, Z, X.is.bm)
   if(mixed) return(ans[])
   ans
 }

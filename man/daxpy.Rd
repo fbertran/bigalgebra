@@ -47,7 +47,7 @@ is taken from \code{X}. If input \code{X} is dimensionless (that is, lacks a
 dimension attribute), then the output is a column vector.
 }
 \references{
-\url{http://www.netlib.org/blas/daxpy.f}
+\url{https://www.netlib.org/blas/daxpy.f}
 }
 \author{
 Michael J. Kane

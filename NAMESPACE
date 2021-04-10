@@ -1,10 +1,14 @@
 import(methods)
 importFrom("bigmemory", "typeof")
+importFrom("bigmemory", "filebacked.big.matrix")
 #S4 methods
 exportMethods("%*%")
 exportMethods("Arith")
 #Functions
 export("daxpy")
-useDynLib(bigalgebra)
+
+
+# #' @useDynLib bigalgebra, .registration = TRUE
+useDynLib(bigalgebra, .registration = TRUE)
 
 importFrom("utils", "capture.output")

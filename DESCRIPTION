@@ -1,21 +1,24 @@
 Package: bigalgebra
-Version: 0.8.4.2
-Date: 2014-04-15
-Title: BLAS Routines for Native R Matrices and 'big.matrix' Objects
-Author: Michael J. Kane, Bryan Lewis, and John W. Emerson
-Maintainer: ORPHANED
-Imports: methods
+Type: Package
+Title: 'BLAS' Routines for Native R Matrices and 'big.matrix' Objects
+Version: 1.0.0
+Date: 2021-04-10
 Depends: bigmemory (>= 4.0.0)
-LinkingTo: bigmemory, BH
+Imports: methods
+LinkingTo: bigmemory, BH, Rcpp
+Authors@R: c(
+	person(given = "Frederic", family= "Bertrand", role = c("cre", "ctb"), email = "frederic.bertrand@utt.fr", comment = c(ORCID = "0000-0002-0837-8281")),
+	person(given = "Michael J.", family= "Kane", role = c("aut")),
+	person(given = "Bryan", family= "Lewis", role = c("aut")),
+	person(given = "John W.", family= "Emerson", role = c("aut")))
+Author: Frederic Bertrand [cre, ctb] (<https://orcid.org/0000-0002-0837-8281>), Michael J. Kane [aut], Bryan Lewis [aut], John W. Emerson [aut]
+Maintainer: Frederic Bertrand <frederic.bertrand@utt.fr>
 Description: Provides arithmetic functions for R matrix and 'big.matrix' objects.
 License: LGPL-3 | Apache License 2.0
+Encoding: UTF-8
 Copyright: (C) 2014 Michael J. Kane, Bryan Lewis, and John W. Emerson
-URL: http://www.bigmemory.org
 LazyLoad: yes
-Packaged: 2019-12-06 11:41:25 UTC; hornik
 NeedsCompilation: yes
-Repository: CRAN
-Date/Publication: 2019-12-06 11:48:07 UTC
-X-CRAN-Original-Maintainer: <ripley@stats.ox.ac.uk>
-X-CRAN-Comment: Orphaned and corrected on 2018-12-21 as no response to
-        request for corrections.
+RoxygenNote: 7.1.1
+URL: https://fbertran.github.io/bigalgebra/, https://github.com/fbertran/bigalgebra/
+BugReports: https://github.com/fbertran/bigalgebra/issues/
