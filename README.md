@@ -19,8 +19,8 @@
 [![DOI](https://zenodo.org/badge/136206211.svg)](https://zenodo.org/badge/latestdoi/136206211)
 <!-- badges: end -->
 
-This package provides arithmetic functions for native `R` matrices and
-`bigmemory::big.matrix` objects. 
+This package provides arithmetic functions for native `R` matrices and `bigmemory::big.matrix` objects  as well as functions for QR factorization, Cholesky factorization, General eigenvalue, and Singular value decomposition (SVD). A method matrix multiplication and an arithmetic method -for matrix addition, matrix difference- allows for mixed type operation -a matrix class object and a big.matrix class object- and pure type operation for two big.matrix class objects.
+
 
 The package defines a number of global options that begin with `bigalgebra`.
 

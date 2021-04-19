@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • bigalgebra</title>
+<title>Scales a vector by a constant. — dscal • bigalgebra</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Scales a vector by a constant. — dscal" />
+<meta property="og:description" content="Scales a vector by a constant." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -66,7 +67,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -116,96 +117,61 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Scales a vector by a constant.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/bigalgebra/blob/master/R/bigalgebra.R'><code>R/bigalgebra.R</code></a></small>
+    <div class="hidden name"><code>dscal.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Scales a vector by a constant.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>dscal</span><span class='op'>(</span>N <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>ALPHA</span>, <span class='va'>Y</span>, INCY <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="Ops.html">balgebra-methods</a></code> </p>
-        </td>
-        <td><p>Class <code>"big.matrix"</code> arithmetic methods</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bigalgebra-package.html">bigalgebra-package</a></code> </p>
-        </td>
-        <td><p>Arithmetic routines for native R matrices and big.matrix objects.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="daxpy.html">daxpy()</a></code> </p>
-        </td>
-        <td><p>BLAS daxpy functionality</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dcopy.html">dcopy()</a></code> </p>
-        </td>
-        <td><p>Copy a vector.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dgeev.html">dgeev()</a></code> </p>
-        </td>
-        <td><p>DGEEV computes eigenvalues and eigenvectors.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dgemm.html">dgemm()</a></code> </p>
-        </td>
-        <td><p>Matrix Multiply</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dgeqrf.html">dgeqrf()</a></code> </p>
-        </td>
-        <td><p>QR factorization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dgesdd.html">dgesdd()</a></code> </p>
-        </td>
-        <td><p>DGESDD computes the singular value decomposition (SVD) of a real matrix.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dpotrf.html">dpotrf()</a></code> </p>
-        </td>
-        <td><p>Cholesky factorization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dscal.html">dscal()</a></code> </p>
-        </td>
-        <td><p>Scales a vector by a constant.</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>N</th>
+      <td><p>an integer. Number of elements in input vector(s)</p></td>
+    </tr>
+    <tr>
+      <th>ALPHA</th>
+      <td><p>a real number. The scalar alpha</p></td>
+    </tr>
+    <tr>
+      <th>Y</th>
+      <td><p>a big matrix to scale by ALPHA</p></td>
+    </tr>
+    <tr>
+      <th>INCY</th>
+      <td><p>an integer. Storage spacing between elements of Y.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Update Y.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>4669</span><span class='op'>)</span>
+<span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>2</span>, type<span class='op'>=</span><span class='st'>"double"</span>, init<span class='op'>=</span><span class='fl'>1</span>, dimnames<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span>, 
+<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"alpha"</span>, <span class='st'>"beta"</span><span class='op'>)</span><span class='op'>)</span>, shared<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>dscal</span><span class='op'>(</span>ALPHA<span class='op'>=</span><span class='fl'>2</span>,Y<span class='op'>=</span><span class='va'>A</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='va'>A</span><span class='op'>[</span>,<span class='op'>]</span>
+</div><div class='output co'>#&gt;      alpha beta
+#&gt; [1,]     2    2
+#&gt; [2,]     2    2
+#&gt; [3,]     2    2</div><div class='input'>
+<span class='co'># The big.matrix file backings will be deleted when garbage collected.</span>
+<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/gc.html'>gc</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
+#&gt; Ncells  771698 41.3    1434878 76.7         NA  1434878 76.7
+#&gt; Vcells 1440822 11.0    8388608 64.0      65536  2523363 19.3</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

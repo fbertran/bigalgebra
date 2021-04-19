@@ -1,14 +1,42 @@
 import(methods)
 importFrom("bigmemory", "typeof")
 importFrom("bigmemory", "filebacked.big.matrix")
+importFrom("utils", "capture.output")
+
 #S4 methods
 exportMethods("%*%")
 exportMethods("Arith")
-#Functions
-export("daxpy")
 
+#Functions
+# Copy a matrix
+# Y := X
+export("dcopy")
+# Multiply by a scalar
+# Y := ALPHA * Y
+export("dscal")
+# Add two matrices.
+# Y := ALPHA * X + Y
+export("daxpy")
+# Matrix Multiply
+# C := ALPHA * op(A) * op(B) + BETA * C
+export("dgemm")
+# QR factorization
+# return 0 if successful, -i if ith argument has illegal value
+export("dgeqrf")
+# Cholesky factorization
+# return 0 if successful, <0 if -i-th argument is invalid, > 0 if leading minor
+# is not positive definite
+export("dpotrf")
+# General eigenvalue
+# return 0 if successful, <0 i-th argument has illegal value, >0 QR 
+# algorithm failed.
+# for now, VL and VR have to be matrices but they could be NULL
+export("dgeev")
+# Singular value decomposition (SVD) 
+# Returns: = 0 if successful
+#          < 0 if INFO = -i had an illegal value
+#          > 0 if DBDSDC did not converge
+export("dgesdd")
 
 # #' @useDynLib bigalgebra, .registration = TRUE
 useDynLib(bigalgebra, .registration = TRUE)
-
-importFrom("utils", "capture.output")

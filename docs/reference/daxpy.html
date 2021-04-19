@@ -47,10 +47,7 @@
 
 
 <meta property="og:title" content="BLAS daxpy functionality — daxpy" />
-<meta property="og:description" content="This function implements the function Y := A * X + Y where X and Y may be
-either native double-precision valued R matrices or numeric vectors, or
-double-precision valued big.matrix objects, and A is a
-scalar." />
+<meta property="og:description" content="This function implements the function Y := A * X + Y where X and Y may be either native double-precision valued R matrices or numeric vectors, or double-precision valued big.matrix objects, and A is a scalar." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -123,81 +120,60 @@ scalar." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>BLAS daxpy functionality</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/bigalgebra/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
     <div class="hidden name"><code>daxpy.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function implements the function Y := A * X + Y where X and Y may be
-either native double-precision valued R matrices or numeric vectors, or
-double-precision valued <code><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></code> objects, and A is a
-scalar.</p>
+    <p>This function implements the function Y := A * X + Y where X and Y may be either native double-precision valued R matrices or numeric vectors, or double-precision valued <code><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></code> objects, and A is a scalar.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>daxpy</span><span class='op'>(</span>A<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>X</span>, <span class='va'>Y</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>daxpy</span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>X</span>, <span class='va'>Y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>A</th>
-      <td><p>Optional numeric scalar value to scale the matrix <code>X</code> by,
-           with a default value of 1.</p></td>
+      <td><p>Optional numeric scalar value to scale the matrix <code>X</code> by, with a default value of 1.</p></td>
     </tr>
     <tr>
       <th>X</th>
-      <td><p>Requried to be either a native <span style="R">R</span> <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code>
-           or numeric vector,
-           or a <code><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></code> object</p></td>
+      <td><p>Requried to be either a native <span style="R">R</span> <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code> or numeric vector, or a <code><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></code> object</p></td>
     </tr>
     <tr>
       <th>Y</th>
-      <td><p>Optional native <span style="R">R</span> <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code> or numeric vector,
-           or a <code><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></code> object</p></td>
+      <td><p>Optional native <span style="R">R</span> <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code> or numeric vector, or a <code><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></code> object</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>At least one of either <code>X</code> or <code>Y</code> must be a <code>big.matrix</code>.
-All values must be of type <code>double</code> (the only type presently supported
-by the bigalgebra package).</p>
-<p>This function is rarely necessary to use directly since the bigalgebra
-package defines standard arithmetic operations and scalar multiplication.
-It is more efficient to use <code>daxpy</code> directly when both scaling and
-matrix addition are required, in which case both operations are performed
-in one step.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The output value depends on the classes of input values <code>X</code> and <code>Y</code>
-and on the value of the global option
-<code>bigalgebra.mixed_arithmetic_returns_R_matrix</code>.</p>
-<p>If <code>X</code> and <code>Y</code> are both big matrices, or <code>Y</code> is missing,
-<code><a href='https://rdrr.io/r/base/options.html'>options("bigalgebra.mixed_arithmetic_returns_R_matrix")</a></code> is <code>FALSE</code>,
-then a <code>big.matrix</code> is returned. The returned <code>big.matrix</code> is backed
-by a temporary file mapping that will be deleted when the returned result is
-garbage collected by R (see the examples).</p>
-<p>Otherwise, a standard R matrix is returned. The dimensional shape of the output
-is taken from <code>X</code>. If input <code>X</code> is dimensionless (that is, lacks a
-dimension attribute), then the output is a column vector.</p>
+    <p>The output value depends on the classes of input values <code>X</code> and <code>Y</code> and on the value of the global option <code>bigalgebra.mixed_arithmetic_returns_R_matrix</code>.</p>
+<p>If <code>X</code> and <code>Y</code> are both big matrices, or <code>Y</code> is missing, <code><a href='https://rdrr.io/r/base/options.html'>options("bigalgebra.mixed_arithmetic_returns_R_matrix")</a></code> is <code>FALSE</code>, then a <code>big.matrix</code> is returned. The returned <code>big.matrix</code> is backed by a temporary file mapping that will be deleted when the returned result is garbage collected by R (see the examples).</p>
+<p>Otherwise, a standard R matrix is returned. The dimensional shape of the output is taken from <code>X</code>. If input <code>X</code> is dimensionless (that is, lacks a dimension attribute), then the output is a column vector.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>At least one of either <code>X</code> or <code>Y</code> must be a <code>big.matrix</code>. All values must be of type <code>double</code> (the only type presently supported by the bigalgebra package).</p>
+<p>This function is rarely necessary to use directly since the bigalgebra package defines standard arithmetic operations and scalar multiplication. It is more efficient to use <code>daxpy</code> directly when both scaling and matrix addition are required, in which case both operations are performed in one step.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p><a href='https://www.netlib.org/blas/daxpy.f'>https://www.netlib.org/blas/daxpy.f</a></p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Michael J. Kane</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/bigmemory/man/bigmemory-package.html'>bigmemory</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael J. Kane</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/kaneplusplus/bigmemory'>bigmemory</a></span><span class='op'>)</span>
 <span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>1</span>, nrow<span class='op'>=</span><span class='fl'>3</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>B</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>big.matrix</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>2</span>, type<span class='op'>=</span><span class='st'>"double"</span>, init<span class='op'>=</span><span class='fl'>0</span>,
-                dimnames<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"alpha"</span>, <span class='st'>"beta"</span><span class='op'>)</span><span class='op'>)</span>, shared<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+               dimnames<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"alpha"</span>, <span class='st'>"beta"</span><span class='op'>)</span><span class='op'>)</span>, shared<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>C</span> <span class='op'>=</span> <span class='va'>B</span> <span class='op'>+</span> <span class='va'>B</span>   <span class='co'># C is a new big matrix</span>
 <span class='va'>D</span> <span class='op'>=</span> <span class='va'>A</span> <span class='op'>+</span> <span class='va'>B</span>   <span class='co'># D defaults to a regular R matrix, to change this, set the option:</span>
-            <span class='co'># optons(bigalgebra.mixed_arithmetic_returns_R_matrix=FALSE)</span>
+<span class='co'># options(bigalgebra.mixed_arithmetic_returns_R_matrix=FALSE)</span>
 <span class='va'>E</span> <span class='op'>=</span> <span class='fu'>daxpy</span><span class='op'>(</span>A<span class='op'>=</span><span class='fl'>1.0</span>, X<span class='op'>=</span><span class='va'>B</span>, Y<span class='op'>=</span><span class='va'>B</span><span class='op'>)</span>  <span class='co'># Same kind of result as C</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>C</span><span class='op'>[</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      [,1] [,2]
@@ -218,8 +194,9 @@ dimension attribute), then the output is a column vector.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>C</span>,<span class='va'>E</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/gc.html'>gc</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#&gt; Ncells  761688 40.7    1430568 76.5         NA  1430568 76.5
-#&gt; Vcells 1421587 10.9    8388608 64.0      65536  2561285 19.6</div></pre>
+#&gt; Ncells  765022 40.9    1434878 76.7         NA  1434878 76.7
+#&gt; Vcells 1427548 10.9    8388608 64.0      65536  2523363 19.3</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

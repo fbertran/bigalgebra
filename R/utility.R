@@ -42,7 +42,7 @@ anon_matrix = function(m, n, type, val=NULL)
                               descriptorfile=d)
   address = capture.output(print(ans@address))
   path = paste(p,f,sep="//")
-  if(bigdebug()) warning(paste("Creating anonymous maitrx ",path))
+  if(bigdebug()) warning(paste("Creating anonymous matrix ",path))
   assign(address, path, envir=.bigalgebra_env)
   reg.finalizer(ans@address, finalize_anon_matrix, onexit=TRUE)
   ans
