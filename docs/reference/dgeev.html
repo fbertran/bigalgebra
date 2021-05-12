@@ -84,7 +84,7 @@ The computed eigenvectors are normalized to have Euclidean norm equal to 1 and l
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -239,41 +239,18 @@ The left eigenvector u(j) of A satisfies u(j)**H * A = lambda(j) * u(j)**H where
     <p>WR, WI, VR, VL and Work. On exit, A has been overwritten.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>4669</span><span class='op'>)</span>
 <span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>16</span><span class='op'>)</span>,<span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>WR</span><span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,nrow<span class='op'>=</span><span class='fl'>4</span>,ncol<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>WI</span><span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,nrow<span class='op'>=</span><span class='fl'>4</span>,ncol<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>VL</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,ncol<span class='op'>=</span><span class='fl'>4</span>,nrow<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; eigen() decomposition
-#&gt; $values
-#&gt; [1]  0.85730911+1.690442i  0.85730911-1.690442i -0.86120947+0.000000i
-#&gt; [4] -0.04044732+0.000000i
-#&gt; 
-#&gt; $vectors
-#&gt;                       [,1]                  [,2]          [,3]          [,4]
-#&gt; [1,] -0.2013142-0.0805166i -0.2013142+0.0805166i -0.4396218+0i -0.9125418+0i
-#&gt; [2,] -0.7325134+0.0000000i -0.7325134+0.0000000i  0.4547709+0i -0.2656930+0i
-#&gt; [3,] -0.0664407-0.5588001i -0.0664407+0.5588001i -0.1693250+0i  0.2527695+0i
-#&gt; [4,]  0.2271468+0.2194226i  0.2271468-0.2194226i -0.7558076+0i  0.1810590+0i
-#&gt; </div><div class='input'><span class='fu'>dgeev</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>A</span>,WR<span class='op'>=</span><span class='va'>WR</span>,WI<span class='op'>=</span><span class='va'>WI</span>,VL<span class='op'>=</span><span class='va'>VL</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='va'>VL</span>
-</div><div class='output co'>#&gt;              [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] -0.099694024  0.1149983 -0.2126753 -0.7057922
-#&gt; [2,]  0.657326284  0.0000000 -0.1918649  0.3331385
-#&gt; [3,]  0.007357843  0.5515939 -0.3234797  0.3139870
-#&gt; [4,]  0.451853982 -0.1904644 -0.9018414  0.5406369</div><div class='input'><span class='va'>WR</span>
-</div><div class='output co'>#&gt;             [,1]
-#&gt; [1,]  0.85730911
-#&gt; [2,]  0.85730911
-#&gt; [3,] -0.86120947
-#&gt; [4,] -0.04044732</div><div class='input'><span class='va'>WI</span>
-</div><div class='output co'>#&gt;           [,1]
-#&gt; [1,]  1.690442
-#&gt; [2,] -1.690442
-#&gt; [3,]  0.000000
-#&gt; [4,]  0.000000</div><div class='input'>
+<span class='fu'>dgeev</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>A</span>,WR<span class='op'>=</span><span class='va'>WR</span>,WI<span class='op'>=</span><span class='va'>WI</span>,VL<span class='op'>=</span><span class='va'>VL</span><span class='op'>)</span>
+<span class='va'>VL</span>
+<span class='va'>WR</span>
+<span class='va'>WI</span>
+
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>WR</span>,<span class='va'>WI</span>,<span class='va'>VL</span><span class='op'>)</span>
 
 <span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>16</span><span class='op'>)</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
@@ -281,36 +258,14 @@ The left eigenvector u(j) of A satisfies u(j)**H * A = lambda(j) * u(j)**H where
 <span class='va'>WI</span><span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,nrow<span class='op'>=</span><span class='fl'>4</span>,ncol<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>VL</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,ncol<span class='op'>=</span><span class='fl'>4</span>,nrow<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>[</span>,<span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; eigen() decomposition
-#&gt; $values
-#&gt; [1] -0.7802559+0.6873447i -0.7802559-0.6873447i  0.6930662+0.4810716i
-#&gt; [4]  0.6930662-0.4810716i
-#&gt; 
-#&gt; $vectors
-#&gt;                       [,1]                  [,2]                  [,3]
-#&gt; [1,]  0.1471182+0.4334710i  0.1471182-0.4334710i -0.2986975+0.0737525i
-#&gt; [2,]  0.2638302+0.1607608i  0.2638302-0.1607608i -0.4446219-0.1864026i
-#&gt; [3,] -0.4094915+0.0733955i -0.4094915-0.0733955i  0.7778787+0.0000000i
-#&gt; [4,] -0.7224532+0.0000000i -0.7224532+0.0000000i  0.2526100-0.0632353i
-#&gt;                       [,4]
-#&gt; [1,] -0.2986975-0.0737525i
-#&gt; [2,] -0.4446219+0.1864026i
-#&gt; [3,]  0.7778787+0.0000000i
-#&gt; [4,]  0.2526100+0.0632353i
-#&gt; </div><div class='input'><span class='fu'>dgeev</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>A</span>,WR<span class='op'>=</span><span class='va'>WR</span>,WI<span class='op'>=</span><span class='va'>WI</span>,VL<span class='op'>=</span><span class='va'>VL</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='va'>VL</span><span class='op'>[</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]
-#&gt; [1,] 0.63149291  0.0000000 -0.35751797 -0.04531232
-#&gt; [2,] 0.22007417 -0.1890068  0.81587447  0.00000000
-#&gt; [3,] 0.33976651 -0.2889619  0.32444761  0.26761276
-#&gt; [4,] 0.08779556  0.5571465  0.04124336 -0.16091204</div><div class='input'><span class='va'>WR</span><span class='op'>[</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt; [1] -0.7802559 -0.7802559  0.6930662  0.6930662</div><div class='input'><span class='va'>WI</span><span class='op'>[</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt; [1]  0.6873447 -0.6873447  0.4810716 -0.4810716</div><div class='input'>
+<span class='fu'>dgeev</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>A</span>,WR<span class='op'>=</span><span class='va'>WR</span>,WI<span class='op'>=</span><span class='va'>WI</span>,VL<span class='op'>=</span><span class='va'>VL</span><span class='op'>)</span>
+<span class='va'>VL</span><span class='op'>[</span>,<span class='op'>]</span>
+<span class='va'>WR</span><span class='op'>[</span>,<span class='op'>]</span>
+<span class='va'>WI</span><span class='op'>[</span>,<span class='op'>]</span>
+
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>WR</span>,<span class='va'>WI</span>,<span class='va'>VL</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/gc.html'>gc</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#&gt; Ncells  769545 41.1    1434878 76.7         NA  1434878 76.7
-#&gt; Vcells 1437722 11.0    8388608 64.0      65536  2523363 19.3</div><div class='input'><span class='co'># }</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

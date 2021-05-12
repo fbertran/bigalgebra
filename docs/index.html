@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -90,6 +90,7 @@
 <a href="#fr%C3%A9d%C3%A9ric-bertrand-michael-j-kane-bryan-lewis-john-w-emerson" class="anchor"></a>Frédéric Bertrand, Michael J. Kane, Bryan Lewis, John W. Emerson</h2>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>This package provides arithmetic functions for native <code>R</code> matrices and <code><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html">bigmemory::big.matrix</a></code> objects as well as functions for QR factorization, Cholesky factorization, General eigenvalue, and Singular value decomposition (SVD). A method matrix multiplication and an arithmetic method -for matrix addition, matrix difference- allows for mixed type operation -a matrix class object and a big.matrix class object- and pure type operation for two big.matrix class objects.</p>
 <p>The package defines a number of global options that begin with <code>bigalgebra</code>.</p>
 <p>They include:</p>
@@ -139,21 +140,18 @@
 <span class="va">B</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html">big.matrix</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,init <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 
 <span class="va">C</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">B</span>       <span class="co"># Returns a new big.matrix object</span>
+<span class="co">#&gt; Error in A %*% B: nécessite des arguments numériques/complexes matrice/vecteur</span>
 <span class="va">D</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">[</span><span class="op">]</span> <span class="op">%*%</span> <span class="va">B</span><span class="op">[</span><span class="op">]</span>   <span class="co"># Compute the same thing in R</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">C</span> <span class="op">-</span> <span class="va">D</span><span class="op">)</span>       <span class="co"># Compare the results (subtraction of an R matrix from a</span>
-<span class="co">#&gt;      [,1] [,2] [,3] [,4]</span>
-<span class="co">#&gt; [1,]    0    0    0    0</span>
-<span class="co">#&gt; [2,]    0    0    0    0</span>
-<span class="co">#&gt; [3,]    0    0    0    0</span>
-<span class="co">#&gt; [4,]    0    0    0    0</span>
-<span class="co">#&gt; [5,]    0    0    0    0</span>
+<span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'print' : argument non numérique pour un opérateur binaire</span>
                    <span class="co"># big.matrix)</span>
 
 <span class="co"># The next example illustrates mixing R and big.matrix objects. It returns by</span>
 <span class="co"># default (see # options("bigalgebra.mixed_arithmetic_returns_R_matrix")</span>
 <span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span>
-<span class="va">E</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">D</span></code></pre></div>
+<span class="va">E</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">D</span>
+<span class="co">#&gt; Error in A %*% D: nécessite des arguments numériques/complexes matrice/vecteur</span></code></pre></div>
 </div>
 </div>
 
@@ -204,7 +202,7 @@
 <li><a href="https://cran.r-project.org/package=bigalgebra"><img src="https://www.r-pkg.org/badges/version/bigalgebra" alt="CRAN status"></a></li>
 <li><a href="https://cran.r-project.org/package=bigalgebra"><img src="https://cranlogs.r-pkg.org/badges/bigalgebra" alt="CRAN RStudio mirror downloads"></a></li>
 <li><a href="https://github.com/fbertran/bigalgebra"><img src="https://img.shields.io/github/stars/fbertran/bigalgebra?style=social" alt="GitHub Repo stars"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/136206211"><img src="https://zenodo.org/badge/136206211.svg" alt="DOI"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/353292865"><img src="https://zenodo.org/badge/353292865.svg" alt="DOI"></a></li>
 </ul>
 </div>
 </div>

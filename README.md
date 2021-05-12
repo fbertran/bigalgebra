@@ -16,7 +16,8 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/bigalgebra)](https://cran.r-project.org/package=bigalgebra)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/bigalgebra)](https://cran.r-project.org/package=bigalgebra)
 [![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/bigalgebra?style=social)](https://github.com/fbertran/bigalgebra)
-[![DOI](https://zenodo.org/badge/136206211.svg)](https://zenodo.org/badge/latestdoi/136206211)
+[![DOI](https://zenodo.org/badge/353292865.svg)](https://zenodo.org/badge/latestdoi/353292865)
+
 <!-- badges: end -->
 
 This package provides arithmetic functions for native `R` matrices and `bigmemory::big.matrix` objects  as well as functions for QR factorization, Cholesky factorization, General eigenvalue, and Singular value decomposition (SVD). A method matrix multiplication and an arithmetic method -for matrix addition, matrix difference- allows for mixed type operation -a matrix class object and a big.matrix class object- and pure type operation for two big.matrix class objects.
@@ -98,20 +99,17 @@ A <- bigmemory::big.matrix(5,4,init = 1)
 B <- bigmemory::big.matrix(4,4,init = 2)
 
 C <- A %*% B       # Returns a new big.matrix object
+#> Error in A %*% B: nécessite des arguments numériques/complexes matrice/vecteur
 D <- A[] %*% B[]   # Compute the same thing in R
 
 print(C - D)       # Compare the results (subtraction of an R matrix from a
-#>      [,1] [,2] [,3] [,4]
-#> [1,]    0    0    0    0
-#> [2,]    0    0    0    0
-#> [3,]    0    0    0    0
-#> [4,]    0    0    0    0
-#> [5,]    0    0    0    0
+#> Error in h(simpleError(msg, call)): erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'print' : argument non numérique pour un opérateur binaire
                    # big.matrix)
 
 # The next example illustrates mixing R and big.matrix objects. It returns by
 # default (see # options("bigalgebra.mixed_arithmetic_returns_R_matrix")
 D <- matrix(rnorm(16),4)
 E <- A %*% D
+#> Error in A %*% D: nécessite des arguments numériques/complexes matrice/vecteur
 ```
 

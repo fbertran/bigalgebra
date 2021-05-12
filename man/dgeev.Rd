@@ -85,7 +85,7 @@ The left eigenvector u(j) of A satisfies u(j)**H * A = lambda(j) * u(j)**H where
 The computed eigenvectors are normalized to have Euclidean norm equal to 1 and largest component real.
 }
 \examples{
-\donttest{
+\dontrun{
 set.seed(4669)
 A = matrix(rnorm(16),4)
 WR= matrix(0,nrow=4,ncol=1)

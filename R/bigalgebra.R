@@ -41,7 +41,7 @@ check_matrix = function(A, classes=c('big.matrix', 'matrix'),
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' set.seed(4669)
 #' A = big.matrix(3, 2, type="double", init=1, dimnames=list(NULL, 
 #' c("alpha", "beta")), shared=FALSE)
@@ -344,7 +344,7 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' set.seed(4669)
 #' A = matrix(rnorm(16),4)
 #' WR= matrix(0,nrow=4,ncol=1)
@@ -499,7 +499,7 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' set.seed(4669)
 #' A = matrix(rnorm(12),4,3)
 #' S = matrix(0,nrow=3,ncol=1)

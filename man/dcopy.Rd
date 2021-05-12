@@ -27,7 +27,7 @@ where LX = 1 if INCX .GE. 0, else LX = 1+(1-N)*INCX, and LY is
 defined in a similar way using INCY.
 }
 \examples{
-\donttest{
+\dontrun{
 set.seed(4669)
 A = big.matrix(3, 2, type="double", init=1, dimnames=list(NULL, 
 c("alpha", "beta")), shared=FALSE)

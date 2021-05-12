@@ -144,17 +144,17 @@ daxpy_wrapper (SEXP N, SEXP A, SEXP X, SEXP Y, SEXP X_isBM)
 SEXP dpotrf_wrapper(SEXP UPLO, SEXP N, SEXP A, SEXP LDA, SEXP INFO, SEXP A_isBM)
 {
   SEXP ans;
-  const char *_UPLO = CHAR(Rf_asChar(UPLO));
-  INT _N = (INT)* (DOUBLE_DATA(N));
-  double *_A = make_double_ptr(A, A_isBM);
-  INT _LDA = (INT) *(DOUBLE_DATA(LDA));
-  INT _INFO = (INT) *(DOUBLE_DATA(INFO));
+  const char *UUPLO = CHAR(Rf_asChar(UPLO));
+  INT NN = (INT)* (DOUBLE_DATA(N));
+  double *AA = make_double_ptr(A, A_isBM);
+  INT LLDA = (INT) *(DOUBLE_DATA(LDA));
+  INT IINFO = (INT) *(DOUBLE_DATA(INFO));
 #if REFBLAS
   /* Standard Fortran interface without underscoring */
-  int8_dpotrf (_UPLO, &_N, _A, &_LDA, &_INFO);
+  int8_dpotrf (UUPLO, &NN, AA, &LLDA, &IINFO);
 #else
   /* Adaptative Fortran interface from F77_CALL */
-  F77_CALL(dpotrf) (_UPLO, &_N, _A, &_LDA, &_INFO);
+  F77_CALL(dpotrf) (UUPLO, &NN, AA, &LLDA, &IINFO);
 #endif
   PROTECT(ans = A);
   Rf_unprotect(1);

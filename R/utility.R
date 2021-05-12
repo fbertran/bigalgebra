@@ -38,7 +38,7 @@ anon_matrix = function(m, n, type, val=NULL)
   f = basename(tempfile(pattern=options("bigalgebra.temp_pattern")[[1]]))
   p = options("bigalgebra.tempdir")[[1]]()
   d = sprintf("%s.desc",f)
-  ans = filebacked.big.matrix(m, n, type, init=val, backingfile=f, backingpath=p,
+  ans = bigmemory::filebacked.big.matrix(m, n, type, init=val, backingfile=f, backingpath=p,
                               descriptorfile=d)
   address = capture.output(print(ans@address))
   path = paste(p,f,sep="//")

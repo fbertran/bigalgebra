@@ -84,7 +84,7 @@ Note that the routine returns VT = V**T, not V." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -249,27 +249,17 @@ A is updated.</p><dl>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>4669</span><span class='op'>)</span>
 <span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>12</span><span class='op'>)</span>,<span class='fl'>4</span>,<span class='fl'>3</span><span class='op'>)</span>
 <span class='va'>S</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,nrow<span class='op'>=</span><span class='fl'>3</span>,ncol<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>U</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,nrow<span class='op'>=</span><span class='fl'>4</span>,ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>VT</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,ncol<span class='op'>=</span><span class='fl'>3</span>,nrow<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 <span class='fu'>dgesdd</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>A</span>,S<span class='op'>=</span><span class='va'>S</span>,U<span class='op'>=</span><span class='va'>U</span>,VT<span class='op'>=</span><span class='va'>VT</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='va'>S</span>
-</div><div class='output co'>#&gt;           [,1]
-#&gt; [1,] 2.3395225
-#&gt; [2,] 1.9241467
-#&gt; [3,] 0.1271556</div><div class='input'><span class='va'>U</span>
-</div><div class='output co'>#&gt;             [,1]        [,2]       [,3] [,4]
-#&gt; [1,] -0.16447457 -0.14876817  0.9750980    0
-#&gt; [2,] -0.98577532  0.05943821 -0.1572072    0
-#&gt; [3,] -0.03457065 -0.98708416 -0.1564281    0
-#&gt; [4,]  0.00000000  0.00000000  0.0000000    0</div><div class='input'><span class='va'>VT</span>
-</div><div class='output co'>#&gt;            [,1]       [,2]       [,3]
-#&gt; [1,] -0.1952545 -0.1966417 -0.9608370
-#&gt; [2,] -0.1599080  0.9729667 -0.1666287
-#&gt; [3,] -0.9676286 -0.1211106  0.2214207</div><div class='input'>
+<span class='va'>S</span>
+<span class='va'>U</span>
+<span class='va'>VT</span>
+
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>S</span>,<span class='va'>U</span>,<span class='va'>VT</span><span class='op'>)</span>
 
 <span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>12</span><span class='op'>)</span>,<span class='fl'>4</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
@@ -277,22 +267,13 @@ A is updated.</p><dl>
 <span class='va'>U</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,nrow<span class='op'>=</span><span class='fl'>4</span>,ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>VT</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>,ncol<span class='op'>=</span><span class='fl'>3</span>,nrow<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>dgesdd</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>A</span>,S<span class='op'>=</span><span class='va'>S</span>,U<span class='op'>=</span><span class='va'>U</span>,VT<span class='op'>=</span><span class='va'>VT</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='va'>S</span><span class='op'>[</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt; [1] 2.64161686 1.15897237 0.06190967</div><div class='input'><span class='va'>U</span><span class='op'>[</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt;            [,1]       [,2]       [,3] [,4]
-#&gt; [1,] -0.1580270 -0.6334319 -0.7574903    0
-#&gt; [2,]  0.4538101 -0.7279031  0.5140170    0
-#&gt; [3,] -0.8769743 -0.2625282  0.4024861    0
-#&gt; [4,]  0.0000000  0.0000000  0.0000000    0</div><div class='input'><span class='va'>VT</span><span class='op'>[</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt;            [,1]        [,2]       [,3]
-#&gt; [1,]  0.5859085 0.002410907  0.8103736
-#&gt; [2,]  0.6912594 0.520406262 -0.5013360
-#&gt; [3,] -0.4229322 0.853915400  0.3032439</div><div class='input'>
+<span class='va'>S</span><span class='op'>[</span>,<span class='op'>]</span>
+<span class='va'>U</span><span class='op'>[</span>,<span class='op'>]</span>
+<span class='va'>VT</span><span class='op'>[</span>,<span class='op'>]</span>
+
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>S</span>,<span class='va'>U</span>,<span class='va'>VT</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/gc.html'>gc</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#&gt; Ncells  771305 41.2    1434878 76.7         NA  1434878 76.7
-#&gt; Vcells 1441704 11.0    8388608 64.0      65536  2523363 19.3</div><div class='input'><span class='co'># }</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
