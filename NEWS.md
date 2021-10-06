@@ -1,3 +1,7 @@
+# bigalgebra 1.0.2
+
+* As recommended, updated the link to the JSS.
+
 # bigalgebra 1.0.1
 
 * Fixes for CRAN checks with Fedora.

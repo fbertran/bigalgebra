@@ -103,7 +103,7 @@ C <- A %*% B       # Returns a new big.matrix object
 D <- A[] %*% B[]   # Compute the same thing in R
 
 print(C - D)       # Compare the results (subtraction of an R matrix from a
-#> Error in h(simpleError(msg, call)): erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'print' : argument non numérique pour un opérateur binaire
+#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'print' : argument non numérique pour un opérateur binaire
                    # big.matrix)
 
 # The next example illustrates mixing R and big.matrix objects. It returns by
