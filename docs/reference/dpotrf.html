@@ -49,8 +49,8 @@
 <meta property="og:title" content="Cholesky factorization — dpotrf" />
 <meta property="og:description" content="DPOTRF computes the Cholesky factorization of a real symmetric positive definite matrix A.
 The factorization has the form
-  A = U**T * U,  if UPLO = 'U', or
-  A = L  * L**T,  if UPLO = 'L',
+  A =U**T * U,  if UPLO = 'U', or
+  A =L  * L**T,  if UPLO = 'L',
 
 where U is an upper triangular matrix and L is lower triangular.
 This is the block version of the algorithm, calling Level 3 BLAS." />
@@ -86,7 +86,7 @@ This is the block version of the algorithm, calling Level 3 BLAS." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -133,8 +133,8 @@ This is the block version of the algorithm, calling Level 3 BLAS." />
     <div class="ref-description">
     <p>DPOTRF computes the Cholesky factorization of a real symmetric positive definite matrix A.</p>
 <p>The factorization has the form</p><dl>
-  <dt></dt><dd><p>A = U**T * U,  if UPLO = 'U', or</p></dd>
-  <dt></dt><dd><p>A = L  * L**T,  if UPLO = 'L',</p></dd>
+  <dt>A =</dt><dd><p>U**T * U,  if UPLO = 'U', or</p></dd>
+  <dt>A =</dt><dd><p>L  * L**T,  if UPLO = 'L',</p></dd>
 
 </dl><p>where U is an upper triangular matrix and L is lower triangular.</p>
 <p>This is the block version of the algorithm, calling Level 3 BLAS.</p>
@@ -148,8 +148,8 @@ This is the block version of the algorithm, calling Level 3 BLAS." />
     <tr>
       <th>UPLO</th>
       <td><p>a character.</p><dl>
-  <dt></dt><dd><p>'U':  Upper triangle of A is stored;</p></dd>
-  <dt></dt><dd><p>'L':  Lower triangle of A is stored.</p></dd>
+  <dt>'U':</dt><dd><p>Upper triangle of A is stored;</p></dd>
+  <dt>'L':</dt><dd><p>Lower triangle of A is stored.</p></dd>
 
 </dl></td>
     </tr>
@@ -170,9 +170,9 @@ This is the block version of the algorithm, calling Level 3 BLAS." />
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>updates the big matrix A with the result, INFO is an integer</p><dl>
-  <dt></dt><dd><p>= 0:  successful exit</p></dd>
-  <dt></dt><dd><p>&lt; 0:  if INFO = -i, the i-th argument had an illegal value</p></dd>
-  <dt></dt><dd><p>&gt; 0:  if INFO = i, the leading minor of order i is not positive definite, and the factorization could not be completed.</p></dd>
+  <dt>= 0:</dt><dd><p>successful exit</p></dd>
+  <dt>&lt; 0:</dt><dd><p>if INFO = -i, the i-th argument had an illegal value</p></dd>
+  <dt>&gt; 0:</dt><dd><p>if INFO = i, the leading minor of order i is not positive definite, and the factorization could not be completed.</p></dd>
 
 </dl><p>Terms laying out of the computed triangle should be discarded.</p>
 
@@ -209,8 +209,8 @@ This is the block version of the algorithm, calling Level 3 BLAS." />
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>B</span>,<span class='va'>C</span>,<span class='va'>D</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/gc.html'>gc</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#&gt; Ncells  766963   41    1433914 76.6         NA  1433914 76.6
-#&gt; Vcells 1430232   11    8388608 64.0      65536  2520857 19.3</div></pre>
+#&gt; Ncells  786128 42.0    1311267 70.1         NA  1311267 70.1
+#&gt; Vcells 1474189 11.3    8388608 64.0      65536  2216094 17.0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

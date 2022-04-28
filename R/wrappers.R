@@ -20,15 +20,15 @@
 #' 
 #' @param TRANSA a character. TRANSA specifies the form of op( A ) to be used in the matrix multiplication as follows:
 #' \describe{
-#'   \item{}{TRANSA = 'N' or 'n',  op( A ) = A.}
-#'   \item{}{TRANSA = 'T' or 't',  op( A ) = A**T.}
-#'   \item{}{TRANSA = 'C' or 'c',  op( A ) = A**T.}
+#'   \item{TRANSA =}{ 'N' or 'n',  op( A ) = A.}
+#'   \item{TRANSA =}{ 'T' or 't',  op( A ) = A**T.}
+#'   \item{TRANSA =}{ 'C' or 'c',  op( A ) = A**T.}
 #' }
 #' @param TRANSB a character. TRANSB specifies the form of op( B ) to be used in the matrix multiplication as follows:
 #' #' \describe{
-#'   \item{}{TRANSA = 'N' or 'n',  op( B ) = B.}
-#'   \item{}{TRANSA = 'T' or 't',  op( B ) = B**T.}
-#'   \item{}{TRANSA = 'C' or 'c',  op( B ) = B**T.}
+#'   \item{TRANSA =}{ 'N' or 'n',  op( B ) = B.}
+#'   \item{TRANSA =}{ 'T' or 't',  op( B ) = B**T.}
+#'   \item{TRANSA =}{ 'C' or 'c',  op( B ) = B**T.}
 #' }
 #' @param M an integer. M specifies the number of rows  of the  matrix op( A )  and of the  matrix  C.  M  must  be at least  zero.
 #' @param N an integer. N specifies the number of columns  of the  matrix op( B )  and of the  matrix  C.  N  must  be at least  zero.

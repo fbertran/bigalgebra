@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -180,39 +180,20 @@ represent the orthogonal matrix Q as a product of min(m,n) elementary
 reflectors.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>hilbert</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>{</span> <span class='va'>i</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span>; <span class='fl'>1</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span><span class='op'>(</span><span class='va'>i</span> <span class='op'>-</span> <span class='fl'>1</span>, <span class='va'>i</span>, <span class='st'>"+"</span><span class='op'>)</span> <span class='op'>}</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'>#' hilbert &lt;- function(n) { i &lt;- 1:n; 1 / outer(i - 1, i, "+") }</span>
 <span class='va'>h9</span> <span class='op'>&lt;-</span> <span class='fu'>hilbert</span><span class='op'>(</span><span class='fl'>9</span><span class='op'>)</span>; <span class='va'>h9</span>
-</div><div class='output co'>#&gt;            [,1]      [,2]       [,3]       [,4]       [,5]       [,6]
-#&gt;  [1,] 1.0000000 0.5000000 0.33333333 0.25000000 0.20000000 0.16666667
-#&gt;  [2,] 0.5000000 0.3333333 0.25000000 0.20000000 0.16666667 0.14285714
-#&gt;  [3,] 0.3333333 0.2500000 0.20000000 0.16666667 0.14285714 0.12500000
-#&gt;  [4,] 0.2500000 0.2000000 0.16666667 0.14285714 0.12500000 0.11111111
-#&gt;  [5,] 0.2000000 0.1666667 0.14285714 0.12500000 0.11111111 0.10000000
-#&gt;  [6,] 0.1666667 0.1428571 0.12500000 0.11111111 0.10000000 0.09090909
-#&gt;  [7,] 0.1428571 0.1250000 0.11111111 0.10000000 0.09090909 0.08333333
-#&gt;  [8,] 0.1250000 0.1111111 0.10000000 0.09090909 0.08333333 0.07692308
-#&gt;  [9,] 0.1111111 0.1000000 0.09090909 0.08333333 0.07692308 0.07142857
-#&gt;             [,7]       [,8]       [,9]
-#&gt;  [1,] 0.14285714 0.12500000 0.11111111
-#&gt;  [2,] 0.12500000 0.11111111 0.10000000
-#&gt;  [3,] 0.11111111 0.10000000 0.09090909
-#&gt;  [4,] 0.10000000 0.09090909 0.08333333
-#&gt;  [5,] 0.09090909 0.08333333 0.07692308
-#&gt;  [6,] 0.08333333 0.07692308 0.07142857
-#&gt;  [7,] 0.07692308 0.07142857 0.06666667
-#&gt;  [8,] 0.07142857 0.06666667 0.06250000
-#&gt;  [9,] 0.06666667 0.06250000 0.05882353</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/qr.html'>qr</a></span><span class='op'>(</span><span class='va'>h9</span><span class='op'>)</span><span class='op'>$</span><span class='va'>rank</span>           <span class='co'>#--&gt; only 7</span>
-</div><div class='output co'>#&gt; [1] 7</div><div class='input'><span class='va'>qrh9</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/qr.html'>qr</a></span><span class='op'>(</span><span class='va'>h9</span>, tol <span class='op'>=</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/qr.html'>qr</a></span><span class='op'>(</span><span class='va'>h9</span><span class='op'>)</span><span class='op'>$</span><span class='va'>rank</span>           <span class='co'>#--&gt; only 7</span>
+<span class='va'>qrh9</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/qr.html'>qr</a></span><span class='op'>(</span><span class='va'>h9</span>, tol <span class='op'>=</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 <span class='va'>qrh9</span><span class='op'>$</span><span class='va'>rank</span> 
-</div><div class='output co'>#&gt; [1] 9</div><div class='input'><span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='va'>h9</span><span class='op'>)</span>
+<span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bigmemory/man/big.matrix.html'>as.big.matrix</a></span><span class='op'>(</span><span class='va'>h9</span><span class='op'>)</span>
 <span class='fu'>dgeqrf</span><span class='op'>(</span>A<span class='op'>=</span><span class='va'>C</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
+
 <span class='co'># The big.matrix file backings will be deleted when garbage collected.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/gc.html'>gc</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#&gt; Ncells  766652   41    1433914 76.6         NA  1433914 76.6
-#&gt; Vcells 1429590   11    8388608 64.0      65536  2520857 19.3</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -173,7 +173,8 @@ dscal = function(N=NULL, ALPHA, Y, INCY=1)
 #' @export 
 #'
 #' @examples
-#' hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+#' \dontrun{
+#' #' hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 #' h9 <- hilbert(9); h9
 #' qr(h9)$rank           #--> only 7
 #' qrh9 <- qr(h9, tol = 1e-10)
@@ -184,6 +185,7 @@ dscal = function(N=NULL, ALPHA, Y, INCY=1)
 #' # The big.matrix file backings will be deleted when garbage collected.
 #' rm(C)
 #' gc()
+#' }
 # QR factorization
 # return 0 if successful, -i if ith argument has illegal value
 dgeqrf=function(M=NULL, N=NULL, A, LDA=NULL, TAU=NULL, WORK=NULL,
@@ -232,16 +234,16 @@ dgeqrf=function(M=NULL, N=NULL, A, LDA=NULL, TAU=NULL, WORK=NULL,
 #' 
 #' The factorization has the form
 #' \describe{
-#'   \item{}{A = U**T * U,  if UPLO = 'U', or}
-#'   \item{}{A = L  * L**T,  if UPLO = 'L',}
+#'   \item{A =}{ U**T * U,  if UPLO = 'U', or}
+#'   \item{A =}{ L  * L**T,  if UPLO = 'L',}
 #' }
 #' where U is an upper triangular matrix and L is lower triangular.
 #' 
 #' This is the block version of the algorithm, calling Level 3 BLAS.
 #' @param UPLO a character. 
 #' \describe{
-#'   \item{}{'U':  Upper triangle of A is stored;}
-#'   \item{}{'L':  Lower triangle of A is stored.}
+#'   \item{'U':}{ Upper triangle of A is stored;}
+#'   \item{'L':}{ Lower triangle of A is stored.}
 #' }
 #' @param N an integer. The order of the matrix A.  N >= 0.
 #' @param A a big.matrix, dimension (LDA,N).
@@ -249,9 +251,9 @@ dgeqrf=function(M=NULL, N=NULL, A, LDA=NULL, TAU=NULL, WORK=NULL,
 #'
 #' @return updates the big matrix A with the result, INFO is an integer 
 #' \describe{
-#'   \item{}{= 0:  successful exit}
-#'   \item{}{< 0:  if INFO = -i, the i-th argument had an illegal value}
-#'   \item{}{> 0:  if INFO = i, the leading minor of order i is not positive definite, and the factorization could not be completed.}
+#'   \item{= 0:}{ successful exit}
+#'   \item{< 0:}{ if INFO = -i, the i-th argument had an illegal value}
+#'   \item{> 0:}{ if INFO = i, the leading minor of order i is not positive definite, and the factorization could not be completed.}
 #' }
 #' Terms laying out of the computed triangle should be discarded.
 #' @export
@@ -303,13 +305,13 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
 #' 
 #' @param JOBVL a character.
 #' \describe{
-#'   \item{}{= 'N': left eigenvectors of A are not computed;}
-#'   \item{}{= 'V': left eigenvectors of A are computed.}
+#'   \item{= 'N':}{left eigenvectors of A are not computed;}
+#'   \item{= 'V':}{left eigenvectors of A are computed.}
 #' }
 #' @param JOBVR a character.
 #' \describe{
-#'   \item{}{= 'N': right eigenvectors of A are not computed;}
-#'   \item{}{= 'V': right eigenvectors of A are computed.}
+#'   \item{= 'N':}{right eigenvectors of A are not computed;}
+#'   \item{= 'V':}{right eigenvectors of A are computed.}
 #' }
 #' @param N an integer. The order of the matrix A. N >= 0.
 #' @param A a matrix of dimension (LDA,N), the N-by-N matrix A.
@@ -318,23 +320,23 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
 #' @param WI a vector of dimension (N). WI contain the imaginary part of the computed eigenvalues. Complex conjugate pairs of eigenvalues appear consecutively with the eigenvalue having the positive imaginary part first.
 #' @param VL a matrx of dimension (LDVL,N)
 #' \describe{
-#'   \item{}{If JOBVL = 'V', the left eigenvectors u(j) are stored one
+#'   \item{If}{ JOBVL = 'V', the left eigenvectors u(j) are stored one
 #'   after another in the columns of VL, in the same order
 #'   as their eigenvalues.}
-#'   \item{}{If JOBVL = 'N', VL is not referenced.}
-#'   \item{}{If the j-th eigenvalue is real, then u(j) = VL(:,j),
+#'   \item{If}{ JOBVL = 'N', VL is not referenced.}
+#'   \item{If}{ the j-th eigenvalue is real, then u(j) = VL(:,j),
 #'   the j-th column of VL.}
-#'   \item{}{If the j-th and (j+1)-st eigenvalues form a complex
+#'   \item{If}{ the j-th and (j+1)-st eigenvalues form a complex
 #'   conjugate pair, then u(j) = VL(:,j) + i*VL(:,j+1) and
 #'   u(j+1) = VL(:,j) - i*VL(:,j+1).}
 #' }
 #' @param LDVL an integer. The leading dimension of the array VL. LDVL >= 1; if JOBVL = 'V', LDVL >= N.
 #' @param VR  a matrix of dimension (LDVR,N). 
 #' \describe{
-#'   \item{}{If JOBVR = 'V', the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues.}
-#'   \item{}{If JOBVR = 'N', VR is not referenced.}
-#'   \item{}{If the j-th eigenvalue is real, then v(j) = VR(:,j), the j-th column of VR.}
-#'   \item{}{If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then v(j) = VR(:,j) + i*VR(:,j+1) and v(j+1) = VR(:,j) - i*VR(:,j+1).}
+#'   \item{If}{ JOBVR = 'V', the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues.}
+#'   \item{If}{ JOBVR = 'N', VR is not referenced.}
+#'   \item{If}{ the j-th eigenvalue is real, then v(j) = VR(:,j), the j-th column of VR.}
+#'   \item{If}{ the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then v(j) = VR(:,j) + i*VR(:,j+1) and v(j+1) = VR(:,j) - i*VR(:,j+1).}
 #'  }
 #' @param LDVR an integer. The leading dimension of the array VR.  LDVR >= 1; if JOBVR = 'V', LDVR >= N.
 #' @param WORK a matrix of dimension (MAX(1,LWORK))
@@ -442,10 +444,10 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' 
 #' @param JOBZ a character. Specifies options for computing all or part of the matrix U:
 #' \describe{
-#'   \item{}{= 'A':  all M columns of U and all N rows of V**T are returned in the arrays U and VT;}
-#'   \item{}{= 'S':  the first min(M,N) columns of U and the first min(M,N) rows of V**T are returned in the arrays U and VT;}
-#'   \item{}{= 'O':  If M >= N, the first N columns of U are overwritten on the array A and all rows of V**T are returned in the array VT; otherwise, all columns of U are returned in the array U and the first M rows of V**T are overwritten in the array A;}
-#'   \item{}{= 'N':  no columns of U or rows of V**T are computed.}
+#'   \item{= 'A':}{ all M columns of U and all N rows of V**T are returned in the arrays U and VT;}
+#'   \item{= 'S':}{ the first min(M,N) columns of U and the first min(M,N) rows of V**T are returned in the arrays U and VT;}
+#'   \item{= 'O':}{ If M >= N, the first N columns of U are overwritten on the array A and all rows of V**T are returned in the array VT; otherwise, all columns of U are returned in the array U and the first M rows of V**T are overwritten in the array A;}
+#'   \item{= 'N':}{ no columns of U or rows of V**T are computed.}
 #' }
 #' @param M an integer. The number of rows of the input matrix A. M >= 0.
 #' @param N an integer. The number of columns of the input matrix A. N >= 0.
@@ -454,17 +456,17 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' @param S  a matrix of dimension (min(M,N)). The singular values of A, sorted so that S(i) >= S(i+1).
 #' @param U  U is a matrx of dimension (LDU,UCOL)
 #' \describe{
-#'   \item{}{UCOL = M if JOBZ = 'A' or JOBZ = 'O' and M < N; UCOL = min(M,N) if JOBZ = 'S'.}
-#'   \item{}{If JOBZ = 'A' or JOBZ = 'O' and M < N, U contains the M-by-M orthogonal matrix U;}
-#'   \item{}{if JOBZ = 'S', U contains the first min(M,N) columns of U (the left singular vectors, stored columnwise);}
-#'   \item{}{if JOBZ = 'O' and M >= N, or JOBZ = 'N', U is not referenced.}
+#'   \item{UCOL = M if}{ JOBZ = 'A' or JOBZ = 'O' and M < N; UCOL = min(M,N) if JOBZ = 'S'.}
+#'   \item{If}{ JOBZ = 'A' or JOBZ = 'O' and M < N, U contains the M-by-M orthogonal matrix U;}
+#'   \item{if}{ JOBZ = 'S', U contains the first min(M,N) columns of U (the left singular vectors, stored columnwise);}
+#'   \item{if}{ JOBZ = 'O' and M >= N, or JOBZ = 'N', U is not referenced.}
 #' }
 #' @param LDU an integer. The leading dimension of the matrix U.  LDU >= 1; if JOBZ = 'S' or 'A' or JOBZ = 'O' and M < N, LDU >= M.
 #' @param VT VT is matrix of dimension (LDVT,N)
 #' \describe{
-#'   \item{}{If JOBZ = 'A' or JOBZ = 'O' and M >= N, VT contains the N-by-N orthogonal matrix V**T;}
-#'   \item{}{if JOBZ = 'S', VT contains the first min(M,N) rows of V**T (the right singular vectors, stored rowwise);}
-#'   \item{}{if JOBZ = 'O' and M < N, or JOBZ = 'N', VT is not referenced.}
+#'   \item{If}{ JOBZ = 'A' or JOBZ = 'O' and M >= N, VT contains the N-by-N orthogonal matrix V**T;}
+#'   \item{if}{ JOBZ = 'S', VT contains the first min(M,N) rows of V**T (the right singular vectors, stored rowwise);}
+#'   \item{if}{ JOBZ = 'O' and M < N, or JOBZ = 'N', VT is not referenced.}
 #'  }
 #' @param LDVT an integer. The leading dimension of the matrix VT.  LDVT >= 1; if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N; if JOBZ = 'S', LDVT >= min(M,N).
 #' @param WORK  a matrix of dimension (MAX(1,LWORK))
@@ -475,10 +477,10 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' 
 #' Let mx = max(M,N) and mn = min(M,N).
 #' \describe{
-#'   \item{}{If JOBZ = 'N', LWORK >= 3*mn + max( mx, 7*mn ).}
-#'   \item{}{If JOBZ = 'O', LWORK >= 3*mn + max( mx, 5*mn*mn + 4*mn ).}
-#'   \item{}{If JOBZ = 'S', LWORK >= 4*mn*mn + 7*mn.}
-#'   \item{}{If JOBZ = 'A', LWORK >= 4*mn*mn + 6*mn + mx.}
+#'   \item{If}{ JOBZ = 'N', LWORK >= 3*mn + max( mx, 7*mn ).}
+#'   \item{If}{ JOBZ = 'O', LWORK >= 3*mn + max( mx, 5*mn*mn + 4*mn ).}
+#'   \item{If}{ JOBZ = 'S', LWORK >= 4*mn*mn + 7*mn.}
+#'   \item{If}{ JOBZ = 'A', LWORK >= 4*mn*mn + 6*mn + mx.}
 #'  }
 #'  These are not tight minimums in all cases; see comments inside code.
 #'  For good performance, LWORK should generally be larger;
@@ -487,14 +489,14 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' @return IWORK an integer matrix dimension of (8*min(M,N))
 #' A is updated.
 #' \describe{
-#'   \item{}{if JOBZ = 'O',  A is overwritten with the first N columns of U (the left singular vectors, stored columnwise) if M >= N; A is overwritten with the first M rows of V**T (the right singular vectors, stored rowwise) otherwise.}
-#'   \item{}{if JOBZ .ne. 'O', the contents of A are destroyed.}
+#'   \item{if}{ JOBZ = 'O',  A is overwritten with the first N columns of U (the left singular vectors, stored columnwise) if M >= N; A is overwritten with the first M rows of V**T (the right singular vectors, stored rowwise) otherwise.}
+#'   \item{if}{ JOBZ .ne. 'O', the contents of A are destroyed.}
 #' }
 #' INFO an integer
 #' \describe{
-#'   \item{}{= 0:  successful exit.}
-#'   \item{}{< 0:  if INFO = -i, the i-th argument had an illegal value.}
-#'   \item{}{> 0:  DBDSDC did not converge, updating process failed.}
+#'   \item{= 0:}{ successful exit.}
+#'   \item{< 0:}{ if INFO = -i, the i-th argument had an illegal value.}
+#'   \item{> 0:}{ DBDSDC did not converge, updating process failed.}
 #' }
 #' @export
 #'

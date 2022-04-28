@@ -84,7 +84,7 @@ The computed eigenvectors are normalized to have Euclidean norm equal to 1 and l
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -158,16 +158,16 @@ The left eigenvector u(j) of A satisfies u(j)**H * A = lambda(j) * u(j)**H where
     <tr>
       <th>JOBVL</th>
       <td><p>a character.</p><dl>
-  <dt></dt><dd><p>= 'N': left eigenvectors of A are not computed;</p></dd>
-  <dt></dt><dd><p>= 'V': left eigenvectors of A are computed.</p></dd>
+  <dt>= 'N':</dt><dd><p>left eigenvectors of A are not computed;</p></dd>
+  <dt>= 'V':</dt><dd><p>left eigenvectors of A are computed.</p></dd>
 
 </dl></td>
     </tr>
     <tr>
       <th>JOBVR</th>
       <td><p>a character.</p><dl>
-  <dt></dt><dd><p>= 'N': right eigenvectors of A are not computed;</p></dd>
-  <dt></dt><dd><p>= 'V': right eigenvectors of A are computed.</p></dd>
+  <dt>= 'N':</dt><dd><p>right eigenvectors of A are not computed;</p></dd>
+  <dt>= 'V':</dt><dd><p>right eigenvectors of A are computed.</p></dd>
 
 </dl></td>
     </tr>
@@ -194,13 +194,13 @@ The left eigenvector u(j) of A satisfies u(j)**H * A = lambda(j) * u(j)**H where
     <tr>
       <th>VL</th>
       <td><p>a matrx of dimension (LDVL,N)</p><dl>
-  <dt></dt><dd><p>If JOBVL = 'V', the left eigenvectors u(j) are stored one
+  <dt>If</dt><dd><p>JOBVL = 'V', the left eigenvectors u(j) are stored one
   after another in the columns of VL, in the same order
   as their eigenvalues.</p></dd>
-  <dt></dt><dd><p>If JOBVL = 'N', VL is not referenced.</p></dd>
-  <dt></dt><dd><p>If the j-th eigenvalue is real, then u(j) = VL(:,j),
+  <dt>If</dt><dd><p>JOBVL = 'N', VL is not referenced.</p></dd>
+  <dt>If</dt><dd><p>the j-th eigenvalue is real, then u(j) = VL(:,j),
   the j-th column of VL.</p></dd>
-  <dt></dt><dd><p>If the j-th and (j+1)-st eigenvalues form a complex
+  <dt>If</dt><dd><p>the j-th and (j+1)-st eigenvalues form a complex
   conjugate pair, then u(j) = VL(:,j) + i*VL(:,j+1) and
   u(j+1) = VL(:,j) - i*VL(:,j+1).</p></dd>
 
@@ -213,10 +213,10 @@ The left eigenvector u(j) of A satisfies u(j)**H * A = lambda(j) * u(j)**H where
     <tr>
       <th>VR</th>
       <td><p>a matrix of dimension (LDVR,N).</p><dl>
-  <dt></dt><dd><p>If JOBVR = 'V', the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues.</p></dd>
-  <dt></dt><dd><p>If JOBVR = 'N', VR is not referenced.</p></dd>
-  <dt></dt><dd><p>If the j-th eigenvalue is real, then v(j) = VR(:,j), the j-th column of VR.</p></dd>
-  <dt></dt><dd><p>If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then v(j) = VR(:,j) + i*VR(:,j+1) and v(j+1) = VR(:,j) - i*VR(:,j+1).</p></dd>
+  <dt>If</dt><dd><p>JOBVR = 'V', the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues.</p></dd>
+  <dt>If</dt><dd><p>JOBVR = 'N', VR is not referenced.</p></dd>
+  <dt>If</dt><dd><p>the j-th eigenvalue is real, then v(j) = VR(:,j), the j-th column of VR.</p></dd>
+  <dt>If</dt><dd><p>the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then v(j) = VR(:,j) + i*VR(:,j+1) and v(j+1) = VR(:,j) - i*VR(:,j+1).</p></dd>
  
 </dl></td>
     </tr>

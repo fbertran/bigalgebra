@@ -9,8 +9,8 @@ dpotrf(UPLO = "U", N = NULL, A, LDA = NULL)
 \arguments{
 \item{UPLO}{a character. 
 \describe{
-  \item{}{'U':  Upper triangle of A is stored;}
-  \item{}{'L':  Lower triangle of A is stored.}
+  \item{'U':}{ Upper triangle of A is stored;}
+  \item{'L':}{ Lower triangle of A is stored.}
 }}
 
 \item{N}{an integer. The order of the matrix A.  N >= 0.}
@@ -22,9 +22,9 @@ dpotrf(UPLO = "U", N = NULL, A, LDA = NULL)
 \value{
 updates the big matrix A with the result, INFO is an integer 
 \describe{
-  \item{}{= 0:  successful exit}
-  \item{}{< 0:  if INFO = -i, the i-th argument had an illegal value}
-  \item{}{> 0:  if INFO = i, the leading minor of order i is not positive definite, and the factorization could not be completed.}
+  \item{= 0:}{ successful exit}
+  \item{< 0:}{ if INFO = -i, the i-th argument had an illegal value}
+  \item{> 0:}{ if INFO = i, the leading minor of order i is not positive definite, and the factorization could not be completed.}
 }
 Terms laying out of the computed triangle should be discarded.
 }
@@ -33,8 +33,8 @@ DPOTRF computes the Cholesky factorization of a real symmetric positive definite
 
 The factorization has the form
 \describe{
-  \item{}{A = U**T * U,  if UPLO = 'U', or}
-  \item{}{A = L  * L**T,  if UPLO = 'L',}
+  \item{A =}{ U**T * U,  if UPLO = 'U', or}
+  \item{A =}{ L  * L**T,  if UPLO = 'L',}
 }
 where U is an upper triangular matrix and L is lower triangular.
 

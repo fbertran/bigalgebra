@@ -40,7 +40,8 @@ reflectors.
 DGEQRF computes a QR factorization of a real M-by-N matrix A: A = Q * R.
 }
 \examples{
-hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+\dontrun{
+#' hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h9 <- hilbert(9); h9
 qr(h9)$rank           #--> only 7
 qrh9 <- qr(h9, tol = 1e-10)
@@ -51,4 +52,5 @@ dgeqrf(A=C)
 # The big.matrix file backings will be deleted when garbage collected.
 rm(C)
 gc()
+}
 }

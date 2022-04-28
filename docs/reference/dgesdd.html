@@ -84,7 +84,7 @@ Note that the routine returns VT = V**T, not V." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigalgebra</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -157,10 +157,10 @@ Note that the routine returns VT = V**T, not V." />
     <tr>
       <th>JOBZ</th>
       <td><p>a character. Specifies options for computing all or part of the matrix U:</p><dl>
-  <dt></dt><dd><p>= 'A':  all M columns of U and all N rows of V**T are returned in the arrays U and VT;</p></dd>
-  <dt></dt><dd><p>= 'S':  the first min(M,N) columns of U and the first min(M,N) rows of V**T are returned in the arrays U and VT;</p></dd>
-  <dt></dt><dd><p>= 'O':  If M &gt;= N, the first N columns of U are overwritten on the array A and all rows of V**T are returned in the array VT; otherwise, all columns of U are returned in the array U and the first M rows of V**T are overwritten in the array A;</p></dd>
-  <dt></dt><dd><p>= 'N':  no columns of U or rows of V**T are computed.</p></dd>
+  <dt>= 'A':</dt><dd><p>all M columns of U and all N rows of V**T are returned in the arrays U and VT;</p></dd>
+  <dt>= 'S':</dt><dd><p>the first min(M,N) columns of U and the first min(M,N) rows of V**T are returned in the arrays U and VT;</p></dd>
+  <dt>= 'O':</dt><dd><p>If M &gt;= N, the first N columns of U are overwritten on the array A and all rows of V**T are returned in the array VT; otherwise, all columns of U are returned in the array U and the first M rows of V**T are overwritten in the array A;</p></dd>
+  <dt>= 'N':</dt><dd><p>no columns of U or rows of V**T are computed.</p></dd>
 
 </dl></td>
     </tr>
@@ -187,10 +187,10 @@ Note that the routine returns VT = V**T, not V." />
     <tr>
       <th>U</th>
       <td><p>U is a matrx of dimension (LDU,UCOL)</p><dl>
-  <dt></dt><dd><p>UCOL = M if JOBZ = 'A' or JOBZ = 'O' and M &lt; N; UCOL = min(M,N) if JOBZ = 'S'.</p></dd>
-  <dt></dt><dd><p>If JOBZ = 'A' or JOBZ = 'O' and M &lt; N, U contains the M-by-M orthogonal matrix U;</p></dd>
-  <dt></dt><dd><p>if JOBZ = 'S', U contains the first min(M,N) columns of U (the left singular vectors, stored columnwise);</p></dd>
-  <dt></dt><dd><p>if JOBZ = 'O' and M &gt;= N, or JOBZ = 'N', U is not referenced.</p></dd>
+  <dt>UCOL = M if</dt><dd><p>JOBZ = 'A' or JOBZ = 'O' and M &lt; N; UCOL = min(M,N) if JOBZ = 'S'.</p></dd>
+  <dt>If</dt><dd><p>JOBZ = 'A' or JOBZ = 'O' and M &lt; N, U contains the M-by-M orthogonal matrix U;</p></dd>
+  <dt>if</dt><dd><p>JOBZ = 'S', U contains the first min(M,N) columns of U (the left singular vectors, stored columnwise);</p></dd>
+  <dt>if</dt><dd><p>JOBZ = 'O' and M &gt;= N, or JOBZ = 'N', U is not referenced.</p></dd>
 
 </dl></td>
     </tr>
@@ -201,9 +201,9 @@ Note that the routine returns VT = V**T, not V." />
     <tr>
       <th>VT</th>
       <td><p>VT is matrix of dimension (LDVT,N)</p><dl>
-  <dt></dt><dd><p>If JOBZ = 'A' or JOBZ = 'O' and M &gt;= N, VT contains the N-by-N orthogonal matrix V**T;</p></dd>
-  <dt></dt><dd><p>if JOBZ = 'S', VT contains the first min(M,N) rows of V**T (the right singular vectors, stored rowwise);</p></dd>
-  <dt></dt><dd><p>if JOBZ = 'O' and M &lt; N, or JOBZ = 'N', VT is not referenced.</p></dd>
+  <dt>If</dt><dd><p>JOBZ = 'A' or JOBZ = 'O' and M &gt;= N, VT contains the N-by-N orthogonal matrix V**T;</p></dd>
+  <dt>if</dt><dd><p>JOBZ = 'S', VT contains the first min(M,N) rows of V**T (the right singular vectors, stored rowwise);</p></dd>
+  <dt>if</dt><dd><p>JOBZ = 'O' and M &lt; N, or JOBZ = 'N', VT is not referenced.</p></dd>
  
 </dl></td>
     </tr>
@@ -222,10 +222,10 @@ If LWORK = -1, a workspace query is assumed.  The optimal
 size for the WORK array is calculated and stored in WORK(1),
 and no other work except argument checking is performed.</p>
 <p>Let mx = max(M,N) and mn = min(M,N).</p><dl>
-  <dt></dt><dd><p>If JOBZ = 'N', LWORK &gt;= 3*mn + max( mx, 7*mn ).</p></dd>
-  <dt></dt><dd><p>If JOBZ = 'O', LWORK &gt;= 3*mn + max( mx, 5*mn*mn + 4*mn ).</p></dd>
-  <dt></dt><dd><p>If JOBZ = 'S', LWORK &gt;= 4*mn*mn + 7*mn.</p></dd>
-  <dt></dt><dd><p>If JOBZ = 'A', LWORK &gt;= 4*mn*mn + 6*mn + mx.</p></dd>
+  <dt>If</dt><dd><p>JOBZ = 'N', LWORK &gt;= 3*mn + max( mx, 7*mn ).</p></dd>
+  <dt>If</dt><dd><p>JOBZ = 'O', LWORK &gt;= 3*mn + max( mx, 5*mn*mn + 4*mn ).</p></dd>
+  <dt>If</dt><dd><p>JOBZ = 'S', LWORK &gt;= 4*mn*mn + 7*mn.</p></dd>
+  <dt>If</dt><dd><p>JOBZ = 'A', LWORK &gt;= 4*mn*mn + 6*mn + mx.</p></dd>
  
 </dl><p>These are not tight minimums in all cases; see comments inside code.
  For good performance, LWORK should generally be larger;
@@ -237,13 +237,13 @@ and no other work except argument checking is performed.</p>
 
     <p>IWORK an integer matrix dimension of (8*min(M,N))
 A is updated.</p><dl>
-  <dt></dt><dd><p>if JOBZ = 'O',  A is overwritten with the first N columns of U (the left singular vectors, stored columnwise) if M &gt;= N; A is overwritten with the first M rows of V**T (the right singular vectors, stored rowwise) otherwise.</p></dd>
-  <dt></dt><dd><p>if JOBZ .ne. 'O', the contents of A are destroyed.</p></dd>
+  <dt>if</dt><dd><p>JOBZ = 'O',  A is overwritten with the first N columns of U (the left singular vectors, stored columnwise) if M &gt;= N; A is overwritten with the first M rows of V**T (the right singular vectors, stored rowwise) otherwise.</p></dd>
+  <dt>if</dt><dd><p>JOBZ .ne. 'O', the contents of A are destroyed.</p></dd>
 
 </dl><p>INFO an integer</p><dl>
-  <dt></dt><dd><p>= 0:  successful exit.</p></dd>
-  <dt></dt><dd><p>&lt; 0:  if INFO = -i, the i-th argument had an illegal value.</p></dd>
-  <dt></dt><dd><p>&gt; 0:  DBDSDC did not converge, updating process failed.</p></dd>
+  <dt>= 0:</dt><dd><p>successful exit.</p></dd>
+  <dt>&lt; 0:</dt><dd><p>if INFO = -i, the i-th argument had an illegal value.</p></dd>
+  <dt>&gt; 0:</dt><dd><p>DBDSDC did not converge, updating process failed.</p></dd>
 
 </dl>
 

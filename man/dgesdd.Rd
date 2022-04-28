@@ -22,10 +22,10 @@ dgesdd(
 \arguments{
 \item{JOBZ}{a character. Specifies options for computing all or part of the matrix U:
 \describe{
-  \item{}{= 'A':  all M columns of U and all N rows of V**T are returned in the arrays U and VT;}
-  \item{}{= 'S':  the first min(M,N) columns of U and the first min(M,N) rows of V**T are returned in the arrays U and VT;}
-  \item{}{= 'O':  If M >= N, the first N columns of U are overwritten on the array A and all rows of V**T are returned in the array VT; otherwise, all columns of U are returned in the array U and the first M rows of V**T are overwritten in the array A;}
-  \item{}{= 'N':  no columns of U or rows of V**T are computed.}
+  \item{= 'A':}{ all M columns of U and all N rows of V**T are returned in the arrays U and VT;}
+  \item{= 'S':}{ the first min(M,N) columns of U and the first min(M,N) rows of V**T are returned in the arrays U and VT;}
+  \item{= 'O':}{ If M >= N, the first N columns of U are overwritten on the array A and all rows of V**T are returned in the array VT; otherwise, all columns of U are returned in the array U and the first M rows of V**T are overwritten in the array A;}
+  \item{= 'N':}{ no columns of U or rows of V**T are computed.}
 }}
 
 \item{M}{an integer. The number of rows of the input matrix A. M >= 0.}
@@ -40,19 +40,19 @@ dgesdd(
 
 \item{U}{U is a matrx of dimension (LDU,UCOL)
 \describe{
-  \item{}{UCOL = M if JOBZ = 'A' or JOBZ = 'O' and M < N; UCOL = min(M,N) if JOBZ = 'S'.}
-  \item{}{If JOBZ = 'A' or JOBZ = 'O' and M < N, U contains the M-by-M orthogonal matrix U;}
-  \item{}{if JOBZ = 'S', U contains the first min(M,N) columns of U (the left singular vectors, stored columnwise);}
-  \item{}{if JOBZ = 'O' and M >= N, or JOBZ = 'N', U is not referenced.}
+  \item{UCOL = M if}{ JOBZ = 'A' or JOBZ = 'O' and M < N; UCOL = min(M,N) if JOBZ = 'S'.}
+  \item{If}{ JOBZ = 'A' or JOBZ = 'O' and M < N, U contains the M-by-M orthogonal matrix U;}
+  \item{if}{ JOBZ = 'S', U contains the first min(M,N) columns of U (the left singular vectors, stored columnwise);}
+  \item{if}{ JOBZ = 'O' and M >= N, or JOBZ = 'N', U is not referenced.}
 }}
 
 \item{LDU}{an integer. The leading dimension of the matrix U.  LDU >= 1; if JOBZ = 'S' or 'A' or JOBZ = 'O' and M < N, LDU >= M.}
 
 \item{VT}{VT is matrix of dimension (LDVT,N)
 \describe{
-  \item{}{If JOBZ = 'A' or JOBZ = 'O' and M >= N, VT contains the N-by-N orthogonal matrix V**T;}
-  \item{}{if JOBZ = 'S', VT contains the first min(M,N) rows of V**T (the right singular vectors, stored rowwise);}
-  \item{}{if JOBZ = 'O' and M < N, or JOBZ = 'N', VT is not referenced.}
+  \item{If}{ JOBZ = 'A' or JOBZ = 'O' and M >= N, VT contains the N-by-N orthogonal matrix V**T;}
+  \item{if}{ JOBZ = 'S', VT contains the first min(M,N) rows of V**T (the right singular vectors, stored rowwise);}
+  \item{if}{ JOBZ = 'O' and M < N, or JOBZ = 'N', VT is not referenced.}
  }}
 
 \item{LDVT}{an integer. The leading dimension of the matrix VT.  LDVT >= 1; if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N; if JOBZ = 'S', LDVT >= min(M,N).}
@@ -66,10 +66,10 @@ and no other work except argument checking is performed.
 
 Let mx = max(M,N) and mn = min(M,N).
 \describe{
-  \item{}{If JOBZ = 'N', LWORK >= 3*mn + max( mx, 7*mn ).}
-  \item{}{If JOBZ = 'O', LWORK >= 3*mn + max( mx, 5*mn*mn + 4*mn ).}
-  \item{}{If JOBZ = 'S', LWORK >= 4*mn*mn + 7*mn.}
-  \item{}{If JOBZ = 'A', LWORK >= 4*mn*mn + 6*mn + mx.}
+  \item{If}{ JOBZ = 'N', LWORK >= 3*mn + max( mx, 7*mn ).}
+  \item{If}{ JOBZ = 'O', LWORK >= 3*mn + max( mx, 5*mn*mn + 4*mn ).}
+  \item{If}{ JOBZ = 'S', LWORK >= 4*mn*mn + 7*mn.}
+  \item{If}{ JOBZ = 'A', LWORK >= 4*mn*mn + 6*mn + mx.}
  }
  These are not tight minimums in all cases; see comments inside code.
  For good performance, LWORK should generally be larger;
@@ -79,14 +79,14 @@ Let mx = max(M,N) and mn = min(M,N).
 IWORK an integer matrix dimension of (8*min(M,N))
 A is updated.
 \describe{
-  \item{}{if JOBZ = 'O',  A is overwritten with the first N columns of U (the left singular vectors, stored columnwise) if M >= N; A is overwritten with the first M rows of V**T (the right singular vectors, stored rowwise) otherwise.}
-  \item{}{if JOBZ .ne. 'O', the contents of A are destroyed.}
+  \item{if}{ JOBZ = 'O',  A is overwritten with the first N columns of U (the left singular vectors, stored columnwise) if M >= N; A is overwritten with the first M rows of V**T (the right singular vectors, stored rowwise) otherwise.}
+  \item{if}{ JOBZ .ne. 'O', the contents of A are destroyed.}
 }
 INFO an integer
 \describe{
-  \item{}{= 0:  successful exit.}
-  \item{}{< 0:  if INFO = -i, the i-th argument had an illegal value.}
-  \item{}{> 0:  DBDSDC did not converge, updating process failed.}
+  \item{= 0:}{ successful exit.}
+  \item{< 0:}{ if INFO = -i, the i-th argument had an illegal value.}
+  \item{> 0:}{ DBDSDC did not converge, updating process failed.}
 }
 }
 \description{

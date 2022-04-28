@@ -23,14 +23,14 @@ dgeev(
 \arguments{
 \item{JOBVL}{a character.
 \describe{
-  \item{}{= 'N': left eigenvectors of A are not computed;}
-  \item{}{= 'V': left eigenvectors of A are computed.}
+  \item{= 'N':}{left eigenvectors of A are not computed;}
+  \item{= 'V':}{left eigenvectors of A are computed.}
 }}
 
 \item{JOBVR}{a character.
 \describe{
-  \item{}{= 'N': right eigenvectors of A are not computed;}
-  \item{}{= 'V': right eigenvectors of A are computed.}
+  \item{= 'N':}{right eigenvectors of A are not computed;}
+  \item{= 'V':}{right eigenvectors of A are computed.}
 }}
 
 \item{N}{an integer. The order of the matrix A. N >= 0.}
@@ -45,13 +45,13 @@ dgeev(
 
 \item{VL}{a matrx of dimension (LDVL,N)
 \describe{
-  \item{}{If JOBVL = 'V', the left eigenvectors u(j) are stored one
+  \item{If}{ JOBVL = 'V', the left eigenvectors u(j) are stored one
   after another in the columns of VL, in the same order
   as their eigenvalues.}
-  \item{}{If JOBVL = 'N', VL is not referenced.}
-  \item{}{If the j-th eigenvalue is real, then u(j) = VL(:,j),
+  \item{If}{ JOBVL = 'N', VL is not referenced.}
+  \item{If}{ the j-th eigenvalue is real, then u(j) = VL(:,j),
   the j-th column of VL.}
-  \item{}{If the j-th and (j+1)-st eigenvalues form a complex
+  \item{If}{ the j-th and (j+1)-st eigenvalues form a complex
   conjugate pair, then u(j) = VL(:,j) + i*VL(:,j+1) and
   u(j+1) = VL(:,j) - i*VL(:,j+1).}
 }}
@@ -60,10 +60,10 @@ dgeev(
 
 \item{VR}{a matrix of dimension (LDVR,N). 
 \describe{
-  \item{}{If JOBVR = 'V', the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues.}
-  \item{}{If JOBVR = 'N', VR is not referenced.}
-  \item{}{If the j-th eigenvalue is real, then v(j) = VR(:,j), the j-th column of VR.}
-  \item{}{If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then v(j) = VR(:,j) + i*VR(:,j+1) and v(j+1) = VR(:,j) - i*VR(:,j+1).}
+  \item{If}{ JOBVR = 'V', the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues.}
+  \item{If}{ JOBVR = 'N', VR is not referenced.}
+  \item{If}{ the j-th eigenvalue is real, then v(j) = VR(:,j), the j-th column of VR.}
+  \item{If}{ the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then v(j) = VR(:,j) + i*VR(:,j+1) and v(j+1) = VR(:,j) - i*VR(:,j+1).}
  }}
 
 \item{LDVR}{an integer. The leading dimension of the array VR.  LDVR >= 1; if JOBVR = 'V', LDVR >= N.}

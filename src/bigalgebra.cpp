@@ -2,7 +2,7 @@
 #include "bigmemory/BigMatrix.h"
 
 
-
+#define USE_FC_LEN_T
 #include <R.h>
 #include <Rinternals.h>
 #include <Rdefines.h>
@@ -16,6 +16,9 @@
 #include <R_ext/BLAS.h>
 #include <R_ext/Lapack.h>
 #define INT int
+#endif
+#ifndef FCONE
+#define FCONE
 #endif
 
 #include "bigalgebra.h"
@@ -102,7 +105,7 @@ dgemm_wrapper (SEXP TRANSA, SEXP TRANSB, SEXP M, SEXP N, SEXP K,
   F77_CALL(dgemm) ((char *) CHARACTER_VALUE (TRANSA),
          (char *) CHARACTER_VALUE (TRANSB),
          &MM, &NN, &KK, NUMERIC_DATA (ALPHA), pA, &LDAA, pB,
-         &LDBB, NUMERIC_DATA (BETA), pC, &LDCC);
+         &LDBB, NUMERIC_DATA (BETA), pC, &LDCC FCONE FCONE);
 #endif
   unprotect(1);
   return ans;
@@ -154,7 +157,7 @@ SEXP dpotrf_wrapper(SEXP UPLO, SEXP N, SEXP A, SEXP LDA, SEXP INFO, SEXP A_isBM)
   int8_dpotrf (UUPLO, &NN, AA, &LLDA, &IINFO);
 #else
   /* Adaptative Fortran interface from F77_CALL */
-  F77_CALL(dpotrf) (UUPLO, &NN, AA, &LLDA, &IINFO);
+  F77_CALL(dpotrf) (UUPLO, &NN, AA, &LLDA, &IINFO FCONE);
 #endif
   PROTECT(ans = A);
   Rf_unprotect(1);
@@ -235,7 +238,7 @@ void dgeev_wrapper (SEXP JOBVL, SEXP JOBVR, SEXP N, SEXP A, SEXP LDA, SEXP WR,
 #else
   F77_CALL(dgeev) ((char *)CHARACTER_VALUE (JOBVL), (char *)CHARACTER_VALUE (JOBVR),
          &NN, pA, &LDAA, pWR, pWI, pVL, &LDVLL, pVR, &LDVRR, pWORK,
-         &LWORKK, &INFOO);
+         &LWORKK, &INFOO FCONE FCONE);
 #endif
 }
 
@@ -269,7 +272,7 @@ void dgesdd_wrapper (SEXP JOBZ, SEXP M, SEXP N, SEXP A, SEXP LDA,
   pIWORK = (INT *)malloc(piworkdim*sizeof(INT));
   F77_CALL(dgesdd) ((char *)CHARACTER_VALUE (JOBZ), &MM, &NN, pA,
           &LDAA, pS, pU, &LDUU, pVT,
-          &LDVTT, pWORK, &LWORKK, pIWORK, &INFOO);
+          &LDVTT, pWORK, &LWORKK, pIWORK, &INFOO FCONE);
           free(pIWORK);
 #endif
 }
