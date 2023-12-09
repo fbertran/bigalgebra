@@ -4,38 +4,31 @@ titl <- meta$Title
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
 vers <- paste("R package version", meta$Version)
 
-citEntry(entry="Manual",
+bibentry(bibtype="Manual",
          title = titl,
-         author = personList(as.person("F. Bertrand"),
-                             as.person("Michael J. Kane"),
-                   as.person("John Emerson"),
-                   as.person("Stephen Weston")),
-	 publisher = "manual",
+         author = c(person(given = "Frederic", family="Bertrand"), person(given = "Michael J.", family="Kane"), person(given = "John", family="Emerson"), person(given = "Stephen", family="Weston")),
+   publisher = "manual",
          year         = year,
          note         = vers,
          url          = "https://fbertran.github.io/bigalgebra/",
-         textVersion =
+         textVersion = 
          paste("Frederic Bertrand, Michael J. Kane, John Emerson and Stephen Weston(",year ,"). ",
                titl, ", ", vers, ".", sep=""
                )
 )
 
-citEntry(entry = "Article",
-  title        = "Scalable Strategies for Computing with Massive Data",
-  author       = personList(as.person("Michael J. Kane"),
-                   as.person("John Emerson"),
-                   as.person("Stephen Weston")),
-  journal      = "Journal of Statistical Software",
-  year         = "2013",
-  volume       = "55",
-  number       = "14",
-  pages        = "1--19",
-  Doi          = "10.18637/jss.v055.i14",
-
+bibentry(bibtype="article",
+         title = "Scalable Strategies for Computing with Massive Data",
+         author = c(person(given = "Michael J. ", family="Kane"), person(given = "John", family="Emerson"), person(given = "Stephen", family="Weston")),
+	       journal = "Journal of Statistical Software",
+         volume = 55,
+         issue = 14,
+         pages = 1--19,
+         year  = 2013,
+         Doi = "10.18637/jss.v055.i14",
   textVersion  =
   paste("Michael J. Kane, John Emerson, Stephen Weston (2013).",
         "Scalable Strategies for Computing with Massive Data.",
         "Journal of Statistical Software, 55(14), 1-19.",
         "doi: 10.18637/jss.v055.i14.")
 )
-

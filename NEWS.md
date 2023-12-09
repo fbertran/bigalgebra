@@ -1,6 +1,10 @@
+# bigalgebra 1.1.1
+
+* Update to adapt to evolution in CRAN checks.
+
 # bigalgebra 1.1
 
-* Update FORTAN calls as requested by CRAN for R4.2.
+* Update FORTRAN calls as requested by CRAN for R4.2.
 
 # bigalgebra 1.0.2
 

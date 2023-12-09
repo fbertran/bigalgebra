@@ -99,17 +99,20 @@ A <- bigmemory::big.matrix(5,4,init = 1)
 B <- bigmemory::big.matrix(4,4,init = 2)
 
 C <- A %*% B       # Returns a new big.matrix object
-#> Error in A %*% B: nécessite des arguments numériques/complexes matrice/vecteur
 D <- A[] %*% B[]   # Compute the same thing in R
 
 print(C - D)       # Compare the results (subtraction of an R matrix from a
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'print' : argument non numérique pour un opérateur binaire
+#>      [,1] [,2] [,3] [,4]
+#> [1,]    0    0    0    0
+#> [2,]    0    0    0    0
+#> [3,]    0    0    0    0
+#> [4,]    0    0    0    0
+#> [5,]    0    0    0    0
                    # big.matrix)
 
 # The next example illustrates mixing R and big.matrix objects. It returns by
 # default (see # options("bigalgebra.mixed_arithmetic_returns_R_matrix")
 D <- matrix(rnorm(16),4)
 E <- A %*% D
-#> Error in A %*% D: nécessite des arguments numériques/complexes matrice/vecteur
 ```
 

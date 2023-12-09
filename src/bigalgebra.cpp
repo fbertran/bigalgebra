@@ -48,7 +48,7 @@ make_double_ptr (SEXP matrix, SEXP isBigMatrix)
             string ("sub.big.matrix objects cannoth have row ") +
             string
             ("offset greater than zero and number of columns greater than 1");
-          Rf_error (errMsg.c_str ());
+          Rf_error ("%s", errMsg.c_str ());
           return (NULL);
         }
 
