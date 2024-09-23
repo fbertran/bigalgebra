@@ -2,7 +2,7 @@
 #include "bigmemory/BigMatrix.h"
 
 
-#define USE_FC_LEN_T
+/*#define USE_FC_LEN_T*/
 #include <R.h>
 #include <Rinternals.h>
 #include <Rdefines.h>
@@ -35,7 +35,8 @@ make_double_ptr (SEXP matrix, SEXP isBigMatrix)
 
   if (LOGICAL_VALUE (isBigMatrix) == (Rboolean) TRUE)   // Big Matrix
     {
-      SEXP address = GET_SLOT (matrix, install ("address"));
+      SEXP address;
+      Rf_protect(address = GET_SLOT (matrix,Rf_install("address")));
       BigMatrix *pbm =
         reinterpret_cast < BigMatrix * >(R_ExternalPtrAddr (address));
       if (!pbm)
@@ -86,12 +87,12 @@ dgemm_wrapper (SEXP TRANSA, SEXP TRANSB, SEXP M, SEXP N, SEXP K,
   {
 /* Return results in a big matrix */
     pC = make_double_ptr (C, C_isBM) + j;
-    PROTECT(ans = C);
+    Rf_protect(ans = C);
   } else {
 /* Allocate an output R matrix and return results there
    XXX Add check for size of MM and NN XXX 
  */
-    PROTECT(ans = allocMatrix(REALSXP, (int)MM, (int)NN));
+    Rf_protect(ans = Rf_allocMatrix(REALSXP, (int)MM, (int)NN));
     pC = NUMERIC_DATA(ans);
   }
 #if REFBLAS
@@ -107,7 +108,7 @@ dgemm_wrapper (SEXP TRANSA, SEXP TRANSB, SEXP M, SEXP N, SEXP K,
          &MM, &NN, &KK, NUMERIC_DATA (ALPHA), pA, &LDAA, pB,
          &LDBB, NUMERIC_DATA (BETA), pC, &LDCC FCONE FCONE);
 #endif
-  unprotect(1);
+  Rf_unprotect(1);
   return ans;
 }
 
@@ -128,8 +129,8 @@ daxpy_wrapper (SEXP N, SEXP A, SEXP X, SEXP Y, SEXP X_isBM)
   INT incx = 1;
   INT incy = 1;
   INT NN = (INT) * (DOUBLE_DATA (N));
-  PROTECT(ans = Y);
-  PROTECT(Tr = allocVector(LGLSXP, 1));
+  Rf_protect(ans = Y);
+  Rf_protect(Tr = Rf_allocVector(LGLSXP, 1));
   LOGICAL(Tr)[0] = 1;
   pY = make_double_ptr (Y, Tr);
 #if REFBLAS
@@ -139,7 +140,7 @@ daxpy_wrapper (SEXP N, SEXP A, SEXP X, SEXP Y, SEXP X_isBM)
 /* Adaptative Fortran interface from F77_CALL */
   F77_CALL(daxpy) (&NN, pA, pX, &incx, pY, &incy);
 #endif
-  unprotect(2);
+  Rf_unprotect(2);
   return ans;
 }
 
@@ -159,7 +160,7 @@ SEXP dpotrf_wrapper(SEXP UPLO, SEXP N, SEXP A, SEXP LDA, SEXP INFO, SEXP A_isBM)
   /* Adaptative Fortran interface from F77_CALL */
   F77_CALL(dpotrf) (UUPLO, &NN, AA, &LLDA, &IINFO FCONE);
 #endif
-  PROTECT(ans = A);
+  Rf_protect(ans = A);
   Rf_unprotect(1);
   return ans;
 }

@@ -78,14 +78,14 @@ Maintainer: Frédéric Bertrand <frederic.bertrand@utt.fr>.
 You can install the released version of bigalgebra from [CRAN](https://CRAN.R-project.org) with:
 
 
-```r
+``` r
 install.packages("bigalgebra")
 ```
 
 You can install the development version of bigalgebra from [github](https://github.com) with:
 
 
-```r
+``` r
 devtools::install_github("fbertran/bigalgebra")
 ```
 
@@ -93,7 +93,7 @@ devtools::install_github("fbertran/bigalgebra")
 ## Examples
 
 
-```r
+``` r
 library("bigmemory")
 A <- bigmemory::big.matrix(5,4,init = 1)
 B <- bigmemory::big.matrix(4,4,init = 2)

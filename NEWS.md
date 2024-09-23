@@ -1,3 +1,7 @@
+# bigalgebra 1.1.2
+
+* Update to adapt to evolution in CRAN checks.
+
 # bigalgebra 1.1.1
 
 * Update to adapt to evolution in CRAN checks.
