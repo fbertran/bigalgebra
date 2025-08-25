@@ -64,8 +64,8 @@ dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
   {
     N = as.double(nrow(X))*as.double(ncol(X))
   }
-  .Call(`_dcopy_wrapper`, N, X, as.double(INCX), Y, as.double(INCY),
-    X.is.bm, Y.is.bm)
+  .Call(`_dcopy_wrapper`, as.integer(N), X, as.integer(INCX), 
+        Y, as.integer(INCY), X.is.bm, Y.is.bm)
   return(0)
 }
 
@@ -97,7 +97,8 @@ dscal <- function(N = NULL, ALPHA, Y, INCY = 1L) {
   N    <- if (is.null(N)) as.integer(nrow(Y) * ncol(Y)) else as.integer(N)
   INCY <- as.integer(INCY)
   ALPHA <- as.numeric(ALPHA)
-  return(.Call(`_dscal_wrapper`, N, ALPHA, Y, INCY, Y.is.bm))
+  return(.Call(`_dscal_wrapper`, as.integer(N), ALPHA, Y, 
+               as.integer(INCY), Y.is.bm))
 }
 
 
@@ -165,8 +166,8 @@ dgeqrf=function(M=NULL, N=NULL, A, LDA=NULL, TAU=NULL, WORK=NULL,
   TAU.is.bm = check_matrix(TAU)
   WORK.is.bm = check_matrix(WORK)
   INFO = 0
-  .Call(`_dgeqrf_wrapper`, as.double(M), as.double(N), A, as.double(LDA), 
-    TAU, WORK, as.double(LWORK), as.double(INFO), A.is.bm, TAU.is.bm, 
+  .Call(`_dgeqrf_wrapper`, as.integer(M), as.integer(N), A, as.integer(LDA), 
+    TAU, WORK, as.integer(LWORK), as.integer(INFO), A.is.bm, TAU.is.bm, 
     WORK.is.bm)
   return(INFO) 
 }
@@ -234,8 +235,8 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
   }
   A.is.bm = check_matrix(A)
   INFO = 0
-  .Call(`_dpotrf_wrapper`, as.character(UPLO), as.double(N), A, as.double(LDA),
-    as.double(INFO), A.is.bm)
+  .Call(`_dpotrf_wrapper`, as.character(UPLO), as.integer(N), A, as.integer(LDA),
+        as.integer(INFO), A.is.bm)
   return(INFO)
 }
 
@@ -323,8 +324,9 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
 # return 0 if successful, <0 i-th argument has illegal value, >0 QR 
 # algorithm failed.
 # for now, VL and VR have to be matrices but they could be NULL
-dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL, 
-  LDVL=NULL,  VR=NULL, LDVR=NULL, WORK=NULL, LWORK=NULL)
+
+dgeev=function(JOBVL=NULL, JOBVR=NULL, N=NULL, A, LDA=NULL, WR, WI, VL=NULL, 
+               LDVL=NULL,  VR=NULL, LDVR=NULL, WORK=NULL, LWORK=NULL)
 {
   if (is.null(N))
   {
@@ -334,22 +336,23 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
   {
     LDA = nrow(A)
   }
-  if (is.null(LDVL) && (JOBVL=='V'))
-  {
-    LDVL = N
+  
+  # Derive JOB flags from object presence if not explicitly set
+  if (is.null(JOBVL)) JOBVL <- if (is.null(VL)) 'N' else 'V'
+  if (is.null(JOBVR)) JOBVR <- if (is.null(VR)) 'N' else 'V'
+  # Leading dimensions: 1 when that side is not requested
+  if (is.null(LDVL)) LDVL <- if (JOBVL == 'V') nrow(VL) else 1L
+  if (is.null(LDVR)) LDVR <- if (JOBVR == 'V') nrow(VR) else 1L
+  
+  # If caller didn't supply WORK/LWORK, query LAPACK for the optimal size.
+  if (is.null(LWORK) || is.null(WORK)) {
+    opt <- .Call(`_dgeev_lwork_query_wrapper`,
+                 as.character(JOBVL), as.character(JOBVR), as.integer(N))
+    if (opt < 0L) stop(sprintf("dgeev workspace query failed: INFO=%d", opt))
+    LWORK <- max(1L, as.integer(opt))
+    WORK  <- as.matrix(numeric(LWORK))
   }
-  if (is.null(LDVR) && (JOBVR=='V'))
-  {
-    LDVR = N
-  }
-  if (is.null(LWORK))
-  {
-    LWORK = ifelse( (JOBVL=='V' || JOBVR == 'V'), 4*N, max(1, 3*N) )
-  }
-  if (is.null(WORK))
-  {
-    WORK = as.matrix(rep(0.0, max(1, LWORK)))
-  }
+  
   # Take car of the case where someone doesn't want to get the 
   # eigen vectors and passed NULL.
   if (is.null(VL))
@@ -368,9 +371,10 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
   VR.is.bm = check_matrix(VR)
   WORK.is.bm = check_matrix(WORK)
   INFO=0
-  .Call(`_dgeev_wrapper`, as.character(JOBVL), as.character(JOBVR), as.double(N),    A, as.double(LDA), WR, WI, VL, as.double(LDVL), VR, as.double(LDVR),
-    WORK, as.double(LWORK), as.double(INFO), A.is.bm, WR.is.bm, WI.is.bm, 
-    VL.is.bm, VR.is.bm, WORK.is.bm)
+  .Call(`_dgeev_wrapper`, as.character(JOBVL), as.character(JOBVR), as.integer(N), A, as.integer(LDA),
+        WR, WI, VL, as.integer(LDVL), VR, as.integer(LDVR),
+        WORK, as.integer(LWORK), as.integer(INFO), A.is.bm, WR.is.bm, WI.is.bm,
+        VL.is.bm, VR.is.bm, WORK.is.bm)
   return(INFO)
 }
 
@@ -533,9 +537,9 @@ dgesdd = function( JOBZ='A', M=NULL, N=NULL, A, LDA=NULL, S, U, LDU=NULL,
   }
   WORK.is.bm = check_matrix(WORK)
   INFO = 0
-  .Call(`_dgesdd_wrapper`, as.character(JOBZ), as.double(M), as.double(N), A, 
-    as.double(LDA), S, U, as.double(LDU), VT, as.double(LDVT), WORK, 
-    as.double(LWORK), as.double(INFO), A.is.bm, S.is.bm, U.is.bm, VT.is.bm, 
+  .Call(`_dgesdd_wrapper`, as.character(JOBZ), as.integer(M), as.integer(N), A, 
+        as.integer(LDA), S, U, as.integer(LDU), VT, as.integer(LDVT), WORK, 
+        as.integer(LWORK), as.integer(INFO), A.is.bm, S.is.bm, U.is.bm, VT.is.bm, 
     WORK.is.bm)
   return(INFO)
 }

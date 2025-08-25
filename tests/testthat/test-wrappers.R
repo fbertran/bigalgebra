@@ -437,3 +437,50 @@ test_that("dgesdd(JOBZ='A') on big.matrix reconstructs A", {
   rm(Abm)
   gc()
 })
+
+# --- DGEEV workspace query & auto-allocation tests ----------------------
+
+test_that("dgeev workspace query returns >= 4N when vectors requested", {
+  skip_on_cran()
+  n <- 5L
+  # requires the C symbol `_dgeev_lwork_query_wrapper` to be registered
+  optV <- .Call(`_dgeev_lwork_query_wrapper`, "V", "N", as.integer(n))
+  expect_type(optV, "integer")
+  expect_gte(as.integer(optV), 4L * n)
+  optN <- .Call(`_dgeev_lwork_query_wrapper`, "N", "N", as.integer(n))
+  expect_type(optN, "integer")
+  expect_gte(as.integer(optN), 3L * n)
+})
+
+test_that("dgeev auto-allocates WORK when VL requested (non-big)", {
+  skip_on_cran()
+  set.seed(4669)
+  A <- matrix(rnorm(16), 4, 4)
+  WR <- matrix(0, 4, 1); WI <- matrix(0, 4, 1)
+  VL <- matrix(0, 4, 4)
+  info <- dgeev(A = A, WR = WR, WI = WI, VL = VL) # no WORK/LWORK provided
+  expect_identical(info, 0)
+  expect_equal(sort(WR + 1i*WI), sort(eigen(A)$values), tolerance = 1e-8)
+})
+
+test_that("dgeev auto-allocates WORK when VR requested (non-big)", {
+  skip_on_cran()
+  set.seed(4670)
+  A <- matrix(rnorm(25), 5, 5)
+  WR <- matrix(0, 5, 1); WI <- matrix(0, 5, 1)
+  VR <- matrix(0, 5, 5)
+  info <- dgeev(A = A, WR = WR, WI = WI, VR = VR) # vectors on right
+  expect_identical(info, 0)
+  expect_equal(sort(WR + 1i*WI), sort(eigen(A)$values), tolerance = 1e-8)
+})
+
+test_that("dgeev auto-allocates WORK when neither VL or VR requested (non-big)", {
+  skip_on_cran()
+  set.seed(4669)
+  A <- matrix(rnorm(16), 4, 4)
+  WR <- matrix(0, 4, 1); WI <- matrix(0, 4, 1)
+  VL <- matrix(0, 4, 4)
+  info <- dgeev(A = A, WR = WR, WI = WI) # no WORK/LWORK provided
+  expect_identical(info, 0)
+  expect_equal(sort(WR + 1i*WI), sort(eigen(A)$values), tolerance = 1e-8)
+})

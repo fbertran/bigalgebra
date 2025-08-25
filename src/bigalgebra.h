@@ -19,6 +19,7 @@ extern "C"
   SEXP dgeqrf_wrapper (SEXP M, SEXP N, SEXP A, SEXP LDA, SEXP TAU, SEXP WORK,
                        SEXP LWORK, SEXP INFO, SEXP A_isBM, SEXP TAU_isBM,
                        SEXP WORK_isBM);
+  SEXP dgeev_lwork_query_wrapper(SEXP JOBVL, SEXP JOBVR, SEXP N);
   SEXP dgeev_wrapper (SEXP JOBVL, SEXP JOBVR, SEXP N, SEXP A, SEXP LDA, SEXP WR,
                       SEXP WI, SEXP VL, SEXP LDVL, SEXP VR, SEXP LDVR, SEXP WORK,
                       SEXP LWORK, SEXP INFO, SEXP A_isBM, SEXP WR_isBM, SEXP WI_isBM,

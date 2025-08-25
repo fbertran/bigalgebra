@@ -1,8 +1,8 @@
 Package: bigalgebra
 Type: Package
 Title: 'BLAS' and 'LAPACK' Routines for Native R Matrices and 'big.matrix' Objects
-Version: 2.0.0
-Date: 2025-08-20
+Version: 2.0.1
+Date: 2025-08-26
 Depends: bigmemory (>= 4.0.0)
 Imports: methods
 LinkingTo: bigmemory, BH, Rcpp

@@ -5,14 +5,14 @@
 \title{DGEEV computes eigenvalues and eigenvectors.}
 \usage{
 dgeev(
-  JOBVL = "V",
-  JOBVR = "V",
+  JOBVL = NULL,
+  JOBVR = NULL,
   N = NULL,
   A,
   LDA = NULL,
   WR,
   WI,
-  VL,
+  VL = NULL,
   LDVL = NULL,
   VR = NULL,
   LDVR = NULL,
