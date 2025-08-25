@@ -1,8 +1,8 @@
 Package: bigalgebra
 Type: Package
 Title: 'BLAS' and 'LAPACK' Routines for Native R Matrices and 'big.matrix' Objects
-Version: 1.1.2
-Date: 2024-09-23
+Version: 2.0.0
+Date: 2025-08-20
 Depends: bigmemory (>= 4.0.0)
 Imports: methods
 LinkingTo: bigmemory, BH, Rcpp
@@ -22,3 +22,6 @@ NeedsCompilation: yes
 RoxygenNote: 7.3.2
 URL: https://fbertran.github.io/bigalgebra/, https://github.com/fbertran/bigalgebra/
 BugReports: https://github.com/fbertran/bigalgebra/issues/
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

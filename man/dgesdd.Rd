@@ -101,7 +101,6 @@ where SIGMA is an M-by-N matrix which is zero except for its min(m,n) diagonal e
 Note that the routine returns VT = V**T, not V.
 }
 \examples{
-\dontrun{
 set.seed(4669)
 A = matrix(rnorm(12),4,3)
 S = matrix(0,nrow=3,ncol=1)
@@ -125,5 +124,5 @@ VT[,]
 
 rm(A,S,U,VT)
 gc()
-}
+
 }

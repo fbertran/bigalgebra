@@ -32,7 +32,7 @@ This function is rarely necessary to use directly since the bigalgebra package d
 require(bigmemory)
 A = matrix(1, nrow=3, ncol=2)
 B <- big.matrix(3, 2, type="double", init=0,
-               dimnames=list(NULL, c("alpha", "beta")), shared=FALSE)
+                dimnames=list(NULL, c("alpha", "beta")), shared=FALSE)
 C = B + B   # C is a new big matrix
 D = A + B   # D defaults to a regular R matrix, to change this, set the option:
 # options(bigalgebra.mixed_arithmetic_returns_R_matrix=FALSE)

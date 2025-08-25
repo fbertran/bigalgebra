@@ -1,0 +1,18 @@
+url: https://fbertran.github.io/bigalgebra
+
+template:
+  bootstrap: 5
+  
+navbar:
+  title: "bigalgebra"
+  type: inverse
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Changelog"
+      href: news/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/fbertran/bigalgebra

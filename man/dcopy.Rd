@@ -27,7 +27,6 @@ where LX = 1 if INCX .GE. 0, else LX = 1+(1-N)*INCX, and LY is
 defined in a similar way using INCY.
 }
 \examples{
-\dontrun{
 set.seed(4669)
 A = big.matrix(3, 2, type="double", init=1, dimnames=list(NULL, 
 c("alpha", "beta")), shared=FALSE)
@@ -40,7 +39,7 @@ A[,]-B[,]
 # The big.matrix file backings will be deleted when garbage collected.
 rm(A,B)
 gc()
-}
+
 }
 \references{
 C. L. Lawson, R. J. Hanson, D. R. Kincaid and F. T. Krogh, Basic linear algebra subprograms for Fortran usage, Algorithm No. 539, Transactions on Mathematical Software 5, 3 (September 1979), pp. 308-323.

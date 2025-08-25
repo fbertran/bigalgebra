@@ -41,7 +41,6 @@ check_matrix = function(A, classes=c('big.matrix', 'matrix'),
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(4669)
 #' A = big.matrix(3, 2, type="double", init=1, dimnames=list(NULL, 
 #' c("alpha", "beta")), shared=FALSE)
@@ -54,7 +53,7 @@ check_matrix = function(A, classes=c('big.matrix', 'matrix'),
 #' # The big.matrix file backings will be deleted when garbage collected.
 #' rm(A,B)
 #' gc()
-#' }
+#' 
 # Copy a matrix
 # Y := X
 dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
@@ -81,7 +80,6 @@ dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(4669)
 #' A = big.matrix(3, 2, type="double", init=1, dimnames=list(NULL, 
 #' c("alpha", "beta")), shared=FALSE)
@@ -91,70 +89,17 @@ dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
 #' # The big.matrix file backings will be deleted when garbage collected.
 #' rm(A)
 #' gc()
-#' }
-# Multiply by a scalar
-# Y := ALPHA * Y
-dscal = function(N=NULL, ALPHA, Y, INCY=1)
-{
-  Y.is.bm = check_matrix(Y)
-  if (is.null(N))
-  {
-    N = as.double(nrow(Y))*as.double(ncol(Y))
-  } 
-  .Call(`_dscal_wrapper`, N, as.double(ALPHA), Y, as.double(INCY), Y.is.bm)
-  return(0)
+#' 
+dscal <- function(N = NULL, ALPHA, Y, INCY = 1L) {
+  Y.is.bm <- check_matrix(Y)
+  #if (!is.double(Y)) storage.mode(Y) <- "double"
+  
+  N    <- if (is.null(N)) as.integer(nrow(Y) * ncol(Y)) else as.integer(N)
+  INCY <- as.integer(INCY)
+  ALPHA <- as.numeric(ALPHA)
+  return(.Call(`_dscal_wrapper`, N, ALPHA, Y, INCY, Y.is.bm))
 }
 
-# # Add two matrices.
-# # Y := ALPHA * X + Y
-# daxpy = function(N=NULL, ALPHA=1, X, INCX=1, Y, INCY=1)
-# {
-#   X.is.bm = check_matrix(X)
-#   Y.is.bm = check_matrix(Y)
-#   if (is.null(N))
-#   {
-#     N = as.double(nrow(X))*as.double(ncol(X))
-#   }
-#   .Call("_daxpy_wrapper", as.double(N), as.double(ALPHA), X, as.double(INCX),
-#     Y, as.double(INCY), X.is.bm, Y.is.bm)
-#   return(0)
-# }
-
-# # Matrix Multiply
-# # C := ALPHA * op(A) * op(B) + BETA * C
-# # This is function provides dgemm functionality.  The matrix types
-# # are handled on the C++ side.
-# dgemm = function(TRANSA='n', TRANSB='n', M=NULL, N=NULL, K=NULL,
-#   ALPHA=1, A, LDA=NULL, B, LDB=NULL, BETA=0, C, LDC=NULL, COFF=0) 
-# {
-#   A.is.bm = check_matrix(A)
-#   B.is.bm = check_matrix(B)
-#   C.is.bm = check_matrix(C)
-#   # The matrices look OK.  Now, if they haven't been specified, let's
-#   # specify some reasonable dimension information.
-#   if ( is.null(M) )
-#   {
-#     M = ifelse ( is_transposed(TRANSA), ncol(A), nrow(A) )
-#   }
-#   if ( is.null(N) ) 
-#   {
-#     N = ifelse ( is_transposed(TRANSB), nrow(B), ncol(B) )
-#   }
-#   if ( is.null(K) )
-#   {
-#     K = ifelse ( is_transposed(TRANSA), nrow(A), ncol(A) )
-#   }
-#   if ( is.null(LDA) ) LDA = nrow (A)
-#   if ( is.null(LDB) ) LDB = nrow (B)
-#   if ( is.null(LDC) ) LDC = nrow (C)
-# 
-#   .Call('dgemm_wrapper', as.character(TRANSA), as.character(TRANSB),
-#     as.double(M), as.double(N), as.double(K), as.double(ALPHA), A, 
-#     as.double(LDA), B, as.double(LDB),
-#     as.double(BETA), C, as.double(LDC), as.logical(A.is.bm), 
-#     as.logical(B.is.bm), as.logical(C.is.bm), COFF)
-#   return(invisible(C))
-# }
 
 #' @title QR factorization
 #'
@@ -175,8 +120,7 @@ dscal = function(N=NULL, ALPHA, Y, INCY=1)
 #' @export 
 #'
 #' @examples
-#' \dontrun{
-#' #' hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+#' hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 #' h9 <- hilbert(9); h9
 #' qr(h9)$rank           #--> only 7
 #' qrh9 <- qr(h9, tol = 1e-10)
@@ -187,7 +131,7 @@ dscal = function(N=NULL, ALPHA, Y, INCY=1)
 #' # The big.matrix file backings will be deleted when garbage collected.
 #' rm(C)
 #' gc()
-#' }
+#' 
 # QR factorization
 # return 0 if successful, -i if ith argument has illegal value
 dgeqrf=function(M=NULL, N=NULL, A, LDA=NULL, TAU=NULL, WORK=NULL,
@@ -348,7 +292,6 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(4669)
 #' A = matrix(rnorm(16),4)
 #' WR= matrix(0,nrow=4,ncol=1)
@@ -375,7 +318,7 @@ dpotrf=function(UPLO='U', N=NULL, A, LDA=NULL)
 # The big.matrix file backings will be deleted when garbage collected.
 #' rm(A,WR,WI,VL)
 #' gc()
-#' }
+#'
 # General eigenvalue
 # return 0 if successful, <0 i-th argument has illegal value, >0 QR 
 # algorithm failed.
@@ -503,7 +446,6 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(4669)
 #' A = matrix(rnorm(12),4,3)
 #' S = matrix(0,nrow=3,ncol=1)
@@ -527,7 +469,7 @@ dgeev=function(JOBVL='V', JOBVR='V', N=NULL, A, LDA=NULL, WR, WI, VL,
 #' 
 #' rm(A,S,U,VT)
 #' gc()
-#' }
+#' 
 # Singular value decomposition (SVD) 
 # Returns: = 0 if successful
 #          < 0 if INFO = -i had an illegal value

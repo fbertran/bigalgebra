@@ -1,3 +1,9 @@
+# bigalgebra 2.0.0
+
+* Code cleaning and improvement. 
+* Bug fixes and updates to adapt to new CRAN checks.
+* Added tests
+
 # bigalgebra 1.1.2
 
 * Update to adapt to evolution in CRAN checks.

@@ -4,7 +4,7 @@
 \alias{dscal}
 \title{Scales a vector by a constant.}
 \usage{
-dscal(N = NULL, ALPHA, Y, INCY = 1)
+dscal(N = NULL, ALPHA, Y, INCY = 1L)
 }
 \arguments{
 \item{N}{an integer. Number of elements in input vector(s)}
@@ -22,7 +22,6 @@ Update Y.
 Scales a vector by a constant.
 }
 \examples{
-\dontrun{
 set.seed(4669)
 A = big.matrix(3, 2, type="double", init=1, dimnames=list(NULL, 
 c("alpha", "beta")), shared=FALSE)
@@ -32,5 +31,5 @@ A[,]
 # The big.matrix file backings will be deleted when garbage collected.
 rm(A)
 gc()
-}
+
 }

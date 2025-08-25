@@ -9,7 +9,6 @@
 # with the big matrix that removes its allocated files when the
 # garbage collector is called on the big matrix, to clean up.
 # Add this!
-#
 
 
 #' Matrix Multiply
@@ -95,6 +94,7 @@ dgemm = function(TRANSA='N', TRANSB='N', M=NULL, N=NULL, K=NULL,
     as.double(LDA), B, as.double(LDB),
     as.double(BETA), C, as.double(LDC), as.logical(A.is.bm), 
     as.logical(B.is.bm), as.logical(C.is.bm), COFF)
+  invisible(C)
 }
 
 #' @title BLAS daxpy functionality
@@ -121,22 +121,22 @@ dgemm = function(TRANSA='N', TRANSB='N', M=NULL, N=NULL, K=NULL,
 #'
 #' @examples
 #' require(bigmemory)
-#'A = matrix(1, nrow=3, ncol=2)
-#'B <- big.matrix(3, 2, type="double", init=0,
-#'                dimnames=list(NULL, c("alpha", "beta")), shared=FALSE)
-#'C = B + B   # C is a new big matrix
-#'D = A + B   # D defaults to a regular R matrix, to change this, set the option:
-#'# options(bigalgebra.mixed_arithmetic_returns_R_matrix=FALSE)
-#'E = daxpy(A=1.0, X=B, Y=B)  # Same kind of result as C
-#'print(C[])
-#'print(D)
-#'print(E[])
+#' A = matrix(1, nrow=3, ncol=2)
+#' B <- big.matrix(3, 2, type="double", init=0,
+#'                 dimnames=list(NULL, c("alpha", "beta")), shared=FALSE)
+#' C = B + B   # C is a new big matrix
+#' D = A + B   # D defaults to a regular R matrix, to change this, set the option:
+#' # options(bigalgebra.mixed_arithmetic_returns_R_matrix=FALSE)
+#' E = daxpy(A=1.0, X=B, Y=B)  # Same kind of result as C
+#' print(C[])
+#' print(D)
+#' print(E[])
 #'
-#'# The C and E big.matrix file backings will be deleted when garbage collected:
-#'# (We enable debugging to see this explicitly)
-#'options(bigalgebra.DEBUG=TRUE)
-#'rm(C,E)
-#'gc()
+#' # The C and E big.matrix file backings will be deleted when garbage collected:
+#' # (We enable debugging to see this explicitly)
+#' options(bigalgebra.DEBUG=TRUE)
+#' rm(C,E)
+#' gc()
 #' 
 # Vector addition and scaling
 # Y := A * X  + Y
@@ -173,3 +173,19 @@ daxpy = function(A=1, X, Y)
   if(mixed) return(ans[])
   ans
 }
+
+
+# # Add two matrices.
+# # Y := ALPHA * X + Y
+# daxpy = function(N=NULL, ALPHA=1, X, INCX=1, Y, INCY=1)
+# {
+#   X.is.bm = check_matrix(X)
+#   Y.is.bm = check_matrix(Y)
+#   if (is.null(N))
+#   {
+#     N = as.double(nrow(X))*as.double(ncol(X))
+#   }
+#   .Call("_daxpy_wrapper", as.double(N), as.double(ALPHA), X, as.double(INCX),
+#     Y, as.double(INCY), X.is.bm, Y.is.bm)
+#   return(0)
+# }
