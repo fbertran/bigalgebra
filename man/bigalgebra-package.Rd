@@ -61,7 +61,7 @@ Feel free to contact us for help installing and running the package.
 \author{
 Frédéric Bertrand, Michael J. Kane, Bryan Lewis, John W. Emerson
 
-Maintainer: Frédéric Bertrand <frederic.bertrand@utt.fr>
+Maintainer: Frédéric Bertrand <frederic.bertrand@lecnam.net>
 }
 \references{
 \url{https://www.netlib.org/blas/}

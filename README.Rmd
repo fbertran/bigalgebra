@@ -16,8 +16,10 @@ knitr::opts_chunk$set(
 # Arithmetic routines for native R matrices and big.matrix objects
 ## Frédéric Bertrand, Michael J. Kane, Bryan Lewis, John W. Emerson
 
+<https://doi.org/10.32614/CRAN.package.bigalgebra>
 
 <!-- badges: start -->
+[![](https://img.shields.io/badge/doi-10.32614/CRAN.package.bigalgebra-blue.svg)](https://doi.org/10.32614/CRAN.package.bigalgebra)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/fbertran/bigalgebra/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/bigalgebra/actions)
@@ -25,7 +27,6 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/bigalgebra)](https://cran.r-project.org/package=bigalgebra)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/bigalgebra)](https://cran.r-project.org/package=bigalgebra)
 [![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/bigalgebra?style=social)](https://github.com/fbertran/bigalgebra)
-[![DOI](https://zenodo.org/badge/353292865.svg)](https://zenodo.org/badge/latestdoi/353292865)
 
 <!-- badges: end -->
 
@@ -77,9 +78,9 @@ of the low-level calling syntax depending on the library used.
 Feel free to contact us for help installing and running the package.
 
 
-This website and these examples were created by F. Bertrand.
+This website, the unit tests, some C code fixes and improvements as well as these examples were created by F. Bertrand.
 
-Maintainer: Frédéric Bertrand <frederic.bertrand@utt.fr>.
+Maintainer: Frédéric Bertrand <frederic.bertrand@lecnam.net>.
 
 
 ## Installation
@@ -104,6 +105,7 @@ library("bigmemory")
 A <- bigmemory::big.matrix(5,4,init = 1)
 B <- bigmemory::big.matrix(4,4,init = 2)
 
+library("bigalgebra")
 C <- A %*% B       # Returns a new big.matrix object
 D <- A[] %*% B[]   # Compute the same thing in R
 

@@ -1,6 +1,7 @@
-# bigalgebra 2.0.1
+# bigalgebra 2.0.2
 
-* Code fix ti get rid of erors for gcc 1.5 or windows based.
+* Maintainer email update
+* Code fix to get rid of random errors for gcc 1.5 or windows based.
 
 # bigalgebra 2.0.0
 
