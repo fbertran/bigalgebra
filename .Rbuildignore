@@ -1,3 +1,5 @@
+\.DS_Store$
+
 genlogo.R
 .gitignore
 ^codecov\.yml$
