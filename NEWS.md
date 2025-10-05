@@ -1,3 +1,7 @@
+# bigalgebra 2.1.0
+
+* Added dadd wrapper
+
 # bigalgebra 2.0.2
 
 * Maintainer email update

@@ -14,6 +14,7 @@
 static const R_CallMethodDef callMethods[] = {
   {"_dgeev_lwork_query_wrapper", (DL_FUNC) &dgeev_lwork_query_wrapper, 3},
   {"_dgemm_wrapper",  (DL_FUNC) &dgemm_wrapper,  17},
+  {"_dadd_wrapper",  (DL_FUNC) &dadd_wrapper,   7},
   {"_daxpy_wrapper",  (DL_FUNC) &daxpy_wrapper,   5},
   {"_dpotrf_wrapper", (DL_FUNC) &dpotrf_wrapper,  6},
   {"_dcopy_wrapper",  (DL_FUNC) &dcopy_wrapper,   7},

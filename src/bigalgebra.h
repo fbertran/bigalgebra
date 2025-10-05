@@ -10,6 +10,8 @@ extern "C"
                        SEXP ALPHA, SEXP A, SEXP LDA, SEXP B, SEXP LDB,
                        SEXP BETA, SEXP C, SEXP LDC, SEXP A_isBM, SEXP B_isBM,
                        SEXP C_isBM, SEXP C_offset);
+  SEXP dadd_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP Y, SEXP INCY,
+                     SEXP X_isBM, SEXP Y_isBM);
   SEXP daxpy_wrapper (SEXP N, SEXP A, SEXP X, SEXP Y, SEXP X_isBM);
   SEXP dpotrf_wrapper(SEXP UPLO, SEXP N, SEXP A, SEXP LDA, SEXP INFO, SEXP A_isBM);
   

@@ -215,7 +215,30 @@ extern "C" {
 #endif
     return R_NilValue;
   }
-  
+
+  /* DADD: Y := X + Y (in-place, alpha = 1) */
+  SEXP dadd_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP Y, SEXP INCY,
+                     SEXP X_isBM, SEXP Y_isBM)
+  {
+    double *pX = make_double_ptr(X, X_isBM);
+    double *pY = make_double_ptr(Y, Y_isBM);
+    if (!pX) Rf_error("NULL pointer for X");
+    if (!pY) Rf_error("NULL pointer for Y");
+
+    INT NN    = (INT) Rf_asInteger(N);
+    INT INCXX = (INT) Rf_asInteger(INCX);
+    INT INCYY = (INT) Rf_asInteger(INCY);
+    double alpha = 1.0;
+
+#ifdef REFBLAS
+    int8_daxpy(&NN, &alpha, pX, &INCXX, pY, &INCYY);
+#else
+    F77_CALL(daxpy)(&NN, &alpha, pX, &INCXX, pY, &INCYY);
+#endif
+
+    return Y;
+  }
+
   /* DSCAL: Y := alpha * Y (in-place) */
   SEXP dscal_wrapper (SEXP N, SEXP ALPHA, SEXP Y, SEXP INCY, SEXP Y_isBM)
   {

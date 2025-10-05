@@ -11,6 +11,9 @@ exportMethods("Arith")
 # Copy a matrix
 # Y := X
 export("dcopy")
+# Vector addition
+# Y := X + Y
+export("dadd")
 # Multiply by a scalar
 # Y := ALPHA * Y
 export("dscal")

@@ -64,9 +64,51 @@ dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
   {
     N = as.double(nrow(X))*as.double(ncol(X))
   }
-  .Call(`_dcopy_wrapper`, as.integer(N), X, as.integer(INCX), 
+  .Call(`_dcopy_wrapper`, as.integer(N), X, as.integer(INCX),
         Y, as.integer(INCY), X.is.bm, Y.is.bm)
   return(0)
+}
+
+#' @title Add two double-precision vectors.
+#'
+#' @description Compute double precision DY := DX + DY for N elements, applying the
+#' specified storage increments. This routine mirrors the BLAS DAXPY operation with
+#' a unit scaling factor.
+#' 
+#' @details
+#' The implementation delegates to the BLAS \code{DAXPY} routine with a unit scaling
+#' factor, making it equivalent to \code{daxpy(1.0, X, Y)} while exposing an interface
+#' consistent with other low-level wrappers such as \code{dcopy} and \code{dscal}.
+#' 
+#' @param N number of elements in the input vectors. Defaults to the length of \code{X} if \code{NULL}.
+#' @param X double precision vector or matrix providing the addend.
+#' @param INCX storage spacing between elements of \code{X}.
+#' @param Y double precision vector or matrix that is updated in place.
+#' @param INCY storage spacing between elements of \code{Y}.
+#'
+#' @return The modified object \code{Y} containing the element-wise sums.
+#' @export
+#' 
+#' \seealso{[daxpy()], [dcopy()] and [dscal()].}
+#' 
+#' @examples
+#' set.seed(4669)
+#' X <- matrix(runif(6), 3, 2)
+#' Y <- matrix(runif(6), 3, 2)
+#' dadd(X = X, Y = Y)
+#' all.equal(Y, X + Y)
+#'
+dadd <- function(N = NULL, X, INCX = 1L, Y, INCY = 1L) {
+  X.is.bm <- check_matrix(X)
+  Y.is.bm <- check_matrix(Y)
+  if (is.null(N)) {
+    N <- as.integer(nrow(X) * ncol(X))
+  }
+  N <- as.integer(N)
+  INCX <- as.integer(INCX)
+  INCY <- as.integer(INCY)
+
+  .Call(`_dadd_wrapper`, N, X, INCX, Y, INCY, X.is.bm, Y.is.bm)
 }
 
 #' @title Scales a vector by a constant.

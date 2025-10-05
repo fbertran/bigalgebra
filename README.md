@@ -10,7 +10,7 @@
 <https://doi.org/10.32614/CRAN.package.bigalgebra>
 
 <!-- badges: start -->
-[![](https://img.shields.io/badge/doi-10.32614/CRAN.package.bigalgebra-blue.svg)](https://doi.org/10.32614/CRAN.package.bigalgebra)
+[![DOI](https://img.shields.io/badge/doi-10.32614/CRAN.package.bigalgebra-blue.svg)](https://doi.org/10.32614/CRAN.package.bigalgebra)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/fbertran/bigalgebra/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/bigalgebra/actions)
@@ -18,7 +18,6 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/bigalgebra)](https://cran.r-project.org/package=bigalgebra)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/bigalgebra)](https://cran.r-project.org/package=bigalgebra)
 [![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/bigalgebra?style=social)](https://github.com/fbertran/bigalgebra)
-
 <!-- badges: end -->
 
 This package provides arithmetic functions for native `R` matrices and `bigmemory::big.matrix` objects  as well as functions for QR factorization, Cholesky factorization, General eigenvalue, and Singular value decomposition (SVD). A method matrix multiplication and an arithmetic method -for matrix addition, matrix difference- allows for mixed type operation -a matrix class object and a big.matrix class object- and pure type operation for two big.matrix class objects.

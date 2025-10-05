@@ -21,6 +21,16 @@ test_that("dcopy copies matrix contents", {
   expect_equal(Y, X, tolerance = 1e-12)
 })
 
+# --- DADD ---------------------------------------------------------------
+test_that("dadd adds matrix contents in place", {
+  set.seed(1011)
+  X <- matrix(runif(10), 5, 2)
+  Y <- matrix(runif(10), 5, 2)
+  Y_ref <- X + Y
+  expect_silent(dadd(X = X, Y = Y))
+  expect_equal(Y, Y_ref, tolerance = 1e-12)
+})
+
 # --- DSCAL ---------------------------------------------------------------
 test_that("dscal scales a matrix in place", {
   set.seed(102)
@@ -137,6 +147,23 @@ test_that("dcopy works with big.matrix", {
   expect_silent(dcopy(X = Xbm, Y = Ybm))
   expect_equal(as.matrix(Ybm[]), Xr, tolerance = 1e-12)
   rm(Xbm,Ybm)
+  gc()
+})
+
+test_that("dadd works with big.matrix", {
+  skip_on_cran()
+  skip_if_not_installed("bigmemory")
+  library(bigmemory)
+  set.seed(2011)
+  Xr <- matrix(runif(10), 5, 2)
+  Yr <- matrix(runif(10), 5, 2)
+  Xbm <- big.matrix(nrow = 5, ncol = 2, type = "double")
+  Ybm <- big.matrix(nrow = 5, ncol = 2, type = "double")
+  Xbm[,] <- Xr
+  Ybm[,] <- Yr
+  expect_silent(dadd(X = Xbm, Y = Ybm))
+  expect_equal(as.matrix(Ybm[]), Xr + Yr, tolerance = 1e-12)
+  rm(Xbm, Ybm)
   gc()
 })
 
