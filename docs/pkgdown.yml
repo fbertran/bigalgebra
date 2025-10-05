@@ -6,7 +6,7 @@ articles:
   level-1-blas-style-helpers: level-1-blas-style-helpers.html
   matrix-wrapper-helpers: matrix-wrapper-helpers.html
   z_lapack-decompositions: z_lapack-decompositions.html
-last_built: 2025-10-05T13:42Z
+last_built: 2025-10-05T13:49Z
 urls:
   reference: https://fbertran.github.io/bigalgebra/reference
   article: https://fbertran.github.io/bigalgebra/articles

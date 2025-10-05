@@ -149,7 +149,7 @@ RAM.</p>
 <span>                              backingpath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in filebacked.big.matrix(nrow(H), ncol(H), init = H, backingfile =</span></span>
 <span><span class="co">#&gt; basename(tmp), : No descriptor file given, it will be named</span></span>
-<span><span class="co">#&gt; filefce44c6bc69.desc</span></span>
+<span><span class="co">#&gt; file19493a85896e.desc</span></span>
 <span><span class="fu"><a href="../reference/dgeqrf.html">dgeqrf</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">H_fb</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="va">H_fb</span><span class="op">[</span>,<span class="op">]</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">upper.tri</a></span><span class="op">(</span><span class="va">H_fb</span><span class="op">[</span>,<span class="op">]</span>, diag <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span></span>
@@ -157,8 +157,8 @@ RAM.</p>
 <span><span class="co">#&gt;  [6] -1.739150e-33 -2.000000e+00 -9.614813e-17 -1.739150e-33  4.056603e-49</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">H_fb</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/gc.html" class="external-link">gc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)</span></span>
-<span><span class="co">#&gt; Ncells  816477 43.7    1543644 82.5         NA  1543644 82.5</span></span>
-<span><span class="co">#&gt; Vcells 1481033 11.3    8388608 64.0      65536  2970061 22.7</span></span></code></pre></div>
+<span><span class="co">#&gt; Ncells  816477 43.7    1543621 82.5         NA  1543621 82.5</span></span>
+<span><span class="co">#&gt; Vcells 1481048 11.3    8388608 64.0      65536  2970069 22.7</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cholesky-factorisation-with-dpotrf">Cholesky factorisation with <code>dpotrf()</code><a class="anchor" aria-label="anchor" href="#cholesky-factorisation-with-dpotrf"></a>

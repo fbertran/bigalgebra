@@ -188,18 +188,17 @@
 <span>                                  backingfile <span class="op">=</span> <span class="st">"example.bin"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No</span></span>
 <span><span class="co">#&gt; descriptor file given, it will be named example.bin.desc</span></span>
-<span><span class="co">#&gt; Error in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : Backing file already exists! Either remove or specify</span></span>
-<span><span class="co">#&gt;            different backing file</span></span>
 <span><span class="va">file_big</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
-<span><span class="co">#&gt; Error: object 'file_big' not found</span></span>
 <span><span class="va">file_big</span><span class="op">[</span><span class="op">]</span></span>
-<span><span class="co">#&gt; Error: object 'file_big' not found</span></span>
+<span><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span><span class="co">#&gt; [1,]    1    1    5</span></span>
+<span><span class="co">#&gt; [2,]    1    1    1</span></span>
+<span><span class="co">#&gt; [3,]    1    1    1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">file_big</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in rm(file_big): object 'file_big' not found</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/gc.html" class="external-link">gc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)</span></span>
-<span><span class="co">#&gt; Ncells 1017419 54.4    1698357 90.8         NA  1698357 90.8</span></span>
-<span><span class="co">#&gt; Vcells 2413994 18.5    8388608 64.0      65536  3432096 26.2</span></span></code></pre></div>
+<span><span class="co">#&gt;           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)</span></span>
+<span><span class="co">#&gt; Ncells 1032976 55.2    2024841 108.2         NA  1481340 79.2</span></span>
+<span><span class="co">#&gt; Vcells 2266143 17.3    8388608  64.0      65536  3485149 26.6</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

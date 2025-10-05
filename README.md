@@ -177,18 +177,17 @@ file_big <- filebacked.big.matrix(3, 3, init = diag(3),
                                   backingfile = "example.bin")
 #> Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No
 #> descriptor file given, it will be named example.bin.desc
-#> Error in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : Backing file already exists! Either remove or specify
-#>            different backing file
 file_big[1, 3] <- 5
-#> Error: object 'file_big' not found
 file_big[]
-#> Error: object 'file_big' not found
+#>      [,1] [,2] [,3]
+#> [1,]    1    1    5
+#> [2,]    1    1    1
+#> [3,]    1    1    1
 rm(file_big)
-#> Warning in rm(file_big): object 'file_big' not found
 gc()
-#>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells 1017419 54.4    1698357 90.8         NA  1698357 90.8
-#> Vcells 2413994 18.5    8388608 64.0      65536  3432096 26.2
+#>           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)
+#> Ncells 1032976 55.2    2024841 108.2         NA  1481340 79.2
+#> Vcells 2266143 17.3    8388608  64.0      65536  3485149 26.6
 ```
 
 ## Available vignettes
