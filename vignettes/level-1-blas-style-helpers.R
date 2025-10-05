@@ -47,6 +47,11 @@ B <- matrix(rep(2, 4), 2, 2)
 Z <- dhprod(X = A, Y = B)
 Z
 
+# Element-wise square root performed in place
+sqrt_vals <- matrix(c(1, 4, 9, 16), 2)
+dsqrt(X = sqrt_vals)
+sqrt_vals
+
 ## -----------------------------------------------------------------------------
 ux <- c(1, 0, 0)
 uy <- c(0, 1, 0)

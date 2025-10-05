@@ -124,12 +124,16 @@ helpers behave with in-memory and file-backed matrices.
 
 ### Level 1 BLAS helpers
 
+These helpers cover vector updates, reductions, and element-wise transforms
+such as the in-place square root provided by `dsqrt()`.
 ```{r level1-example}
 library(bigmemory)
 library(bigalgebra)
 
 x <- bigmemory::big.matrix(5, 1, init = 0)
-dset(ALPHA = 3, X = x)
+dset(ALPHA = 9, X = x)
+dsqrt(X = x)
+x[]
 
 y <- bigmemory::big.matrix(5, 1, init = 1)
 dvcal(ALPHA = 0.5, X = x, BETA = 2, Y = y)

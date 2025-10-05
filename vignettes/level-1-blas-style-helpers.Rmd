@@ -71,7 +71,9 @@ X_bm[]
 `ddot()` evaluates the standard dot product. For problems where numerical
 stability is paramount, `dqddot()` accumulates in extended precision. The helper
 `dhprod()` forms the Hadamard (element-wise) product and returns the populated
-output container.
+output container. When you need to transform each entry of a vector or matrix in
+place, `dsqrt()` applies the square root while preserving the original storage
+mode.
 
 ```{r}
 # Classic dot product and its extended-precision counterpart
@@ -84,6 +86,11 @@ A <- matrix(as.numeric(1:4), 2, 2)
 B <- matrix(rep(2, 4), 2, 2)
 Z <- dhprod(X = A, Y = B)
 Z
+
+# Element-wise square root performed in place
+sqrt_vals <- matrix(c(1, 4, 9, 16), 2)
+dsqrt(X = sqrt_vals)
+sqrt_vals
 ```
 
 For three-dimensional vectors the cross product helper `dxyz()` offers a

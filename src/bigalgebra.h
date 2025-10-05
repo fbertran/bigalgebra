@@ -26,6 +26,7 @@ extern "C"
                       SEXP X_isBM, SEXP Y_isBM);
   SEXP dsub_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP Y, SEXP INCY,
                      SEXP X_isBM, SEXP Y_isBM);
+  SEXP dsqrt_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM);
   SEXP ddot_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP Y, SEXP INCY,
                      SEXP X_isBM, SEXP Y_isBM);
   SEXP dqddot_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP Y, SEXP INCY,

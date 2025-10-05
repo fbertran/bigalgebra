@@ -4,6 +4,7 @@
   More precisely, the wrappers that call into BLAS are: dadd(), ddot(), dasum(), dnrm2() and dsymm(). The other routines are implemented with explicit C++ loops.
 * Added vignettes to the package
 * Updated README
+* Created a dsqrt() helper wired through the C++ backend to apply element-wise square roots to double vectors, matrices, and big.matrix objects in place. 
 
 # bigalgebra 2.0.2
 

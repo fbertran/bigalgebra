@@ -401,7 +401,9 @@ place:</p>
 where numerical stability is paramount, <code>dqddot()</code>
 accumulates in extended precision. The helper <code>dhprod()</code>
 forms the Hadamard (element-wise) product and returns the populated
-output container.</p>
+output container. When you need to transform each entry of a vector or
+matrix in place, <code>dsqrt()</code> applies the square root while
+preserving the original storage mode.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Classic dot product and its extended-precision counterpart</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>)</span>
@@ -419,7 +421,15 @@ output container.</p>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>Z</span>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2]</span></span>
 <span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; [1,]    2    6</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; [2,]    4    8</span></span></code></pre></div>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; [2,]    4    8</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co"># Element-wise square root performed in place</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>sqrt_vals <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">16</span>), <span class="dv">2</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="fu">dsqrt</span>(<span class="at">X =</span> sqrt_vals)</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>sqrt_vals</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2]</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4</span></span></code></pre></div>
 <p>For three-dimensional vectors the cross product helper
 <code>dxyz()</code> offers a specialised convenience routine:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>ux <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>

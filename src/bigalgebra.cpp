@@ -365,6 +365,25 @@ extern "C" {
     return Y;
   }
 
+  /* DSQRT: X := sqrt(X) */
+  SEXP dsqrt_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
+  {
+    double *pX = make_double_ptr(X, X_isBM);
+    if (!pX) Rf_error("NULL pointer for X");
+    
+    INT NN    = (INT) Rf_asInteger(N);
+    INT INCXX = (INT) Rf_asInteger(INCX);
+    
+    INT ix = (INCXX >= 0) ? 0 : (1 - NN) * INCXX;
+    for (INT i = 0; i < NN; ++i) {
+      double val = pX[ix];
+      pX[ix] = std::sqrt(val);
+      ix += INCXX;
+    }
+    
+    return X;
+  }
+  
   /* DDOT: dot product */
   SEXP ddot_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP Y, SEXP INCY,
                      SEXP X_isBM, SEXP Y_isBM)

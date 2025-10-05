@@ -43,6 +43,7 @@
 <ul><li>Added equivalent of the BLAS FORTRAN functions: DSET, DVCAL, DADD, DSUB, DSWAP, DDOT, DQDDOT, DHPROD, DXYZ, DSUM, DASUM, DNRM2, DPRDCT, IDMIN, IDMAX, IDAMIN, IDAMAX, DSYMM. More precisely, the wrappers that call into BLAS are: dadd(), ddot(), dasum(), dnrm2() and dsymm(). The other routines are implemented with explicit C++ loops.</li>
 <li>Added vignettes to the package</li>
 <li>Updated README</li>
+<li>Created a dsqrt() helper wired through the C++ backend to apply element-wise square roots to double vectors, matrices, and big.matrix objects in place.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.2" id="bigalgebra-202">bigalgebra 2.0.2<a class="anchor" aria-label="anchor" href="#bigalgebra-202"></a></h2><p class="text-muted">CRAN release: 2025-09-08</p>

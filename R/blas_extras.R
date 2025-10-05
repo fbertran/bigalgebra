@@ -239,6 +239,33 @@ dxyz <- function(X, Y, Z) {
   Z
 }
 
+#' Element-wise square root
+#'
+#' @description
+#' Applies the square root to each entry of `X` in place, supporting both base R
+#' and [`bigmemory::big.matrix`] inputs.
+#'
+#' @inheritParams dsum
+#'
+#' @return Invisibly returns the modified object `X`.
+#' @export
+#'
+#' @examples
+#' vals <- matrix(c(1, 4, 9, 16), 2)
+#' dsqrt(X = vals)
+#' vals
+#'
+dsqrt <- function(N = NULL, X, INCX = 1L) {
+  classes <- c("big.matrix", "matrix", "vector", "numeric")
+  X <- ensure_double(X)
+  X.is.bm <- check_matrix(X, classes = classes)
+  if (is.null(N)) {
+    N <- length(X)
+  }
+  .Call(`_dsqrt_wrapper`, as.integer(N), X, as.integer(INCX), X.is.bm)
+  invisible(X)
+}
+
 #' Sum of elements
 #'
 #' @inheritParams ddot

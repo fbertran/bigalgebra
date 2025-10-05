@@ -23,6 +23,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_dset_wrapper",   (DL_FUNC) &dset_wrapper,    5},
   {"_dvcal_wrapper",  (DL_FUNC) &dvcal_wrapper,   9},
   {"_dsub_wrapper",   (DL_FUNC) &dsub_wrapper,    7},
+  {"_dsqrt_wrapper",  (DL_FUNC) &dsqrt_wrapper,   4},
   {"_ddot_wrapper",   (DL_FUNC) &ddot_wrapper,    7},
   {"_dqddot_wrapper", (DL_FUNC) &dqddot_wrapper,  7},
   {"_dhprod_wrapper", (DL_FUNC) &dhprod_wrapper, 10},
