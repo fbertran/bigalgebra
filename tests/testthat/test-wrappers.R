@@ -31,6 +31,18 @@ test_that("dadd adds matrix contents in place", {
   expect_equal(Y, Y_ref, tolerance = 1e-12)
 })
 
+# --- DSWAP ---------------------------------------------------------------
+test_that("dswap exchanges matrix contents", {
+  set.seed(1012)
+  X <- matrix(runif(8), 4, 2)
+  Y <- matrix(runif(8), 4, 2)
+  X_ref <- matrix(X, nrow(X), ncol(X))
+  Y_ref <- matrix(Y, nrow(Y), ncol(Y))
+  expect_silent(dswap(X = X, Y = Y))
+  expect_equal(X, Y_ref, tolerance = 1e-12)
+  expect_equal(Y, X_ref, tolerance = 1e-12)
+})
+
 # --- DSCAL ---------------------------------------------------------------
 test_that("dscal scales a matrix in place", {
   set.seed(102)
@@ -39,6 +51,88 @@ test_that("dscal scales a matrix in place", {
   alpha <- 2.5
   expect_silent(dscal(ALPHA = alpha, Y = Y))
   expect_equal(Y, alpha * Y0, tolerance = 1e-12)
+})
+
+# --- DSET ---------------------------------------------------------------
+test_that("dset fills the target with a constant", {
+  X <- matrix(0, 2, 3)
+  expect_invisible(dset(ALPHA = 3.14, X = X))
+  expect_equal(X, matrix(3.14, 2, 3))
+})
+
+# --- DVCAL --------------------------------------------------------------
+test_that("dvcal computes alpha * X + beta * Y", {
+  X <- matrix(as.numeric(1:6), 3, 2)
+  Y <- matrix(as.numeric(6:1), 3, 2)
+  expect_invisible(dvcal(ALPHA = 2, X = X, BETA = -1, Y = Y))
+  expect_equal(Y, 2 * X - matrix(6:1, 3, 2))
+})
+
+# --- DSUB ---------------------------------------------------------------
+test_that("dsub subtracts matrices in place", {
+  X <- matrix(1, 4, 2)
+  Y <- matrix(5, 4, 2)
+  expect_invisible(dsub(X = X, Y = Y))
+  expect_equal(Y, matrix(4, 4, 2))
+})
+
+# --- DDOT / DQDDOT ------------------------------------------------------
+test_that("ddot matches base crossprod", {
+  X <- as.numeric(1:5)
+  Y <- seq(2, 10, by = 2)
+  expect_equal(ddot(X = X, Y = Y), sum(X * Y))
+})
+
+test_that("dqddot matches ddot", {
+  set.seed(42)
+  X <- runif(10)
+  Y <- runif(10)
+  expect_equal(dqddot(X = X, Y = Y), ddot(X = X, Y = Y), tolerance = 1e-15)
+})
+
+# --- DHPROD -------------------------------------------------------------
+test_that("dhprod returns element-wise products", {
+  X <- matrix(as.numeric(1:6), 3, 2)
+  Y <- matrix(rep(2, 6), 3, 2)
+  Z <- dhprod(X = X, Y = Y)
+  expect_equal(Z, 2 * X)
+})
+
+# --- DXYZ ---------------------------------------------------------------
+test_that("dxyz computes cross product", {
+  X <- c(1, 0, 0)
+  Y <- c(0, 1, 0)
+  Z <- dxyz(X = X, Y = Y)
+  expect_equal(Z, c(0, 0, 1))
+})
+
+# --- DSUM / DASUM / DNRM2 / DPRDCT --------------------------------------
+test_that("scalar summary helpers match base R", {
+  X <- c(-1, 2, -3, 4)
+  expect_equal(dsum(X = X), sum(X))
+  expect_equal(dasum(X = X), sum(abs(X)))
+  expect_equal(dnrm2(X = X), sqrt(sum(X^2)))
+  expect_equal(dprdct(X = X), prod(X))
+})
+
+# --- IDMIN / IDMAX / IDAMIN / IDAMAX -----------------------------------
+test_that("index helpers return 1-based extrema", {
+  X <- c(-2, 5, -7, 3)
+  expect_equal(idmin(X = X), which.min(X))
+  expect_equal(idmax(X = X), which.max(X))
+  expect_equal(idamin(X = X), which.min(abs(X)))
+  expect_equal(idamax(X = X), which.max(abs(X)))
+})
+
+# --- DSYMM --------------------------------------------------------------
+test_that("dsymm matches base tcrossprod when SIDE = 'L'", {
+  skip_on_cran()
+  set.seed(321)
+  A <- crossprod(matrix(rnorm(9), 3, 3))
+  B <- matrix(rnorm(9), 3, 3)
+  C <- matrix(0, 3, 3)
+  expect_silent(dsymm(A = A, B = B, C = C, SIDE = "L", UPLO = "U"))
+  expect_equal(C, A %*% B, tolerance = 1e-12)
 })
 
 # --- DGEMM ---------------------------------------------------------------
@@ -163,6 +257,26 @@ test_that("dadd works with big.matrix", {
   Ybm[,] <- Yr
   expect_silent(dadd(X = Xbm, Y = Ybm))
   expect_equal(as.matrix(Ybm[]), Xr + Yr, tolerance = 1e-12)
+  rm(Xbm, Ybm)
+  gc()
+})
+
+test_that("dswap works with big.matrix", {
+  skip_on_cran()
+  skip_if_not_installed("bigmemory")
+  library(bigmemory)
+  set.seed(2012)
+  Xr <- matrix(runif(8), 4, 2)
+  Yr <- matrix(runif(8), 4, 2)
+  Xbm <- big.matrix(nrow = 4, ncol = 2, type = "double")
+  Ybm <- big.matrix(nrow = 4, ncol = 2, type = "double")
+  Xbm[,] <- Xr
+  Ybm[,] <- Yr
+  X_ref <- matrix(Xr, nrow(Xr), ncol(Xr))
+  Y_ref <- matrix(Yr, nrow(Yr), ncol(Yr))
+  expect_silent(dswap(X = Xbm, Y = Ybm))
+  expect_equal(as.matrix(Xbm[]), Y_ref, tolerance = 1e-12)
+  expect_equal(as.matrix(Ybm[]), X_ref, tolerance = 1e-12)
   rm(Xbm, Ybm)
   gc()
 })

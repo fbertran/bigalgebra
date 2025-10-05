@@ -100,17 +100,19 @@
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,init <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://fbertran.github.io/bigalgebra/">"bigalgebra"</a></span><span class="op">)</span></span>
-<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span>       <span class="co"># Returns a new big.matrix object</span></span>
-<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">[</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span><span class="op">[</span><span class="op">]</span>   <span class="co"># Compute the same thing in R</span></span>
+<span><span class="co"># Returns a new big.matrix object</span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span>       </span>
+<span><span class="co"># Compute the same thing in R</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">[</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span><span class="op">[</span><span class="op">]</span>   </span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">C</span> <span class="op">-</span> <span class="va">D</span><span class="op">)</span>       <span class="co"># Compare the results (subtraction of an R matrix from a</span></span>
+<span><span class="co"># Compare the results (subtraction of an R matrix from a big.matrix)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">C</span> <span class="op">-</span> <span class="va">D</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4]</span></span>
 <span><span class="co">#&gt; [1,]    0    0    0    0</span></span>
 <span><span class="co">#&gt; [2,]    0    0    0    0</span></span>
 <span><span class="co">#&gt; [3,]    0    0    0    0</span></span>
 <span><span class="co">#&gt; [4,]    0    0    0    0</span></span>
 <span><span class="co">#&gt; [5,]    0    0    0    0</span></span>
-<span>                   <span class="co"># big.matrix)</span></span>
 <span></span>
 <span><span class="co"># The next example illustrates mixing R and big.matrix objects. It returns by</span></span>
 <span><span class="co"># default (see # options("bigalgebra.mixed_arithmetic_returns_R_matrix")</span></span>

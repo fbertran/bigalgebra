@@ -53,7 +53,7 @@ check_matrix = function(A, classes=c('big.matrix', 'matrix'),
 #' # The big.matrix file backings will be deleted when garbage collected.
 #' rm(A,B)
 #' gc()
-#' 
+#'
 # Copy a matrix
 # Y := X
 dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
@@ -67,6 +67,56 @@ dcopy = function(N=NULL, X, INCX=1, Y, INCY=1)
   .Call(`_dcopy_wrapper`, as.integer(N), X, as.integer(INCX),
         Y, as.integer(INCY), X.is.bm, Y.is.bm)
   return(0)
+}
+
+#' @title Swap two double-precision vectors.
+#'
+#' @description Exchange the elements of two double precision vectors in place.
+#' For I = 0 to N-1, swap DX(LX + I * INCX) with DY(LY + I * INCY) where LX and
+#' LY depend on the increment signs. When an optimized BLAS is available the
+#' implementation dispatches to \code{DSWAP}; otherwise a portable C loop
+#' performs the exchange.
+#' 
+#' @details
+#' When an optimized BLAS is available the implementation delegates to the
+#' Fortran \code{DSWAP} routine. Otherwise a portable C fallback performs the
+#' exchange directly while respecting the supplied vector increments.
+#'
+#' @param N Number of elements in the input vectors. Defaults to the full
+#'   length of \code{X} if \code{NULL}.
+#' @param X Double precision vector or matrix providing the first data block.
+#' @param INCX Storage spacing between elements of \code{X}.
+#' @param Y Double precision vector or matrix providing the second data block.
+#' @param INCY Storage spacing between elements of \code{Y}.
+#'
+#' @return Invisibly returns \code{NULL}; both \code{X} and \code{Y} are
+#'   modified in place.
+#'   
+#' @seealso [dcopy()], [daxpy()] and [dscal()].
+#' 
+#' @export
+#'
+#' @examples
+#' set.seed(4670)
+#' X <- matrix(runif(6), 3, 2)
+#' Y <- matrix(runif(6), 3, 2)
+#' X_original <- X
+#' Y_original <- Y
+#' dswap(X = X, Y = Y)
+#' all.equal(X, Y_original)
+#' all.equal(Y, X_original)
+dswap <- function(N = NULL, X, INCX = 1L, Y, INCY = 1L) {
+  X.is.bm <- check_matrix(X)
+  Y.is.bm <- check_matrix(Y)
+  if (is.null(N)) {
+    N <- as.integer(nrow(X) * ncol(X))
+  }
+  N <- as.integer(N)
+  INCX <- as.integer(INCX)
+  INCY <- as.integer(INCY)
+
+  .Call(`_dswap_wrapper`, N, X, INCX, Y, INCY, X.is.bm, Y.is.bm)
+  invisible(NULL)
 }
 
 #' @title Add two double-precision vectors.

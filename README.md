@@ -99,17 +99,21 @@ A <- bigmemory::big.matrix(5,4,init = 1)
 B <- bigmemory::big.matrix(4,4,init = 2)
 
 library("bigalgebra")
-C <- A %*% B       # Returns a new big.matrix object
-D <- A[] %*% B[]   # Compute the same thing in R
 
-print(C - D)       # Compare the results (subtraction of an R matrix from a
+# Returns a new big.matrix object
+C <- A %*% B       
+
+# Compute the same thing in R
+D <- A[] %*% B[]   
+
+# Compare the results (subtraction of an R matrix from a big.matrix)
+print(C - D)
 #>      [,1] [,2] [,3] [,4]
 #> [1,]    0    0    0    0
 #> [2,]    0    0    0    0
 #> [3,]    0    0    0    0
 #> [4,]    0    0    0    0
 #> [5,]    0    0    0    0
-                   # big.matrix)
 
 # The next example illustrates mixing R and big.matrix objects. It returns by
 # default (see # options("bigalgebra.mixed_arithmetic_returns_R_matrix")
