@@ -1,8 +1,12 @@
 pandoc: '3.4'
 pkgdown: 2.1.3
 pkgdown_sha: ~
-articles: {}
-last_built: 2025-10-05T01:05Z
+articles:
+  big-matrix-workflows: big-matrix-workflows.html
+  level-1-blas-style-helpers: level-1-blas-style-helpers.html
+  matrix-wrapper-helpers: matrix-wrapper-helpers.html
+  z_lapack-decompositions: z_lapack-decompositions.html
+last_built: 2025-10-05T13:42Z
 urls:
   reference: https://fbertran.github.io/bigalgebra/reference
   article: https://fbertran.github.io/bigalgebra/articles

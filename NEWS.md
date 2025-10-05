@@ -2,6 +2,8 @@
 
 * Added equivalent of the BLAS FORTRAN functions: DSET, DVCAL, DADD, DSUB, DSWAP, DDOT, DQDDOT, DHPROD, DXYZ, DSUM, DASUM, DNRM2, DPRDCT, IDMIN, IDMAX, IDAMIN, IDAMAX, DSYMM.
   More precisely, the wrappers that call into BLAS are: dadd(), ddot(), dasum(), dnrm2() and dsymm(). The other routines are implemented with explicit C++ loops.
+* Added vignettes to the package
+* Updated README
 
 # bigalgebra 2.0.2
 

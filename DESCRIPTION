@@ -5,6 +5,7 @@ Version: 3.0.0
 Date: 2025-10-05
 Depends: bigmemory (>= 4.0.0)
 Imports: methods
+Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
 LinkingTo: bigmemory, BH, Rcpp
 Authors@R: c(
 	person(given = "Frederic", family= "Bertrand", role = c("cre", "ctb"), email = "frederic.bertrand@lecnam.net", comment = c(ORCID = "0000-0002-0837-8281")),
@@ -22,6 +23,5 @@ NeedsCompilation: yes
 RoxygenNote: 7.3.3
 URL: https://fbertran.github.io/bigalgebra/, https://github.com/fbertran/bigalgebra/
 BugReports: https://github.com/fbertran/bigalgebra/issues/
-Suggests: 
-    testthat (>= 3.0.0)
+VignetteBuilder: knitr
 Config/testthat/edition: 3

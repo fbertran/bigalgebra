@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Frédéric Bertrand" />
+
+<meta name="date" content="2025-10-05" />
+
+<title>LAPACK Decompositions with bigalgebra</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">LAPACK Decompositions with bigalgebra</h1>
+<h4 class="author">Frédéric Bertrand</h4>
+<h4 class="date">2025-10-05</h4>
+
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>Beyond BLAS-level helpers, <code>bigalgebra</code> ships several
+wrappers around <a href="https://www.netlib.org/lapack/">LAPACK</a>
+routines so that factorisations can run against in-memory
+<code>matrix</code> objects or file-backed
+[<code>bigmemory::big.matrix</code>] containers without changing
+workflows. This vignette highlights the four decompositions currently
+provided:</p>
+<ul>
+<li><code>dgeqrf()</code> — QR factorisation driven by Householder
+reflectors.</li>
+<li><code>dpotrf()</code> — Cholesky factorisation of symmetric positive
+definite matrices.</li>
+<li><code>dgeev()</code> — real eigenvalues and (optionally)
+eigenvectors of general matrices.</li>
+<li><code>dgesdd()</code> — divide-and-conquer singular value
+decomposition (SVD).</li>
+</ul>
+<p>Each example illustrates how to prepare workspace arguments, inspect
+the results, and clean up temporary <code>big.matrix</code> files when
+necessary.</p>
+</div>
+<div id="qr-factorisation-with-dgeqrf" class="section level2">
+<h2>QR factorisation with <code>dgeqrf()</code></h2>
+<p>The <code>dgeqrf()</code> helper overwrites its input with the R
+factor in the upper triangle while storing Householder reflector
+coefficients in a user-supplied <code>TAU</code> vector. Supplying both
+<code>TAU</code> and <code>WORK</code> explicitly makes it easy to
+inspect the outputs afterwards.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>hilbert <span class="ot">&lt;-</span> <span class="cf">function</span>(n) { i <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n; <span class="dv">1</span> <span class="sc">/</span> <span class="fu">outer</span>(i <span class="sc">-</span> <span class="dv">1</span>, i, <span class="st">&quot;+&quot;</span>) }</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">hilbert</span>(<span class="dv">4</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>H_big <span class="ot">&lt;-</span> <span class="fu">as.big.matrix</span>(H)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>TAU <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">min</span>(<span class="fu">nrow</span>(H), <span class="fu">ncol</span>(H)))</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>WORK <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">max</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(H)))</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">dgeqrf</span>(<span class="at">A =</span> H_big, <span class="at">TAU =</span> TAU, <span class="at">WORK =</span> WORK)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Extract the R factor from the overwritten big.matrix</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>R_big <span class="ot">&lt;-</span> H_big[,]</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>R_big[<span class="fu">lower.tri</span>(R_big)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>R_big</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;           [,1]       [,2]         [,3]          [,4]</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; [1,] -1.193152 -0.6704931 -0.474932601 -0.3698354709</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; [2,]  0.000000 -0.1185333 -0.125655095 -0.1175419928</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; [3,]  0.000000  0.0000000 -0.006221774 -0.0095660929</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; [4,]  0.000000  0.0000000  0.000000000  0.0001879049</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co"># Compare against base R&#39;s QR decomposition</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="fu">all.equal</span>(R_big, <span class="fu">qr.R</span>(<span class="fu">qr</span>(H)))</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>TAU</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt;          [,1]</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; [1,] 1.838116</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; [2,] 1.560868</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; [3,] 1.413383</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; [4,] 0.000000</span></span></code></pre></div>
+<p>When the input is file-backed, the updates are written directly to
+disk and the factorisation scales to matrices that exceed available
+RAM.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>H_fb <span class="ot">&lt;-</span> <span class="fu">filebacked.big.matrix</span>(<span class="fu">nrow</span>(H), <span class="fu">ncol</span>(H), <span class="at">init =</span> H,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                              <span class="at">backingfile =</span> <span class="fu">basename</span>(tmp),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                              <span class="at">backingpath =</span> <span class="fu">dirname</span>(tmp))</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; Warning in filebacked.big.matrix(nrow(H), ncol(H), init = H, backingfile =</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; basename(tmp), : No descriptor file given, it will be named</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; filec263c6e5186.desc</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">dgeqrf</span>(<span class="at">A =</span> H_fb)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>H_fb[,][<span class="fu">upper.tri</span>(H_fb[,], <span class="at">diag =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  [1] -2.000000e+00 -2.000000e+00 -9.614813e-17 -2.000000e+00 -9.614813e-17</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;  [6] -1.739150e-33 -2.000000e+00 -9.614813e-17 -1.739150e-33  4.056603e-49</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="fu">rm</span>(H_fb); <span class="fu">gc</span>()</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; Ncells 1157461 61.9    2388877 127.6         NA  2388877 127.6</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; Vcells 2167928 16.6    8388608  64.0      65536  5614480  42.9</span></span></code></pre></div>
+</div>
+<div id="cholesky-factorisation-with-dpotrf" class="section level2">
+<h2>Cholesky factorisation with <code>dpotrf()</code></h2>
+<p><code>dpotrf()</code> computes an in-place Cholesky factorisation.
+The helper returns <code>0</code> when the matrix is positive definite
+and leaves the result in the selected triangle (upper by default).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">9</span>), <span class="dv">3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>SPD <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(A)  <span class="co"># symmetric positive definite</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>SPD_big <span class="ot">&lt;-</span> <span class="fu">as.big.matrix</span>(SPD)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">dpotrf</span>(<span class="at">UPLO =</span> <span class="st">&quot;U&quot;</span>, <span class="at">A =</span> SPD_big)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>info</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>U <span class="ot">&lt;-</span> SPD_big[,]</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>U[<span class="fu">lower.tri</span>(U)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="fu">all.equal</span>(U, <span class="fu">chol</span>(SPD))</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>If the input matrix is not positive definite, the return value
+indicates the leading minor that failed so you can diagnose numerical
+issues before proceeding with downstream solves.</p>
+</div>
+<div id="eigenvalues-and-eigenvectors-via-dgeev" class="section level2">
+<h2>Eigenvalues and eigenvectors via <code>dgeev()</code></h2>
+<p><code>dgeev()</code> wraps LAPACK’s general eigen solver and accepts
+optional storage for left and right eigenvectors. By default the helper
+queries LAPACK for an optimal workspace size, making small examples
+straightforward.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">16</span>), <span class="dv">4</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>WR <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(M))</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>WI <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(M))</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>VL <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(M), <span class="at">ncol =</span> <span class="fu">ncol</span>(M))</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="fu">dgeev</span>(<span class="at">A =</span> M, <span class="at">WR =</span> WR, <span class="at">WI =</span> WI, <span class="at">VL =</span> VL)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># Compare eigenvalues with base R</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>complex_eigs <span class="ot">&lt;-</span> WR[, <span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span><span class="dt">i</span> <span class="sc">*</span> WI[, <span class="dv">1</span>]</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">sort</span>(complex_eigs), <span class="fu">sort</span>(<span class="fu">eigen</span>(M)<span class="sc">$</span>values))</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>For large matrices stored on disk you can pass
+<code>big.matrix</code> containers for <code>A</code> and (optionally)
+<code>VL</code>/<code>VR</code>. The wrapper automatically converts
+between big storage and native <code>matrix</code> arguments as
+required.</p>
+</div>
+<div id="singular-value-decomposition-with-dgesdd" class="section level2">
+<h2>Singular value decomposition with <code>dgesdd()</code></h2>
+<p>The divide-and-conquer SVD routine <code>dgesdd()</code> requires
+workspace for the singular values and (optionally) the left and right
+singular vectors. Providing <code>big.matrix</code> containers lets you
+persist decompositions to disk without copying through R’s heap.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>), <span class="dv">4</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">min</span>(<span class="fu">dim</span>(X)))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(X), <span class="at">ncol =</span> <span class="fu">nrow</span>(X))</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>VT <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(X), <span class="at">ncol =</span> <span class="fu">ncol</span>(X))</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="fu">dgesdd</span>(<span class="at">A =</span> X, <span class="at">S =</span> S, <span class="at">U =</span> U, <span class="at">VT =</span> VT)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>svd_base <span class="ot">&lt;-</span> <span class="fu">svd</span>(X)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">drop</span>(S), svd_base<span class="sc">$</span>d)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Mean relative difference: 0.3311388&quot;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="fu">all.equal</span>(U, svd_base<span class="sc">$</span>u)</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Attributes: &lt; Component \&quot;dim\&quot;: Mean relative difference: 0.25 &gt;&quot;</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Numeric: lengths (16, 12) differ&quot;</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="fu">all.equal</span>(VT, <span class="fu">t</span>(svd_base<span class="sc">$</span>v))</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Mean relative difference: 1.484757&quot;</span></span></code></pre></div>
+<p>Because <code>dgesdd()</code> accepts both in-memory and file-backed
+matrices, it enables scalable dimensionality reduction pipelines
+directly on datasets that are larger than available RAM.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

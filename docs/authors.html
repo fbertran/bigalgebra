@@ -3,11 +3,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="inverse" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">bigalgebra</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,10 +15,18 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="index.html"><span class="fa fa-home"></span></a></li>
-<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="articles/big-matrix-workflows.html">Working with big.matrix Objects</a></li>
+    <li><a class="dropdown-item" href="articles/level-1-blas-style-helpers.html">Level 1 BLAS-Style Helpers</a></li>
+    <li><a class="dropdown-item" href="articles/matrix-wrapper-helpers.html">Matrix Wrapper Helpers</a></li>
+    <li><a class="dropdown-item" href="articles/z_lapack-decompositions.html">LAPACK Decompositions with bigalgebra</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/fbertran/bigalgebra"><span class="fa fa-github"></span></a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/fbertran/bigalgebra/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -54,13 +62,13 @@
       <h2 id="citation">Citation</h2>
       <p><small class="dont-index">Source: <a href="https://github.com/fbertran/bigalgebra/blob/HEAD/inst/CITATION" class="external-link"><code>inst/CITATION</code></a></small></p>
 
-      <p>Frederic Bertrand, Michael J. Kane, John Emerson and Stephen Weston(2025). 'BLAS' and 'LAPACK' Routines for Native R Matrices and 'big.matrix' Objects, R package version 2.1.0. doi:10.32614/CRAN.package.bigalgebra.</p>
+      <p>Frederic Bertrand, Michael J. Kane, John Emerson and Stephen Weston(2025). 'BLAS' and 'LAPACK' Routines for Native R Matrices and 'big.matrix' Objects, R package version 3.0.0. doi:10.32614/CRAN.package.bigalgebra.</p>
       <pre>@Manual{,
   title = {'BLAS' and 'LAPACK' Routines for Native R Matrices and 'big.matrix' Objects},
   author = {Frederic Bertrand and Michael J. Kane and John Emerson and Stephen Weston},
   publisher = {manual},
   year = {2025},
-  note = {R package version 2.1.0},
+  note = {R package version 3.0.0},
   url = {https://fbertran.github.io/bigalgebra/},
 }</pre>
       <p>Michael J. Kane, John Emerson, Stephen Weston (2013). Scalable Strategies for Computing with Massive Data. Journal of Statistical Software, 55(14), 1-19. doi: 10.18637/jss.v055.i14.</p>

@@ -1,0 +1,144 @@
+---
+title: "LAPACK Decompositions with bigalgebra"
+author: "Frédéric Bertrand"
+date: "`r format(Sys.Date())`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{LAPACK Decompositions with bigalgebra}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(bigalgebra)
+library(bigmemory)
+```
+
+## Overview
+
+Beyond BLAS-level helpers, `bigalgebra` ships several wrappers around
+[LAPACK](https://www.netlib.org/lapack/) routines so that factorisations can run
+against in-memory `matrix` objects or file-backed
+[`bigmemory::big.matrix`] containers without changing workflows. This vignette
+highlights the four decompositions currently provided:
+
+* `dgeqrf()` — QR factorisation driven by Householder reflectors.
+* `dpotrf()` — Cholesky factorisation of symmetric positive definite matrices.
+* `dgeev()` — real eigenvalues and (optionally) eigenvectors of general matrices.
+* `dgesdd()` — divide-and-conquer singular value decomposition (SVD).
+
+Each example illustrates how to prepare workspace arguments, inspect the
+results, and clean up temporary `big.matrix` files when necessary.
+
+## QR factorisation with `dgeqrf()`
+
+The `dgeqrf()` helper overwrites its input with the R factor in the upper
+triangle while storing Householder reflector coefficients in a user-supplied
+`TAU` vector. Supplying both `TAU` and `WORK` explicitly makes it easy to
+inspect the outputs afterwards.
+
+```{r}
+hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+H <- hilbert(4)
+H_big <- as.big.matrix(H)
+TAU <- matrix(0, nrow = min(nrow(H), ncol(H)))
+WORK <- matrix(0, nrow = max(1, ncol(H)))
+dgeqrf(A = H_big, TAU = TAU, WORK = WORK)
+
+# Extract the R factor from the overwritten big.matrix
+R_big <- H_big[,]
+R_big[lower.tri(R_big)] <- 0
+R_big
+
+# Compare against base R's QR decomposition
+all.equal(R_big, qr.R(qr(H)))
+TAU
+```
+
+When the input is file-backed, the updates are written directly to disk and the
+factorisation scales to matrices that exceed available RAM.
+
+```{r}
+tmp <- tempfile()
+H_fb <- filebacked.big.matrix(nrow(H), ncol(H), init = H,
+                              backingfile = basename(tmp),
+                              backingpath = dirname(tmp))
+dgeqrf(A = H_fb)
+H_fb[,][upper.tri(H_fb[,], diag = TRUE)]
+rm(H_fb); gc()
+```
+
+## Cholesky factorisation with `dpotrf()`
+
+`dpotrf()` computes an in-place Cholesky factorisation. The helper returns `0`
+when the matrix is positive definite and leaves the result in the selected
+triangle (upper by default).
+
+```{r}
+set.seed(42)
+A <- matrix(rnorm(9), 3)
+SPD <- crossprod(A)  # symmetric positive definite
+SPD_big <- as.big.matrix(SPD)
+info <- dpotrf(UPLO = "U", A = SPD_big)
+info
+
+U <- SPD_big[,]
+U[lower.tri(U)] <- 0
+all.equal(U, chol(SPD))
+```
+
+If the input matrix is not positive definite, the return value indicates the
+leading minor that failed so you can diagnose numerical issues before proceeding
+with downstream solves.
+
+## Eigenvalues and eigenvectors via `dgeev()`
+
+`dgeev()` wraps LAPACK's general eigen solver and accepts optional storage for
+left and right eigenvectors. By default the helper queries LAPACK for an optimal
+workspace size, making small examples straightforward.
+
+```{r}
+set.seed(123)
+M <- matrix(rnorm(16), 4)
+WR <- matrix(0, nrow = ncol(M))
+WI <- matrix(0, nrow = ncol(M))
+VL <- matrix(0, nrow = nrow(M), ncol = ncol(M))
+dgeev(A = M, WR = WR, WI = WI, VL = VL)
+
+# Compare eigenvalues with base R
+complex_eigs <- WR[, 1] + 1i * WI[, 1]
+all.equal(sort(complex_eigs), sort(eigen(M)$values))
+```
+
+For large matrices stored on disk you can pass `big.matrix` containers for `A`
+and (optionally) `VL`/`VR`. The wrapper automatically converts between big
+storage and native `matrix` arguments as required.
+
+## Singular value decomposition with `dgesdd()`
+
+The divide-and-conquer SVD routine `dgesdd()` requires workspace for the singular
+values and (optionally) the left and right singular vectors. Providing `big.matrix`
+containers lets you persist decompositions to disk without copying through R's
+heap.
+
+```{r}
+set.seed(101)
+X <- matrix(rnorm(12), 4)
+S <- matrix(0, nrow = min(dim(X)))
+U <- matrix(0, nrow = nrow(X), ncol = nrow(X))
+VT <- matrix(0, nrow = ncol(X), ncol = ncol(X))
+dgesdd(A = X, S = S, U = U, VT = VT)
+
+svd_base <- svd(X)
+all.equal(drop(S), svd_base$d)
+all.equal(U, svd_base$u)
+all.equal(VT, t(svd_base$v))
+```
+
+Because `dgesdd()` accepts both in-memory and file-backed matrices, it enables
+scalable dimensionality reduction pipelines directly on datasets that are larger
+than available RAM.

@@ -24,11 +24,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="inverse" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">bigalgebra</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,12 +37,23 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item"><a class="nav-link" href="index.html"><span class="fa fa-home"></span></a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/big-matrix-workflows.html">Working with big.matrix Objects</a></li>
+    <li><a class="dropdown-item" href="articles/level-1-blas-style-helpers.html">Level 1 BLAS-Style Helpers</a></li>
+    <li><a class="dropdown-item" href="articles/matrix-wrapper-helpers.html">Matrix Wrapper Helpers</a></li>
+    <li><a class="dropdown-item" href="articles/z_lapack-decompositions.html">LAPACK Decompositions with bigalgebra</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/fbertran/bigalgebra"><span class="fa fa-github"></span></a></li>
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/fbertran/bigalgebra/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -65,18 +76,39 @@
 <p><a href="https://doi.org/10.32614/CRAN.package.bigalgebra" class="external-link uri">https://doi.org/10.32614/CRAN.package.bigalgebra</a></p>
 <!-- badges: start -->
 
-<p>This package provides arithmetic functions for native <code>R</code> matrices and <code><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">bigmemory::big.matrix</a></code> objects as well as functions for QR factorization, Cholesky factorization, General eigenvalue, and Singular value decomposition (SVD). A method matrix multiplication and an arithmetic method -for matrix addition, matrix difference- allows for mixed type operation -a matrix class object and a big.matrix class object- and pure type operation for two big.matrix class objects.</p>
-<p>The package defines a number of global options that begin with <code>bigalgebra</code>.</p>
-<p>They include:</p>
+<p><code>bigalgebra</code> provides fast linear algebra primitives that operate seamlessly on base <code>matrix</code> objects and [<code><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">bigmemory::big.matrix</a></code>] containers. The package wraps BLAS and LAPACK routines with R-friendly helpers so that vector updates, matrix products, and classic decompositions work the same way in memory or on disk.</p>
+</div>
+<div class="section level2">
+<h2 id="package-highlights">Package highlights<a class="anchor" aria-label="anchor" href="#package-highlights"></a>
+</h2>
+<ul>
+<li>
+<strong>big.matrix workflows</strong> – Guidance on creating, sharing, and cleaning up file-backed matrices is collected in the <a href="https://fbertran.github.io/bigalgebra/articles/big-matrix-workflows.html">Working with big.matrix Objects vignette</a>.</li>
+<li>
+<strong>Vector kernels</strong> – Level 1 BLAS-style helpers such as <code><a href="reference/dset.html">dset()</a></code>, <code><a href="reference/dsub.html">dsub()</a></code> and <code><a href="reference/ddot.html">ddot()</a></code> extend familiar vector algebra to <code>big.matrix</code> inputs. See the <a href="https://fbertran.github.io/bigalgebra/articles/level-1-blas-style-helpers.html">Level 1 BLAS-Style Helpers vignette</a>.</li>
+<li>
+<strong>Matrix products</strong> – Wrappers including <code><a href="reference/dgemm.html">dgemm()</a></code> and <code><a href="reference/dsymm.html">dsymm()</a></code> expose Level 3 BLAS routines for dense matrix multiplication with optional file-backed outputs. Explore the <a href="https://fbertran.github.io/bigalgebra/articles/matrix-wrapper-helpers.html">Matrix Wrapper Helpers vignette</a>.</li>
+<li>
+<strong>LAPACK decompositions</strong> – QR, Cholesky, eigenvalue, and SVD helpers (<code><a href="reference/dgeqrf.html">dgeqrf()</a></code>, <code><a href="reference/dpotrf.html">dpotrf()</a></code>, <code><a href="reference/dgeev.html">dgeev()</a></code>, <code><a href="reference/dgesdd.html">dgesdd()</a></code>) bring advanced factorisations to large datasets. Walk through the <a href="https://fbertran.github.io/bigalgebra/articles/lapack-decompositions.html">LAPACK Decompositions vignette</a>.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="package-options">Package options<a class="anchor" aria-label="anchor" href="#package-options"></a>
+</h2>
+<p>The package defines a number of global options that begin with <code>bigalgebra</code>:</p>
 <p>Option Default value * <code>bigalgebra.temp_pattern</code> with default <code>matrix_</code> * <code>bigalgebra.tempdir</code> with default <code>tempdir</code> * <code>bigalgebra.mixed_arithmetic_returns_R_matrix</code> with default <code>TRUE</code> * <code>bigalgebra.DEBUG</code> with default <code>FALSE</code></p>
-<p>The <code>bigalgebra.tempdir</code> option must be a function that returns a temporary directory path used to big matrix results of BLAS and LAPACK operations. The deault value is simply the default R <code>tempdir</code> function.</p>
-<p>The <code>bigalgebra.temp_pattern</code> is a name prefix for file names of generated big matrix objects output as a result of BLAS and LAPACK operations.</p>
-<p>The <code>bigalgebra.mixed_arithmetic_returns_R_matrix</code> option determines whether arithmetic operations involving an R matrix or vector and a big.matrix matrix or vector return a big matrix (when the option is <code>FALSE</code>), or return a normal R matrix (<code>TRUE</code>).</p>
-<p>The package is built, by default, with <code>R</code>’s native BLAS libraries, which use 32-bit signed integer indexing. The default build is limited to vectors of at most 2^31 - 1 entries and matrices with at most 2^31 - 1 rows and 2^31 - 1 columns (note that standard R matrices are limtied to 2^31 - 1 total entries).</p>
+<p>The <code>bigalgebra.tempdir</code> option must be a function that returns a temporary directory path used to store big matrix results of BLAS and LAPACK operations. The default value is simply the base R <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> function.</p>
+<p>The <code>bigalgebra.temp_pattern</code> option is a name prefix for file names of generated big matrix objects output as a result of BLAS and LAPACK operations.</p>
+<p>The <code>bigalgebra.mixed_arithmetic_returns_R_matrix</code> option determines whether arithmetic operations involving an R matrix or vector and a <code>big.matrix</code> matrix or vector return a big matrix (when the option is <code>FALSE</code>), or return a normal R matrix (<code>TRUE</code>).</p>
+</div>
+<div class="section level2">
+<h2 id="blas-and-lapack-backends">BLAS and LAPACK backends<a class="anchor" aria-label="anchor" href="#blas-and-lapack-backends"></a>
+</h2>
+<p>The package is built, by default, with R’s native BLAS libraries, which use 32-bit signed integer indexing. The default build is limited to vectors of at most 2^31 − 1 entries and matrices with at most 2^31 − 1 rows and 2^31 − 1 columns (note that standard R matrices are limited to 2^31 − 1 total entries).</p>
 <p>The package includes a reference BLAS implementation that supports 64-bit integer indexing, relaxing the limitation on vector lengths and matrix row and column limits. Installation of this package with the 64-bit reference BLAS implementation may be performed from the command-line install:</p>
 <p><code>REFBLAS=1 R CMD INSTALL bigalgebra</code></p>
 <p>where <code>bigalgebra</code> is the source package (for example, <code>bigalgebra_0.9.0.tar.gz</code>).</p>
-<p>The package may also be build with user-supplied external BLAS and LAPACK libraries, in either 32- or 64-bit varieties. This is an advanced topic that requires additional Makevars modification, and may include adjustment of the low-level calling syntax depending on the library used.</p>
+<p>The package may also be built with user-supplied external BLAS and LAPACK libraries, in either 32- or 64-bit varieties. This is an advanced topic that requires additional <code>Makevars</code> modification, and may include adjustment of the low-level calling syntax depending on the library used.</p>
 <p>Feel free to contact us for help installing and running the package.</p>
 <p>This website, the unit tests, some C code fixes and improvements as well as these examples were created by F. Bertrand.</p>
 <p>Maintainer: Frédéric Bertrand <a href="mailto:frederic.bertrand@lecnam.net" class="email">frederic.bertrand@lecnam.net</a>.</p>
@@ -87,37 +119,103 @@
 <p>You can install the released version of bigalgebra from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bigalgebra"</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the development version of bigalgebra from <a href="https://github.com" class="external-link">github</a> with:</p>
+<p>You can install the development version of bigalgebra from <a href="https://github.com" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"fbertran/bigalgebra"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="quick-tour-of-the-functionality">Quick tour of the functionality<a class="anchor" aria-label="anchor" href="#quick-tour-of-the-functionality"></a>
 </h2>
+<p>The snippets below mirror the worked examples in the vignettes and show how the helpers behave with in-memory and file-backed matrices.</p>
+<div class="section level3">
+<h3 id="level-1-blas-helpers">Level 1 BLAS helpers<a class="anchor" aria-label="anchor" href="#level-1-blas-helpers"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/kaneplusplus/bigmemory" class="external-link">"bigmemory"</a></span><span class="op">)</span></span>
-<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">4</span>,init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,init <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kaneplusplus/bigmemory" class="external-link">bigmemory</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/bigalgebra/">bigalgebra</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://fbertran.github.io/bigalgebra/">"bigalgebra"</a></span><span class="op">)</span></span>
-<span><span class="co"># Returns a new big.matrix object</span></span>
-<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span>       </span>
-<span><span class="co"># Compute the same thing in R</span></span>
-<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">[</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span><span class="op">[</span><span class="op">]</span>   </span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/dset.html">dset</a></span><span class="op">(</span>ALPHA <span class="op">=</span> <span class="fl">3</span>, X <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Compare the results (subtraction of an R matrix from a big.matrix)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">C</span> <span class="op">-</span> <span class="va">D</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/dvcal.html">dvcal</a></span><span class="op">(</span>ALPHA <span class="op">=</span> <span class="fl">0.5</span>, X <span class="op">=</span> <span class="va">x</span>, BETA <span class="op">=</span> <span class="fl">2</span>, Y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="va">y</span><span class="op">[</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 3.5 3.5 3.5 3.5 3.5</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="matrix-products-with-dgemm">Matrix products with <code>dgemm()</code>
+<a class="anchor" aria-label="anchor" href="#matrix-products-with-dgemm"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">4</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span>, init <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">4</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/dgemm.html">dgemm</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">A</span>, B <span class="op">=</span> <span class="va">B</span>, C <span class="op">=</span> <span class="va">C</span>, ALPHA <span class="op">=</span> <span class="fl">1</span>, BETA <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">C</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4]</span></span>
-<span><span class="co">#&gt; [1,]    0    0    0    0</span></span>
-<span><span class="co">#&gt; [2,]    0    0    0    0</span></span>
-<span><span class="co">#&gt; [3,]    0    0    0    0</span></span>
-<span><span class="co">#&gt; [4,]    0    0    0    0</span></span>
-<span><span class="co">#&gt; [5,]    0    0    0    0</span></span>
-<span></span>
-<span><span class="co"># The next example illustrates mixing R and big.matrix objects. It returns by</span></span>
-<span><span class="co"># default (see # options("bigalgebra.mixed_arithmetic_returns_R_matrix")</span></span>
-<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">E</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">D</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,]    8    8    8    8</span></span>
+<span><span class="co">#&gt; [2,]    8    8    8    8</span></span>
+<span><span class="co">#&gt; [3,]    8    8    8    8</span></span>
+<span><span class="co">#&gt; [4,]    8    8    8    8</span></span>
+<span><span class="co">#&gt; [5,]    8    8    8    8</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="lapack-decompositions">LAPACK decompositions<a class="anchor" aria-label="anchor" href="#lapack-decompositions"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">SPD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="va">SPD_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">as.big.matrix</a></span><span class="op">(</span><span class="va">SPD</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/dpotrf.html">dpotrf</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">SPD_big</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
+<span><span class="va">chol_factor</span> <span class="op">&lt;-</span> <span class="va">SPD_big</span><span class="op">[</span>,<span class="op">]</span></span>
+<span><span class="va">chol_factor</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span><span class="va">chol_factor</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">chol_factor</span></span>
+<span><span class="co">#&gt;          [,1]       [,2]       [,3]</span></span>
+<span><span class="co">#&gt; [1,] 1.060398 -0.2388263 -0.6138286</span></span>
+<span><span class="co">#&gt; [2,] 0.000000  1.8082109  0.2222424</span></span>
+<span><span class="co">#&gt; [3,] 0.000000  0.0000000  0.8294922</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="file-backed-bigmatrix-workflows">File-backed <code>big.matrix</code> workflows<a class="anchor" aria-label="anchor" href="#file-backed-bigmatrix-workflows"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tmpdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">file_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">filebacked.big.matrix</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>                                  backingpath <span class="op">=</span> <span class="va">tmpdir</span>,</span>
+<span>                                  backingfile <span class="op">=</span> <span class="st">"example.bin"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No</span></span>
+<span><span class="co">#&gt; descriptor file given, it will be named example.bin.desc</span></span>
+<span><span class="co">#&gt; Error in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : Backing file already exists! Either remove or specify</span></span>
+<span><span class="co">#&gt;            different backing file</span></span>
+<span><span class="va">file_big</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
+<span><span class="co">#&gt; Error: object 'file_big' not found</span></span>
+<span><span class="va">file_big</span><span class="op">[</span><span class="op">]</span></span>
+<span><span class="co">#&gt; Error: object 'file_big' not found</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">file_big</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in rm(file_big): object 'file_big' not found</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/gc.html" class="external-link">gc</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)</span></span>
+<span><span class="co">#&gt; Ncells 1017419 54.4    1698357 90.8         NA  1698357 90.8</span></span>
+<span><span class="co">#&gt; Vcells 2413994 18.5    8388608 64.0      65536  3432096 26.2</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="available-vignettes">Available vignettes<a class="anchor" aria-label="anchor" href="#available-vignettes"></a>
+</h2>
+<p>The full vignette set expands on the topics above and demonstrates how the routines interact:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Working with big.matrix Objects</strong> – Managing shared memory, file backing, and clean-up for large datasets.</li>
+<li>
+<strong>Level 1 BLAS-Style Helpers</strong> – Filling vectors, Hadamard products, and reductions on disk-backed data.</li>
+<li>
+<strong>Matrix Wrapper Helpers</strong> – Symmetric and general matrix products, including strategies for chaining operations.</li>
+<li>
+<strong>LAPACK Decompositions with bigalgebra</strong> – QR, Cholesky, eigenvalue, and SVD workflows for both in-memory and file-backed matrices.</li>
+</ol>
 </div>
 </div>
 
