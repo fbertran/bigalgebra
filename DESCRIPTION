@@ -21,7 +21,7 @@ Copyright: (C) 2014 Michael J. Kane, Bryan Lewis, and John W. Emerson
 LazyLoad: yes
 NeedsCompilation: yes
 RoxygenNote: 7.3.3
-URL: https://fbertran.github.io/bigalgebra/, https://github.com/fbertran/bigalgebra/
-BugReports: https://github.com/fbertran/bigalgebra/issues/
+URL: https://fbertran.github.io/bigalgebra/, https://github.com/fbertran/bigalgebra
+BugReports: https://github.com/fbertran/bigalgebra/issues
 VignetteBuilder: knitr
 Config/testthat/edition: 3

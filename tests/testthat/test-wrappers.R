@@ -60,6 +60,31 @@ test_that("dset fills the target with a constant", {
   expect_equal(X, matrix(3.14, 2, 3))
 })
 
+# --- DSQRT --------------------------------------------------------------
+test_that("dsqrt matches base sqrt for matrices and big.matrix", {
+  X <- matrix(seq_len(6), 2, 3)
+  sqrt_ref <- sqrt(X)
+  
+  dense <- X
+  dense_res <- dsqrt(X = dense)
+  if (is.null(dense_res)) {
+    expect_equal(dense, sqrt_ref, tolerance = 1e-12)
+  } else {
+    expect_equal(dense_res, sqrt_ref, tolerance = 1e-12)
+  }
+  
+  bm <- bigmemory::big.matrix(nrow = nrow(X), ncol = ncol(X), type = "double", init = 0)
+  bm[,] <- X
+  bm_res <- dsqrt(X = bm)
+  if (is.null(bm_res)) {
+    expect_equal(bm[, ], sqrt_ref, tolerance = 1e-12)
+  } else if (inherits(bm_res, "big.matrix")) {
+    expect_equal(bm_res[, ], sqrt_ref, tolerance = 1e-12)
+  } else {
+    expect_equal(bm_res, sqrt_ref, tolerance = 1e-12)
+  }
+})
+
 # --- DVCAL --------------------------------------------------------------
 test_that("dvcal computes alpha * X + beta * Y", {
   X <- matrix(as.numeric(1:6), 3, 2)

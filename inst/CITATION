@@ -14,6 +14,7 @@ bibentry(bibtype="Manual",
          year         = year,
          note         = vers,
          url          = "https://fbertran.github.io/bigalgebra/",
+         doi          = doi,
          textVersion = 
          paste("Frederic Bertrand, Michael J. Kane, John Emerson and Stephen Weston(",year ,"). ",
                titl, ", ", vers, ". doi:", doi, ".", sep=""
@@ -28,7 +29,7 @@ bibentry(bibtype="article",
          issue = 14,
          pages = 1--19,
          year  = 2013,
-         Doi = "10.18637/jss.v055.i14",
+         doi = "10.18637/jss.v055.i14",
   textVersion  =
   paste("Michael J. Kane, John Emerson, Stephen Weston (2013).",
         "Scalable Strategies for Computing with Massive Data.",
