@@ -77,8 +77,8 @@ if (!pbm) {
 
 /* Validate sub.big.matrix shape */
 if (pbm->row_offset() > 0 && pbm->ncol() > 1) {
-  UNPROTECT(nprot); /* must unprotect before Rf_error (long jump) */
-Rf_error("sub.big.matrix objects cannot have row offset > 0 and number of columns > 1");
+  UNPROTECT(nprot); /* must unprotect before signaling an error (long jump) */
+(Rf_error)("sub.big.matrix objects cannot have row offset > 0 and number of columns > 1");
 }
 
 index_type offset = pbm->nrow() * pbm->col_offset();
@@ -95,6 +95,12 @@ matrix_ptr = NUMERIC_DATA(matrix);
 
 /* ---------------------------------------------------------------------- */
 /* .Call wrappers with C linkage                                               */
+/* NOTE:
+ * The wrappers below are registered as C callbacks (see R_init_bigalgebra.c).
+ * We intentionally keep parenthesized R error calls in this file.
+ * Using Rcpp::stop here would throw C++ exceptions across a C ABI boundary
+ * unless every entry point is wrapped in explicit C++ exception translation.
+ */
 extern "C" {
   
   /* DGEMM: C := alpha * op(A) %*% op(B) + beta * C
@@ -120,9 +126,9 @@ extern "C" {
     double *pA = make_double_ptr(A, A_isBM);
     double *pB = make_double_ptr(B, B_isBM);
     double *pC = make_double_ptr(C, C_isBM);
-    if (!pA) Rf_error("NULL pointer for A");
-    if (!pB) Rf_error("NULL pointer for B");
-    if (!pC) Rf_error("NULL pointer for C");
+    if (!pA) (Rf_error)("NULL pointer for A");
+    if (!pB) (Rf_error)("NULL pointer for B");
+    if (!pC) (Rf_error)("NULL pointer for C");
     
     /* Optional starting column offset in C (as seen in archive code) */
     INT j = (INT) Rf_asInteger(C_offset);
@@ -148,7 +154,7 @@ extern "C" {
     SEXP ans, Tr;
     double *pY;
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
     
     INT incx = 1;
     INT incy = 1;
@@ -158,7 +164,7 @@ extern "C" {
     PROTECT(Tr = Rf_allocVector(LGLSXP, 1));
     LOGICAL(Tr)[0] = 1; /* treat Y as BigMatrix in make_double_ptr */
   pY = make_double_ptr(Y, Tr);
-  if (!pY) { UNPROTECT(2); Rf_error("NULL pointer for Y"); }
+  if (!pY) { UNPROTECT(2); (Rf_error)("NULL pointer for Y"); }
   
 #ifdef REFBLAS
   /* Standard Fortran interface without underscoring */
@@ -182,7 +188,7 @@ extern "C" {
     INT IINFO= (INT) Rf_asInteger(INFO);
     
     double *AA = make_double_ptr(A, A_isBM);
-    if (!AA) Rf_error("NULL pointer for A");
+    if (!AA) (Rf_error)("NULL pointer for A");
     
 #ifdef REFBLAS
     /* Standard Fortran interface without underscoring */
@@ -202,8 +208,8 @@ extern "C" {
   {
     double *pX = make_double_ptr (X, X_isBM);
     double *pY = make_double_ptr (Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -223,8 +229,8 @@ extern "C" {
   {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -259,8 +265,8 @@ extern "C" {
   {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -280,7 +286,7 @@ extern "C" {
   SEXP dscal_wrapper (SEXP N, SEXP ALPHA, SEXP Y, SEXP INCY, SEXP Y_isBM)
   {
     double *pY = make_double_ptr (Y, Y_isBM);
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCYY = (INT) Rf_asInteger(INCY);
@@ -299,7 +305,7 @@ extern "C" {
   SEXP dset_wrapper (SEXP N, SEXP ALPHA, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -321,8 +327,8 @@ extern "C" {
   {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -347,8 +353,8 @@ extern "C" {
   {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -369,7 +375,7 @@ extern "C" {
   SEXP dsqrt_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
     
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -390,8 +396,8 @@ extern "C" {
   {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -419,8 +425,8 @@ extern "C" {
   {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -445,9 +451,9 @@ extern "C" {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
     double *pZ = make_double_ptr(Z, Z_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
-    if (!pZ) Rf_error("NULL pointer for Z");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
+    if (!pZ) (Rf_error)("NULL pointer for Z");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -474,9 +480,9 @@ extern "C" {
     double *pX = make_double_ptr(X, X_isBM);
     double *pY = make_double_ptr(Y, Y_isBM);
     double *pZ = make_double_ptr(Z, Z_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
-    if (!pY) Rf_error("NULL pointer for Y");
-    if (!pZ) Rf_error("NULL pointer for Z");
+    if (!pX) (Rf_error)("NULL pointer for X");
+    if (!pY) (Rf_error)("NULL pointer for Y");
+    if (!pZ) (Rf_error)("NULL pointer for Z");
 
     pZ[0] = pX[1] * pY[2] - pX[2] * pY[1];
     pZ[1] = pX[2] * pY[0] - pX[0] * pY[2];
@@ -489,7 +495,7 @@ extern "C" {
   SEXP dsum_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -508,7 +514,7 @@ extern "C" {
   SEXP dasum_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -532,7 +538,7 @@ extern "C" {
   SEXP dnrm2_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -557,7 +563,7 @@ extern "C" {
   SEXP dprdct_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -576,7 +582,7 @@ extern "C" {
   SEXP idmin_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -601,7 +607,7 @@ extern "C" {
   SEXP idmax_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -626,7 +632,7 @@ extern "C" {
   SEXP idamin_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -649,7 +655,7 @@ extern "C" {
   SEXP idamax_wrapper (SEXP N, SEXP X, SEXP INCX, SEXP X_isBM)
   {
     double *pX = make_double_ptr(X, X_isBM);
-    if (!pX) Rf_error("NULL pointer for X");
+    if (!pX) (Rf_error)("NULL pointer for X");
 
     INT NN    = (INT) Rf_asInteger(N);
     INT INCXX = (INT) Rf_asInteger(INCX);
@@ -679,9 +685,9 @@ extern "C" {
     double *pA = make_double_ptr(A, A_isBM);
     double *pB = make_double_ptr(B, B_isBM);
     double *pC = make_double_ptr(C, C_isBM);
-    if (!pA) Rf_error("NULL pointer for A");
-    if (!pB) Rf_error("NULL pointer for B");
-    if (!pC) Rf_error("NULL pointer for C");
+    if (!pA) (Rf_error)("NULL pointer for A");
+    if (!pB) (Rf_error)("NULL pointer for B");
+    if (!pC) (Rf_error)("NULL pointer for C");
 
     INT MM    = (INT) Rf_asInteger(M);
     INT NN    = (INT) Rf_asInteger(N);
@@ -729,9 +735,9 @@ extern "C" {
     double *pA   = make_double_ptr (A,   A_isBM);
     double *pTAU = make_double_ptr (TAU, TAU_isBM);
     double *pWORK= make_double_ptr (WORK,WORK_isBM);
-    if (!pA)    Rf_error("NULL pointer for A");
-    if (!pTAU)  Rf_error("NULL pointer for TAU");
-    if (!pWORK) Rf_error("NULL pointer for WORK");
+    if (!pA)    (Rf_error)("NULL pointer for A");
+    if (!pTAU)  (Rf_error)("NULL pointer for TAU");
+    if (!pWORK) (Rf_error)("NULL pointer for WORK");
     
     INT MM    = (INT) Rf_asInteger(M);
     INT NN    = (INT) Rf_asInteger(N);
@@ -800,12 +806,12 @@ extern "C" {
     double *pVL   = make_double_ptr (VL,   VL_isBM);
     double *pVR   = make_double_ptr (VR,   VR_isBM);
     double *pWORK = make_double_ptr (WORK, WORK_isBM);
-    if (!pA)    Rf_error("NULL pointer for A");
-    if (!pWR)   Rf_error("NULL pointer for WR");
-    if (!pWI)   Rf_error("NULL pointer for WI");
-    if (!pVL)   Rf_error("NULL pointer for VL");
-    if (!pVR)   Rf_error("NULL pointer for VR");
-    if (!pWORK) Rf_error("NULL pointer for WORK");
+    if (!pA)    (Rf_error)("NULL pointer for A");
+    if (!pWR)   (Rf_error)("NULL pointer for WR");
+    if (!pWI)   (Rf_error)("NULL pointer for WI");
+    if (!pVL)   (Rf_error)("NULL pointer for VL");
+    if (!pVR)   (Rf_error)("NULL pointer for VR");
+    if (!pWORK) (Rf_error)("NULL pointer for WORK");
     
     INT NN     = (INT) Rf_asInteger(N);
     INT LDAA   = (INT) Rf_asInteger(LDA);
@@ -837,11 +843,11 @@ extern "C" {
     double *pU    = make_double_ptr (U,  U_isBM);
     double *pVT   = make_double_ptr (VT, VT_isBM);
     double *pWORK = make_double_ptr (WORK, WORK_isBM);
-    if (!pA)    Rf_error("NULL pointer for A");
-    if (!pS)    Rf_error("NULL pointer for S");
-    if (!pU)    Rf_error("NULL pointer for U");
-    if (!pVT)   Rf_error("NULL pointer for VT");
-    if (!pWORK) Rf_error("NULL pointer for WORK");
+    if (!pA)    (Rf_error)("NULL pointer for A");
+    if (!pS)    (Rf_error)("NULL pointer for S");
+    if (!pU)    (Rf_error)("NULL pointer for U");
+    if (!pVT)   (Rf_error)("NULL pointer for VT");
+    if (!pWORK) (Rf_error)("NULL pointer for WORK");
     
     INT MM     = (INT) Rf_asInteger(M);
     INT NN     = (INT) Rf_asInteger(N);
@@ -864,4 +870,3 @@ extern "C" {
   }
   
 } /* extern "C" */
-
