@@ -1,3 +1,7 @@
+# bigalgebra 3.1.0
+
+* Dealt with upcoming Rf_error issue with Rcpp
+
 # bigalgebra 3.0.0
 
 * Added equivalent of the BLAS FORTRAN functions: DSET, DVCAL, DADD, DSUB, DSWAP, DDOT, DQDDOT, DHPROD, DXYZ, DSUM, DASUM, DNRM2, DPRDCT, IDMIN, IDMAX, IDAMIN, IDAMAX, DSYMM.

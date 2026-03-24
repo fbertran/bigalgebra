@@ -1,0 +1,330 @@
+# bigalgebra
+
+# Arithmetic routines for native R matrices and big.matrix objects
+
+## Frédéric Bertrand, Michael J. Kane, Bryan Lewis, John W. Emerson
+
+<https://doi.org/10.32614/CRAN.package.bigalgebra>
+
+`bigalgebra` provides fast linear algebra primitives that operate
+seamlessly on base `matrix` objects and
+\[[`bigmemory::big.matrix`](https://rdrr.io/pkg/bigmemory/man/big.matrix.html)\]
+containers. The package wraps BLAS and LAPACK routines with R-friendly
+helpers so that vector updates, matrix products, and classic
+decompositions work the same way in memory or on disk.
+
+## Package highlights
+
+- **big.matrix workflows** – Guidance on creating, sharing, and cleaning
+  up file-backed matrices is collected in the [Working with big.matrix
+  Objects
+  vignette](https://fbertran.github.io/bigalgebra/articles/big-matrix-workflows.html).
+- **Vector kernels** – Level 1 BLAS-style helpers such as
+  [`dset()`](https://fbertran.github.io/bigalgebra/reference/dset.md),
+  [`dsub()`](https://fbertran.github.io/bigalgebra/reference/dsub.md)
+  and
+  [`ddot()`](https://fbertran.github.io/bigalgebra/reference/ddot.md)
+  extend familiar vector algebra to `big.matrix` inputs. See the [Level
+  1 BLAS-Style Helpers
+  vignette](https://fbertran.github.io/bigalgebra/articles/level-1-blas-style-helpers.html).
+- **Matrix products** – Wrappers including
+  [`dgemm()`](https://fbertran.github.io/bigalgebra/reference/dgemm.md)
+  and
+  [`dsymm()`](https://fbertran.github.io/bigalgebra/reference/dsymm.md)
+  expose Level 3 BLAS routines for dense matrix multiplication with
+  optional file-backed outputs. Explore the [Matrix Wrapper Helpers
+  vignette](https://fbertran.github.io/bigalgebra/articles/matrix-wrapper-helpers.html).
+- **LAPACK decompositions** – QR, Cholesky, eigenvalue, and SVD helpers
+  ([`dgeqrf()`](https://fbertran.github.io/bigalgebra/reference/dgeqrf.md),
+  [`dpotrf()`](https://fbertran.github.io/bigalgebra/reference/dpotrf.md),
+  [`dgeev()`](https://fbertran.github.io/bigalgebra/reference/dgeev.md),
+  [`dgesdd()`](https://fbertran.github.io/bigalgebra/reference/dgesdd.md))
+  bring advanced factorisations to large datasets. Walk through the
+  [LAPACK Decompositions
+  vignette](https://fbertran.github.io/bigalgebra/articles/lapack-decompositions.html).
+
+## Package options
+
+The package defines a number of global options that begin with
+`bigalgebra`:
+
+Option Default value \* `bigalgebra.temp_pattern` with default `matrix_`
+\* `bigalgebra.tempdir` with default `tempdir` \*
+`bigalgebra.mixed_arithmetic_returns_R_matrix` with default `TRUE` \*
+`bigalgebra.DEBUG` with default `FALSE`
+
+The `bigalgebra.tempdir` option must be a function that returns a
+temporary directory path used to store big matrix results of BLAS and
+LAPACK operations. The default value is simply the base R
+[`tempdir()`](https://rdrr.io/r/base/tempfile.html) function.
+
+The `bigalgebra.temp_pattern` option is a name prefix for file names of
+generated big matrix objects output as a result of BLAS and LAPACK
+operations.
+
+The `bigalgebra.mixed_arithmetic_returns_R_matrix` option determines
+whether arithmetic operations involving an R matrix or vector and a
+`big.matrix` matrix or vector return a big matrix (when the option is
+`FALSE`), or return a normal R matrix (`TRUE`).
+
+## BLAS and LAPACK backends
+
+The package is built, by default, with R’s native BLAS libraries, which
+use 32-bit signed integer indexing. The default build is limited to
+vectors of at most 2^31 − 1 entries and matrices with at most 2^31 − 1
+rows and 2^31 − 1 columns (note that standard R matrices are limited to
+2^31 − 1 total entries).
+
+The package includes a reference BLAS implementation that supports
+64-bit integer indexing, relaxing the limitation on vector lengths and
+matrix row and column limits. Installation of this package with the
+64-bit reference BLAS implementation may be performed from the
+command-line install:
+
+`REFBLAS=1 R CMD INSTALL bigalgebra`
+
+where `bigalgebra` is the source package (for example,
+`bigalgebra_0.9.0.tar.gz`).
+
+The package may also be built with user-supplied external BLAS and
+LAPACK libraries, in either 32- or 64-bit varieties. This is an advanced
+topic that requires additional `Makevars` modification, and may include
+adjustment of the low-level calling syntax depending on the library
+used.
+
+Feel free to contact us for help installing and running the package.
+
+This website, the unit tests, some C code fixes and improvements as well
+as these examples were created by F. Bertrand.
+
+Maintainer: Frédéric Bertrand <frederic.bertrand@lecnam.net>.
+
+## Installation
+
+You can install the released version of bigalgebra from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("bigalgebra")
+```
+
+You can install the development version of bigalgebra from
+[GitHub](https://github.com) with:
+
+``` r
+devtools::install_github("fbertran/bigalgebra")
+```
+
+## Quick tour of the functionality
+
+The snippets below mirror the worked examples in the vignettes and show
+how the helpers behave with in-memory and file-backed matrices.
+
+### Level 1 BLAS helpers
+
+These helpers cover vector updates, reductions, and element-wise
+transforms such as the in-place square root provided by
+[`dsqrt()`](https://fbertran.github.io/bigalgebra/reference/dsqrt.md).
+
+``` r
+library(bigmemory)
+library(bigalgebra)
+
+x <- bigmemory::big.matrix(5, 1, init = 0)
+dset(ALPHA = 9, X = x)
+dsqrt(X = x)
+x[]
+#> [1] 3 3 3 3 3
+
+y <- bigmemory::big.matrix(5, 1, init = 1)
+dvcal(ALPHA = 0.5, X = x, BETA = 2, Y = y)
+y[]
+#> [1] 3.5 3.5 3.5 3.5 3.5
+```
+
+### Matrix products with `dgemm()`
+
+``` r
+A <- bigmemory::big.matrix(5, 4, init = 1)
+B <- bigmemory::big.matrix(4, 4, init = 2)
+C <- bigmemory::big.matrix(5, 4, init = 0)
+
+dgemm(A = A, B = B, C = C, ALPHA = 1, BETA = 0)
+C[]
+#>      [,1] [,2] [,3] [,4]
+#> [1,]    8    8    8    8
+#> [2,]    8    8    8    8
+#> [3,]    8    8    8    8
+#> [4,]    8    8    8    8
+#> [5,]    8    8    8    8
+```
+
+### LAPACK decompositions
+
+``` r
+set.seed(1)
+M <- matrix(rnorm(9), 3)
+SPD <- crossprod(M)
+SPD_big <- as.big.matrix(SPD)
+dpotrf(A = SPD_big)
+#> [1] 0
+chol_factor <- SPD_big[,]
+chol_factor[lower.tri(chol_factor)] <- 0
+chol_factor
+#>          [,1]       [,2]       [,3]
+#> [1,] 1.060398 -0.2388263 -0.6138286
+#> [2,] 0.000000  1.8082109  0.2222424
+#> [3,] 0.000000  0.0000000  0.8294922
+```
+
+### File-backed `big.matrix` workflows
+
+``` r
+tmpdir <- tempdir()
+file_big <- filebacked.big.matrix(3, 3, init = diag(3),
+                                  backingpath = tmpdir,
+                                  backingfile = "example.bin")
+#> Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No descriptor file given, it will be
+#> named example.bin.desc
+file_big[1, 3] <- 5
+file_big[]
+#>      [,1] [,2] [,3]
+#> [1,]    1    1    5
+#> [2,]    1    1    1
+#> [3,]    1    1    1
+rm(file_big)
+gc()
+#>           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)
+#> Ncells  986811 52.8    1924765 102.8         NA  1419161 75.8
+#> Vcells 2376145 18.2    8388608  64.0      65536  3616431 27.6
+```
+
+## Available vignettes
+
+The full vignette set expands on the topics above and demonstrates how
+the routines interact:
+
+1.  **Working with big.matrix Objects** – Managing shared memory, file
+    backing, and clean-up for large datasets.
+2.  **Level 1 BLAS-Style Helpers** – Filling vectors, Hadamard products,
+    and reductions on disk-backed data.
+3.  **Matrix Wrapper Helpers** – Symmetric and general matrix products,
+    including strategies for chaining operations.
+4.  **LAPACK Decompositions with bigalgebra** – QR, Cholesky,
+    eigenvalue, and SVD workflows for both in-memory and file-backed
+    matrices.
+
+# Package index
+
+## All functions
+
+- [`%*%,big.matrix,big.matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`%*%,matrix,big.matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`%*%,big.matrix,matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`Arith,big.matrix,big.matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`Arith,big.matrix,matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`Arith,matrix,big.matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`Arith,big.matrix,numeric-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  [`Arith,numeric,big.matrix-method`](https://fbertran.github.io/bigalgebra/reference/Ops.md)
+  :
+
+  Class `"big.matrix"` arithmetic methods
+
+- [`bigalgebra-package`](https://fbertran.github.io/bigalgebra/reference/bigalgebra-package.md)
+  [`bigalgebra`](https://fbertran.github.io/bigalgebra/reference/bigalgebra-package.md)
+  : Arithmetic routines for native R matrices and big.matrix objects.
+
+- [`dadd()`](https://fbertran.github.io/bigalgebra/reference/dadd.md) :
+  Add two double-precision vectors.
+
+- [`dasum()`](https://fbertran.github.io/bigalgebra/reference/dasum.md)
+  : Sum of absolute values
+
+- [`daxpy()`](https://fbertran.github.io/bigalgebra/reference/daxpy.md)
+  : BLAS daxpy functionality
+
+- [`dcopy()`](https://fbertran.github.io/bigalgebra/reference/dcopy.md)
+  : Copy a vector.
+
+- [`ddot()`](https://fbertran.github.io/bigalgebra/reference/ddot.md) :
+  Dot product of two vectors
+
+- [`dgeev()`](https://fbertran.github.io/bigalgebra/reference/dgeev.md)
+  : DGEEV computes eigenvalues and eigenvectors.
+
+- [`dgemm()`](https://fbertran.github.io/bigalgebra/reference/dgemm.md)
+  : Matrix Multiply
+
+- [`dgeqrf()`](https://fbertran.github.io/bigalgebra/reference/dgeqrf.md)
+  : QR factorization
+
+- [`dgesdd()`](https://fbertran.github.io/bigalgebra/reference/dgesdd.md)
+  : DGESDD computes the singular value decomposition (SVD) of a real
+  matrix.
+
+- [`dhprod()`](https://fbertran.github.io/bigalgebra/reference/dhprod.md)
+  : Element-wise (Hadamard) product
+
+- [`dnrm2()`](https://fbertran.github.io/bigalgebra/reference/dnrm2.md)
+  : Euclidean norm (2-norm)
+
+- [`dpotrf()`](https://fbertran.github.io/bigalgebra/reference/dpotrf.md)
+  : Cholesky factorization
+
+- [`dprdct()`](https://fbertran.github.io/bigalgebra/reference/dprdct.md)
+  : Product of vector elements
+
+- [`dqddot()`](https://fbertran.github.io/bigalgebra/reference/dqddot.md)
+  : High-accuracy dot product
+
+- [`dscal()`](https://fbertran.github.io/bigalgebra/reference/dscal.md)
+  : Scales a vector by a constant.
+
+- [`dset()`](https://fbertran.github.io/bigalgebra/reference/dset.md) :
+  Fill a vector or matrix with a constant value
+
+- [`dsqrt()`](https://fbertran.github.io/bigalgebra/reference/dsqrt.md)
+  : Element-wise square root
+
+- [`dsub()`](https://fbertran.github.io/bigalgebra/reference/dsub.md) :
+  In-place vector subtraction
+
+- [`dsum()`](https://fbertran.github.io/bigalgebra/reference/dsum.md) :
+  Sum of elements
+
+- [`dswap()`](https://fbertran.github.io/bigalgebra/reference/dswap.md)
+  : Swap two double-precision vectors.
+
+- [`dsymm()`](https://fbertran.github.io/bigalgebra/reference/dsymm.md)
+  : Symmetric matrix-matrix multiplication
+
+- [`dvcal()`](https://fbertran.github.io/bigalgebra/reference/dvcal.md)
+  : Generalised AXPBY operation
+
+- [`dxyz()`](https://fbertran.github.io/bigalgebra/reference/dxyz.md) :
+  Three-dimensional cross product
+
+- [`idamax()`](https://fbertran.github.io/bigalgebra/reference/idamax.md)
+  : Index of the maximum absolute value
+
+- [`idamin()`](https://fbertran.github.io/bigalgebra/reference/idamin.md)
+  : Index of the minimum absolute value
+
+- [`idmax()`](https://fbertran.github.io/bigalgebra/reference/idmax.md)
+  : Index of the maximum element
+
+- [`idmin()`](https://fbertran.github.io/bigalgebra/reference/idmin.md)
+  : Index of the minimum element
+
+# Articles
+
+### All vignettes
+
+- [Working with big.matrix
+  Objects](https://fbertran.github.io/bigalgebra/articles/big-matrix-workflows.md):
+- [Level 1 BLAS-Style
+  Helpers](https://fbertran.github.io/bigalgebra/articles/level-1-blas-style-helpers.md):
+- [Matrix Wrapper
+  Helpers](https://fbertran.github.io/bigalgebra/articles/matrix-wrapper-helpers.md):
+- [LAPACK Decompositions with
+  bigalgebra](https://fbertran.github.io/bigalgebra/articles/z_lapack-decompositions.md):

@@ -180,8 +180,8 @@ tmpdir <- tempdir()
 file_big <- filebacked.big.matrix(3, 3, init = diag(3),
                                   backingpath = tmpdir,
                                   backingfile = "example.bin")
-#> Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No
-#> descriptor file given, it will be named example.bin.desc
+#> Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No descriptor file given, it will be
+#> named example.bin.desc
 file_big[1, 3] <- 5
 file_big[]
 #>      [,1] [,2] [,3]
@@ -190,9 +190,9 @@ file_big[]
 #> [3,]    1    1    1
 rm(file_big)
 gc()
-#>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  900616 48.1    1699095 90.8         NA  1377768 73.6
-#> Vcells 2253326 17.2    8388608 64.0      65536  3247956 24.8
+#>           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)
+#> Ncells  986811 52.8    1924765 102.8         NA  1419161 75.8
+#> Vcells 2376145 18.2    8388608  64.0      65536  3616431 27.6
 ```
 
 ## Available vignettes
