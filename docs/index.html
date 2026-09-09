@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bigalgebra</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,7 +121,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bigalgebra"</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the development version of bigalgebra from <a href="https://github.com" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"fbertran/bigalgebra"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install-deprecated.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"fbertran/bigalgebra"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-tour-of-the-functionality">Quick tour of the functionality<a class="anchor" aria-label="anchor" href="#quick-tour-of-the-functionality"></a>
@@ -134,17 +134,25 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kaneplusplus/bigmemory" class="external-link">bigmemory</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/bigalgebra/">bigalgebra</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `library()`:</span></span>
+<span><span class="co">#&gt; ! there is no package called 'bigalgebra'</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/dset.html">dset</a></span><span class="op">(</span>ALPHA <span class="op">=</span> <span class="fl">9</span>, X <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `dset()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "dset"</span></span>
 <span><span class="fu"><a href="reference/dsqrt.html">dsqrt</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `dsqrt()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "dsqrt"</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 3 3 3 3 3</span></span>
+<span><span class="co">#&gt; [1] 0 0 0 0 0</span></span>
 <span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/dvcal.html">dvcal</a></span><span class="op">(</span>ALPHA <span class="op">=</span> <span class="fl">0.5</span>, X <span class="op">=</span> <span class="va">x</span>, BETA <span class="op">=</span> <span class="fl">2</span>, Y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `dvcal()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "dvcal"</span></span>
 <span><span class="va">y</span><span class="op">[</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 3.5 3.5 3.5 3.5 3.5</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 1 1 1 1 1</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="matrix-products-with-dgemm">Matrix products with <code>dgemm()</code>
@@ -156,13 +164,15 @@
 <span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu">bigmemory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">4</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/dgemm.html">dgemm</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">A</span>, B <span class="op">=</span> <span class="va">B</span>, C <span class="op">=</span> <span class="va">C</span>, ALPHA <span class="op">=</span> <span class="fl">1</span>, BETA <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `dgemm()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "dgemm"</span></span>
 <span><span class="va">C</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4]</span></span>
-<span><span class="co">#&gt; [1,]    8    8    8    8</span></span>
-<span><span class="co">#&gt; [2,]    8    8    8    8</span></span>
-<span><span class="co">#&gt; [3,]    8    8    8    8</span></span>
-<span><span class="co">#&gt; [4,]    8    8    8    8</span></span>
-<span><span class="co">#&gt; [5,]    8    8    8    8</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,]    0    0    0    0</span></span>
+<span><span class="co">#&gt; [2,]    0    0    0    0</span></span>
+<span><span class="co">#&gt; [3,]    0    0    0    0</span></span>
+<span><span class="co">#&gt; [4,]    0    0    0    0</span></span>
+<span><span class="co">#&gt; [5,]    0    0    0    0</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="lapack-decompositions">LAPACK decompositions<a class="anchor" aria-label="anchor" href="#lapack-decompositions"></a>
@@ -173,14 +183,15 @@
 <span><span class="va">SPD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="va">SPD_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">as.big.matrix</a></span><span class="op">(</span><span class="va">SPD</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/dpotrf.html">dpotrf</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">SPD_big</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
+<span><span class="co">#&gt; Error in `dpotrf()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "dpotrf"</span></span>
 <span><span class="va">chol_factor</span> <span class="op">&lt;-</span> <span class="va">SPD_big</span><span class="op">[</span>,<span class="op">]</span></span>
 <span><span class="va">chol_factor</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span><span class="va">chol_factor</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">chol_factor</span></span>
-<span><span class="co">#&gt;          [,1]       [,2]       [,3]</span></span>
-<span><span class="co">#&gt; [1,] 1.060398 -0.2388263 -0.6138286</span></span>
-<span><span class="co">#&gt; [2,] 0.000000  1.8082109  0.2222424</span></span>
-<span><span class="co">#&gt; [3,] 0.000000  0.0000000  0.8294922</span></span></code></pre></div>
+<span><span class="co">#&gt;          [,1]      [,2]       [,3]</span></span>
+<span><span class="co">#&gt; [1,] 1.124444 -0.253251 -0.6509028</span></span>
+<span><span class="co">#&gt; [2,] 0.000000  3.326665  0.5484595</span></span>
+<span><span class="co">#&gt; [3,] 0.000000  0.000000  1.1142346</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="file-backed-bigmatrix-workflows">File-backed <code>big.matrix</code> workflows<a class="anchor" aria-label="anchor" href="#file-backed-bigmatrix-workflows"></a>
@@ -190,8 +201,8 @@
 <span><span class="va">file_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">filebacked.big.matrix</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>,</span>
 <span>                                  backingpath <span class="op">=</span> <span class="va">tmpdir</span>,</span>
 <span>                                  backingfile <span class="op">=</span> <span class="st">"example.bin"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No descriptor file given, it will be</span></span>
-<span><span class="co">#&gt; named example.bin.desc</span></span>
+<span><span class="co">#&gt; Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath =</span></span>
+<span><span class="co">#&gt; tmpdir, : No descriptor file given, it will be named example.bin.desc</span></span>
 <span><span class="va">file_big</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="va">file_big</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
@@ -200,9 +211,9 @@
 <span><span class="co">#&gt; [3,]    1    1    1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">file_big</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/gc.html" class="external-link">gc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)</span></span>
-<span><span class="co">#&gt; Ncells  986811 52.8    1924765 102.8         NA  1419161 75.8</span></span>
-<span><span class="co">#&gt; Vcells 2376145 18.2    8388608  64.0      65536  3616431 27.6</span></span></code></pre></div>
+<span><span class="co">#&gt;           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)</span></span>
+<span><span class="co">#&gt; Ncells 1157735 61.9    2307355 123.3         NA  2039287 109.0</span></span>
+<span><span class="co">#&gt; Vcells 2875903 22.0    8388608  64.0      65536  4041391  30.9</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

@@ -14,7 +14,9 @@
 #include <R_ext/BLAS.h>
 #include <R_ext/Lapack.h>
 #include <R_ext/Rdynload.h>
+#include <algorithm>
 #include <cmath>
+#include <iterator>
 
 /* Portable helpers for hidden Fortran string lengths (FCONE). */
 #ifndef FCLEN1

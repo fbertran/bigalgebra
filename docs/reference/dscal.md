@@ -39,7 +39,7 @@ c("alpha", "beta")), shared=FALSE)
 dscal(ALPHA=2,Y=A)
 #> An object of class "big.matrix"
 #> Slot "address":
-#> <pointer: 0x1266b9240>
+#> <pointer: 0x1078049d0>
 #> 
 A[,]
 #>      alpha beta
@@ -51,6 +51,6 @@ A[,]
 rm(A)
 gc()
 #>           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
-#> Ncells 1152443 61.6    2286010 122.1         NA  2286010 122.1
-#> Vcells 2063793 15.8    8388608  64.0      65536  6482741  49.5
+#> Ncells 1017315 54.4    1995290 106.6         NA  1995290 106.6
+#> Vcells 1828205 14.0    8388608  64.0      65536  2724101  20.8
 ```

@@ -1,8 +1,8 @@
 Package: bigalgebra
 Type: Package
 Title: 'BLAS' and 'LAPACK' Routines for Native R Matrices and 'big.matrix' Objects
-Version: 3.1.0
-Date: 2026-03-10
+Version: 3.1.1
+Date: 2026-09-09
 Depends: bigmemory (>= 4.0.0)
 Imports: methods
 Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
@@ -20,8 +20,8 @@ Encoding: UTF-8
 Copyright: (C) 2014 Michael J. Kane, Bryan Lewis, and John W. Emerson
 LazyLoad: yes
 NeedsCompilation: yes
-RoxygenNote: 7.3.3
 URL: https://fbertran.github.io/bigalgebra/, https://github.com/fbertran/bigalgebra
 BugReports: https://github.com/fbertran/bigalgebra/issues
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

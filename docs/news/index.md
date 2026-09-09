@@ -1,6 +1,13 @@
 # Changelog
 
+## bigalgebra 3.1.1
+
+- Fixed compilation with recent Clang and libc++ by including the
+  standard headers required by `bigmemory/BigMatrix.h`.
+
 ## bigalgebra 3.1.0
+
+CRAN release: 2026-03-24
 
 - Dealt with upcoming Rf_error issue with Rcpp
 

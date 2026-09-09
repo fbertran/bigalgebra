@@ -105,7 +105,7 @@ print(E[])
 options(bigalgebra.DEBUG=TRUE)
 rm(C,E)
 gc()
-#>           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
-#> Ncells 1147699 61.3    2286010 122.1         NA  2286010 122.1
-#> Vcells 2053999 15.7    8388608  64.0      65536  6482741  49.5
+#>           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)
+#> Ncells 1012118 54.1    1995290 106.6         NA  1432397 76.5
+#> Vcells 1819522 13.9    8388608  64.0      65536  2724101 20.8
 ```

@@ -13,6 +13,7 @@ In-memory matrices behave much like ordinary R matrices but reside in
 shared memory, allowing multiple R sessions to access the same data.
 
 ``` r
+
 X <- big.matrix(3, 3, type = "double", init = 0)
 X[,] <- matrix(1:9, nrow = 3)
 X[]
@@ -25,6 +26,7 @@ X[]
 Once created, the objects can be passed directly to Level 1 helpers:
 
 ``` r
+
 dvcal(ALPHA = 2, X = X, BETA = -1, Y = X)
 X[]
 #>      [,1] [,2] [,3]
@@ -39,6 +41,7 @@ File-backed matrices persist their contents on disk, making them
 suitable for data sets that exceed available RAM.
 
 ``` r
+
 dir.create(tmp_fb <- tempfile())
 Y <- filebacked.big.matrix(4, 2, type = "double",
                            backingpath = tmp_fb,
@@ -58,6 +61,7 @@ These objects participate in higher-level operations without being
 loaded into memory.
 
 ``` r
+
 Z <- filebacked.big.matrix(4, 2, type = "double",
                            backingpath = tmp_fb,
                            backingfile = "res.bin",
@@ -80,6 +84,7 @@ matrix in a new R session. The
 helper reconstructs the object:
 
 ``` r
+
 Y_desc <- dget(file.path(tmp_fb, "fb.desc"))
 Y_again <- attach.big.matrix(Y_desc)
 identical(Y[,], Y_again[,])
@@ -90,6 +95,7 @@ Any operations performed via `bigalgebra` update the shared backing
 file, allowing all attached references to observe the change.
 
 ``` r
+
 dsub(X = Z, Y = Y_again)
 Y_again[]
 #>             [,1]         [,2]
@@ -106,6 +112,7 @@ and descriptor files once they are no longer needed helps keep the
 workspace tidy.
 
 ``` r
+
 unlink(file.path(tmp_fb, c("fb.bin", "fb.desc", "res.bin", "res.desc")))
 unlink(tmp_fb, recursive = TRUE)
 ```

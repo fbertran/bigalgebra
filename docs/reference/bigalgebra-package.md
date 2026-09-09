@@ -79,6 +79,7 @@ Maintainer: Frédéric Bertrand \<frederic.bertrand@lecnam.net\>
 ## Examples
 
 ``` r
+
 # Testing the development of the user-friendly operators:
 # if you have any problems, please email us!  - Jay & Mike 4/29/2010
 

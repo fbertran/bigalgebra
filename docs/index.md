@@ -105,6 +105,7 @@ You can install the released version of bigalgebra from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
+
 install.packages("bigalgebra")
 ```
 
@@ -112,6 +113,7 @@ You can install the development version of bigalgebra from
 [GitHub](https://github.com) with:
 
 ``` r
+
 devtools::install_github("fbertran/bigalgebra")
 ```
 
@@ -127,65 +129,80 @@ transforms such as the in-place square root provided by
 [`dsqrt()`](https://fbertran.github.io/bigalgebra/reference/dsqrt.md).
 
 ``` r
+
 library(bigmemory)
 library(bigalgebra)
+#> Error in `library()`:
+#> ! there is no package called 'bigalgebra'
 
 x <- bigmemory::big.matrix(5, 1, init = 0)
 dset(ALPHA = 9, X = x)
+#> Error in `dset()`:
+#> ! could not find function "dset"
 dsqrt(X = x)
+#> Error in `dsqrt()`:
+#> ! could not find function "dsqrt"
 x[]
-#> [1] 3 3 3 3 3
+#> [1] 0 0 0 0 0
 
 y <- bigmemory::big.matrix(5, 1, init = 1)
 dvcal(ALPHA = 0.5, X = x, BETA = 2, Y = y)
+#> Error in `dvcal()`:
+#> ! could not find function "dvcal"
 y[]
-#> [1] 3.5 3.5 3.5 3.5 3.5
+#> [1] 1 1 1 1 1
 ```
 
 ### Matrix products with `dgemm()`
 
 ``` r
+
 A <- bigmemory::big.matrix(5, 4, init = 1)
 B <- bigmemory::big.matrix(4, 4, init = 2)
 C <- bigmemory::big.matrix(5, 4, init = 0)
 
 dgemm(A = A, B = B, C = C, ALPHA = 1, BETA = 0)
+#> Error in `dgemm()`:
+#> ! could not find function "dgemm"
 C[]
 #>      [,1] [,2] [,3] [,4]
-#> [1,]    8    8    8    8
-#> [2,]    8    8    8    8
-#> [3,]    8    8    8    8
-#> [4,]    8    8    8    8
-#> [5,]    8    8    8    8
+#> [1,]    0    0    0    0
+#> [2,]    0    0    0    0
+#> [3,]    0    0    0    0
+#> [4,]    0    0    0    0
+#> [5,]    0    0    0    0
 ```
 
 ### LAPACK decompositions
 
 ``` r
+
 set.seed(1)
 M <- matrix(rnorm(9), 3)
 SPD <- crossprod(M)
 SPD_big <- as.big.matrix(SPD)
 dpotrf(A = SPD_big)
-#> [1] 0
+#> Error in `dpotrf()`:
+#> ! could not find function "dpotrf"
 chol_factor <- SPD_big[,]
 chol_factor[lower.tri(chol_factor)] <- 0
 chol_factor
-#>          [,1]       [,2]       [,3]
-#> [1,] 1.060398 -0.2388263 -0.6138286
-#> [2,] 0.000000  1.8082109  0.2222424
-#> [3,] 0.000000  0.0000000  0.8294922
+#>          [,1]      [,2]       [,3]
+#> [1,] 1.124444 -0.253251 -0.6509028
+#> [2,] 0.000000  3.326665  0.5484595
+#> [3,] 0.000000  0.000000  1.1142346
 ```
 
 ### File-backed `big.matrix` workflows
 
 ``` r
+
 tmpdir <- tempdir()
 file_big <- filebacked.big.matrix(3, 3, init = diag(3),
                                   backingpath = tmpdir,
                                   backingfile = "example.bin")
-#> Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath = tmpdir, : No descriptor file given, it will be
-#> named example.bin.desc
+#> Warning in filebacked.big.matrix(3, 3, init = diag(3), backingpath =
+#> tmpdir, : No descriptor file given, it will be named example.bin.desc
 file_big[1, 3] <- 5
 file_big[]
 #>      [,1] [,2] [,3]
@@ -194,9 +211,9 @@ file_big[]
 #> [3,]    1    1    1
 rm(file_big)
 gc()
-#>           used (Mb) gc trigger  (Mb) limit (Mb) max used (Mb)
-#> Ncells  986811 52.8    1924765 102.8         NA  1419161 75.8
-#> Vcells 2376145 18.2    8388608  64.0      65536  3616431 27.6
+#>           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+#> Ncells 1157735 61.9    2307355 123.3         NA  2039287 109.0
+#> Vcells 2875903 22.0    8388608  64.0      65536  4041391  30.9
 ```
 
 ## Available vignettes

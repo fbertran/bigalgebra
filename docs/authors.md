@@ -18,7 +18,7 @@ Source:
 
 Frederic Bertrand, Michael J. Kane, John Emerson and Stephen
 Weston(2026). 'BLAS' and 'LAPACK' Routines for Native R Matrices and
-'big.matrix' Objects, R package version 3.1.0.
+'big.matrix' Objects, R package version 3.1.1.
 doi:10.32614/CRAN.package.bigalgebra.
 
     @Manual{,
@@ -26,7 +26,7 @@ doi:10.32614/CRAN.package.bigalgebra.
       author = {Frederic Bertrand and Michael J. Kane and John Emerson and Stephen Weston},
       publisher = {manual},
       year = {2026},
-      note = {R package version 3.1.0},
+      note = {R package version 3.1.1},
       url = {https://fbertran.github.io/bigalgebra/},
       doi = {10.32614/CRAN.package.bigalgebra},
     }

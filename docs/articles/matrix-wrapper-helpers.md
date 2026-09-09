@@ -22,6 +22,7 @@ multiply from the left or right and accepts optional leading-dimension
 arguments when working with non-standard strides.
 
 ``` r
+
 A_sym <- matrix(c(2, 1, 1, 3), 2, 2)
 B_rhs <- diag(2)
 C_out <- matrix(0, 2, 2)
@@ -36,6 +37,7 @@ When either input is a `big.matrix`, the wrapper performs the
 computation in place without materialising an intermediate R matrix.
 
 ``` r
+
 library(bigmemory)
 dir.create(tmp_sym <- tempfile())
 A_bm <- filebacked.big.matrix(2, 2, type = "double",
@@ -72,6 +74,7 @@ integer literals to doubles (for example with
 the package’s double-precision requirement.
 
 ``` r
+
 A <- matrix(as.numeric(1:6), nrow = 2)
 B <- matrix(seq(2, 12, by = 2), nrow = 3)
 C <- matrix(0, nrow = 2, ncol = 4)
@@ -85,6 +88,7 @@ C
 Transposed operands are also supported via `TRANSA` and `TRANSB`:
 
 ``` r
+
 C_t <- matrix(0, nrow = 3, ncol = 3)
 dgemm(TRANSA = "T", TRANSB = "N", A = A, B = B, C = C_t, BETA = 0)
 C_t
@@ -103,6 +107,7 @@ provides a convenient wrapper for the AXPY operation
 a native matrix versus a `big.matrix`.
 
 ``` r
+
 X <- matrix(1, nrow = 2, ncol = 2)
 Y <- matrix(c(0, 1, 2, 3), nrow = 2)
 daxpy(A = 0.5, X = X, Y = Y)
@@ -114,6 +119,7 @@ daxpy(A = 0.5, X = X, Y = Y)
 When both operands are `big.matrix` objects, the result stays on disk:
 
 ``` r
+
 dir.create(tmp_axpy <- tempfile())
 X_bm <- filebacked.big.matrix(2, 2, type = "double",
                               backingpath = tmp_axpy,
@@ -131,6 +137,7 @@ X_bm[]
 ```
 
 ``` r
+
 unlink(file.path(tmp_sym, c("A.bin", "A.desc", "B.bin", "B.desc", "C.bin", "C.desc")))
 unlink(tmp_sym, recursive = TRUE)
 unlink(file.path(tmp_axpy, c("X.bin", "X.desc")))

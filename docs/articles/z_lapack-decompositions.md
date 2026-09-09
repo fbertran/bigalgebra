@@ -31,6 +31,7 @@ while storing Householder reflector coefficients in a user-supplied
 to inspect the outputs afterwards.
 
 ``` r
+
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 H <- hilbert(4)
 H_big <- as.big.matrix(H)
@@ -64,6 +65,7 @@ When the input is file-backed, the updates are written directly to disk
 and the factorisation scales to matrices that exceed available RAM.
 
 ``` r
+
 tmp <- tempfile()
 H_fb <- filebacked.big.matrix(nrow(H), ncol(H), init = H,
                               backingfile = basename(tmp),
@@ -90,6 +92,7 @@ the matrix is positive definite and leaves the result in the selected
 triangle (upper by default).
 
 ``` r
+
 set.seed(42)
 A <- matrix(rnorm(9), 3)
 SPD <- crossprod(A)  # symmetric positive definite
@@ -116,6 +119,7 @@ left and right eigenvectors. By default the helper queries LAPACK for an
 optimal workspace size, making small examples straightforward.
 
 ``` r
+
 set.seed(123)
 M <- matrix(rnorm(16), 4)
 WR <- matrix(0, nrow = ncol(M))
@@ -143,6 +147,7 @@ right singular vectors. Providing `big.matrix` containers lets you
 persist decompositions to disk without copying through R’s heap.
 
 ``` r
+
 set.seed(101)
 X <- matrix(rnorm(12), 4)
 S <- matrix(0, nrow = min(dim(X)))

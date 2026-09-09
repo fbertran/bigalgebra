@@ -20,6 +20,7 @@ all operate in place, making it easy to reuse pre-allocated storage when
 working with large data sets.
 
 ``` r
+
 # Fill an existing matrix with a scalar
 X <- matrix(0, 2, 3)
 dset(ALPHA = 3.5, X = X)
@@ -46,6 +47,7 @@ When either argument is a `big.matrix`, the wrapper automatically keeps
 the data on disk while still updating it in place:
 
 ``` r
+
 library(bigmemory)
 # Allocate a file-backed big.matrix
 dir.create(tmp <- tempfile())
@@ -75,6 +77,7 @@ matrix in place,
 applies the square root while preserving the original storage mode.
 
 ``` r
+
 # Classic dot product and its extended-precision counterpart
 v1 <- as.numeric(1:5)
 v2 <- seq(2, 10, by = 2)
@@ -108,6 +111,7 @@ For three-dimensional vectors the cross product helper
 offers a specialised convenience routine:
 
 ``` r
+
 ux <- c(1, 0, 0)
 uy <- c(0, 1, 0)
 dxyz(X = ux, Y = uy)
@@ -122,6 +126,7 @@ return numeric scalars and work with strided access patterns via the
 `INCX` parameter when needed.
 
 ``` r
+
 vals <- c(-1, 2, -3, 4)
 list(
   sum = dsum(X = vals),
@@ -146,6 +151,7 @@ The `id*` family returns one-based indices of extrema based on value or
 absolute value criteria.
 
 ``` r
+
 idx_vals <- c(-2, 5, -7, 3)
 list(
   min_index = idmin(X = idx_vals),
@@ -171,6 +177,7 @@ implement more complex algorithms while retaining the performance
 benefits of the underlying compiled implementations.
 
 ``` r
+
 unlink(file.path(tmp, "vec.bin"))
 unlink(file.path(tmp, "vec.desc"))
 unlink(tmp, recursive = TRUE)
